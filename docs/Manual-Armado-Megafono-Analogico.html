@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Megáfono Analógico — Manual de armado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  /* Sistema visual "manual de instrucciones" (LEGO / IKEA / kit electrónico): fondo claro, un
+     paso = un bloque autocontenido, numeración de paso grande, pieza que se agrega en el paso
+     resaltada en color sobre el resto en gris neutro. Estándar del equipo desde 2026-09-25 (ver
+     Referencias-Visuales/01-Sistema-Visual-Manual-Armado.md en la bóveda de Maestro Axel):
+     reemplaza el "blueprint espacial" original tras el rechazo explícito de Baltasar en el
+     retrabajo de Fuente Variable. Paleta pastel formal, 2ª pasada. */
+  :root{
+    --paper:#f5f2ec; --panel:#fffdf9; --panel-2:#faf7f0;
+    --ink:#23221f; --ink-soft:#4a4844; --ink-mute:#83807a;
+    --line:#e0dacb; --line-strong:#cabfa8;
+    --accent-step:#d3a765; --accent-step-ink:#3a2c14; --accent-step-bg:#f6ecda;
+    --blue:#5c7a99; --blue-soft:#eaf0f5; --blue-dim:#cdd9e3;
+    --new:#c97a52; --new-bg:#f5e4d8; --new-strong:#a95f3b;
+    --built:#a5a19a; --built-bg:#eeece6; --built-line:#cfcbc1;
+    --danger:#a8515b; --danger-bg:#f5e6e7; --danger-border:#d3a9ae;
+    --verif:#5f8c68; --verif-bg:#e9f0e9; --verif-border:#aecab1;
+    --note-bg:#eeece3; --note-ink:#454339; --note-border:#c9c4b3;
+    --wire-red:#a8524a; --wire-black:#3a3833; --wire-blue:#5c7a99;
+    --gate-bg:#f6ecda; --gate-border:#c99a4a;
+    --fs-util:0.8rem; --fs-body:1rem; --fs-h3:1.25rem; --fs-h2:1.56rem; --fs-h1:1.95rem;
+  }
+  @page{
+    size:letter; margin:15mm 14mm 16mm; background:#f5f2ec;
+    @bottom-left{ content:"Megáfono Analógico · Manual de armado"; font:600 7.5pt 'Source Sans 3',sans-serif; color:#83807a; }
+    @bottom-right{ content:"página " counter(page) " de " counter(pages); font:600 7.5pt 'Source Sans 3',sans-serif; color:#83807a; }
+  }
+  @page apaisada{ size:letter landscape; margin:11mm 14mm 13mm; }
+  *{box-sizing:border-box;}
+  html,body{background:var(--paper);}
+  body{
+    font-family:'Source Sans 3','Segoe UI',system-ui,sans-serif;
+    color:var(--ink-soft); max-width:860px; margin:0 auto; padding:30px 18px 90px;
+    font-size:15.5px; line-height:1.6;
+  }
+  .doc-head{border-bottom:5px solid var(--accent-step); padding-bottom:18px; margin-bottom:22px;}
+  .doc-kicker{
+    font-family:'JetBrains Mono',monospace; font-size:var(--fs-util); letter-spacing:.12em;
+    text-transform:uppercase; color:var(--blue); margin-bottom:8px; font-weight:700;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:calc(var(--fs-h1) * 1.5);
+    color:var(--ink); margin:0 0 8px; letter-spacing:-0.02em; line-height:1.12;
+  }
+  .doc-sub{color:var(--ink-mute); font-size:14px;}
+  h2{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:calc(var(--fs-h2) * 1.1);
+    color:var(--ink); margin:2.2em 0 .9em; padding-bottom:8px; border-bottom:2px solid var(--line);
+    display:flex; align-items:center; gap:.6em; letter-spacing:-0.015em;
+  }
+  h2 .num{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:.85em; color:var(--accent-step-ink);
+    background:var(--accent-step); width:1.7em; height:1.7em; border-radius:5px;
+    display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  h3{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:var(--fs-h3); color:var(--blue); margin:1.5em 0 .5em; letter-spacing:-0.01em;}
+  p, li{max-width:66ch; margin:.6em 0;}
+  strong{color:var(--ink);}
+  a{color:var(--blue);}
+  code{
+    font-family:'JetBrains Mono',monospace; font-size:.85em;
+    background:var(--blue-soft); color:#3d5670; padding:.08em .32em; border-radius:3px;
+  }
+  ul,ol{padding-left:1.4em;}
+  li{margin-bottom:.35em;}
+
+  /* ---- advertencia T-1: la caja más pesada del documento, portada y etiqueta permanente ---- */
+  .t1{
+    background:var(--danger-bg); border:2.5px solid var(--danger); border-radius:12px;
+    padding:1.2em 1.4em; margin:1em 0 1.8em; break-inside:avoid; page-break-inside:avoid;
+    box-shadow:0 1px 0 rgba(0,0,0,.03), 0 10px 24px rgba(168,81,91,.12);
+  }
+  .t1-tag{
+    font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.8rem; letter-spacing:.1em;
+    text-transform:uppercase; color:#fff; background:var(--danger); border-radius:5px;
+    padding:.25em .7em; display:inline-block; margin-bottom:.7em;
+  }
+  .t1 p{max-width:none; color:var(--ink); font-size:.98rem;}
+  .t1-cifras{display:flex; gap:1.2em; flex-wrap:wrap; margin:.7em 0;}
+  .t1-cifra{background:var(--panel); border:1.5px solid var(--danger-border); border-radius:9px; padding:.55em .9em; min-width:180px;}
+  .t1-cifra .n{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.5rem; color:var(--danger); line-height:1;}
+  .t1-cifra .d{font-size:.78rem; color:var(--ink-mute); margin-top:.15em;}
+  .t1 strong{color:var(--danger);}
+  .etiqueta-permanente{
+    display:inline-flex; align-items:center; gap:.5em; margin-top:.8em; padding:.4em .8em;
+    background:#fff; border:1.5px dashed var(--danger); border-radius:7px; font-size:.83rem; color:var(--ink);
+  }
+
+  /* ---- compuerta de presupuesto: trato visual de barrera, no de párrafo informativo ---- */
+  .compuerta{
+    background:var(--gate-bg); border:3px solid var(--gate-border); border-radius:14px;
+    padding:1.3em 1.5em 1.4em; margin:1.2em 0 2em; break-inside:avoid; page-break-inside:avoid;
+    position:relative;
+  }
+  .compuerta::before{
+    content:"COMPUERTA"; position:absolute; top:-13px; left:24px; background:var(--gate-border);
+    color:#fff; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:.72rem;
+    letter-spacing:.12em; padding:.25em .8em; border-radius:5px;
+  }
+  .compuerta h3{margin-top:.3em; color:var(--ink);}
+  .flujo{display:flex; flex-direction:column; gap:0; margin:1em 0;}
+  .flujo-paso{
+    background:var(--panel); border:1.5px solid var(--line-strong); border-radius:9px;
+    padding:.7em 1em; display:flex; align-items:center; gap:.9em;
+  }
+  .flujo-num{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; color:#fff; background:var(--blue);
+    width:1.9em; height:1.9em; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; font-size:.95rem;
+  }
+  .flujo-arrow{text-align:center; color:var(--gate-border); font-size:1.3rem; line-height:.6; margin:.15em 0;}
+  .flujo-rama{display:flex; gap:.8em; margin:.3em 0 .3em 2.8em; flex-wrap:wrap;}
+  .rama{flex:1 1 240px; border-radius:8px; padding:.6em .9em; font-size:.88rem;}
+  .rama.si{background:var(--verif-bg); border:1.5px solid var(--verif-border);}
+  .rama.no{background:var(--danger-bg); border:1.5px solid var(--danger-border);}
+  .rama .rt{font-family:'Space Grotesk',sans-serif; font-weight:700; display:block; margin-bottom:.25em;}
+  .rama.si .rt{color:var(--verif);}
+  .rama.no .rt{color:var(--danger);}
+  .stop-box{
+    background:var(--danger); color:#fff; border-radius:9px; padding:.7em 1em; margin:.8em 0;
+    font-family:'Space Grotesk',sans-serif; font-weight:700; text-align:center; font-size:1rem;
+    letter-spacing:.03em;
+  }
+
+  table{width:100%; border-collapse:collapse; margin:1em 0; font-size:.9rem;}
+  th,td{border:1px solid var(--line); padding:.5em .6em; text-align:left; vertical-align:top;}
+  th{background:var(--blue-soft); color:var(--blue); font-weight:700; font-family:'JetBrains Mono',monospace; font-size:.8rem; text-transform:uppercase; letter-spacing:.02em;}
+  td{color:var(--ink-soft);}
+  tbody tr:nth-child(odd){background:var(--panel-2);}
+  .bom-total{color:var(--blue); font-weight:700;}
+
+  figure.fig{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:1.1rem 1.2rem 1rem; margin:1.1em 0 1.4em; break-inside:avoid;
+    box-shadow:0 1px 0 rgba(0,0,0,.03), 0 6px 16px rgba(30,25,10,.06);
+  }
+  figure.fig svg{width:100%; max-width:100%; height:auto; display:block; border-radius:6px;}
+  figcaption{margin-top:.7em; font-size:.9rem; color:var(--ink-mute);}
+  figcaption .fig-num{font-weight:700; color:var(--blue); font-family:'Space Grotesk',sans-serif;}
+  figure.fig .fig-note{font-size:.83rem; color:var(--ink-mute); margin-top:.5em; display:block;}
+  .legend{display:flex; gap:1.1em; flex-wrap:wrap; margin-top:.7em; font-size:.8rem; color:var(--ink-mute);}
+  .legend span{display:inline-flex; align-items:center; gap:.4em;}
+  .swatch{width:13px; height:13px; border-radius:3px; display:inline-block; border:2px solid transparent;}
+
+  .qr-row{display:flex; align-items:center; gap:.85em; margin-top:.9em; padding-top:.8em; border-top:1px dashed var(--line-strong);}
+  .qr-row img{width:64px; height:64px; border:1px solid var(--line); border-radius:5px; background:#fff;}
+  .qr-row .qr-txt{font-size:.8rem; color:var(--ink-mute); line-height:1.4;}
+  .qr-row .qr-cap{font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--blue); display:block; font-size:.82rem;}
+
+  /* ---- pasos de armado ---- */
+  .paso{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:1.2rem 1.35rem 1.3rem; margin:1.5em 0; position:relative;
+    box-shadow:0 1px 0 rgba(0,0,0,.03), 0 8px 20px rgba(30,25,10,.05);
+  }
+  .paso-head{display:flex; align-items:center; gap:.9em; margin-bottom:.7em;}
+  .paso-num{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.7rem; color:var(--accent-step-ink);
+    background:var(--accent-step); width:2.3em; height:2.3em; border-radius:10px;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    box-shadow:0 2px 0 rgba(0,0,0,.12);
+  }
+  .paso-titulo{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.2rem; color:var(--ink);}
+  .paso-partes{font-size:.86rem; color:var(--ink-mute); margin:.2em 0 .6em;}
+  .paso-partes strong{color:var(--ink-soft);}
+  .paso h4.conex-h{
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:.92rem; color:var(--blue);
+    text-transform:uppercase; letter-spacing:.03em; margin:1em 0 .4em;
+  }
+  .obligatorio{
+    display:inline-block; font-family:'JetBrains Mono',monospace; font-size:.72rem; font-weight:700;
+    background:var(--new); color:#fff; border-radius:4px; padding:.1em .5em; margin-left:.5em;
+  }
+
+  .callout{display:block; margin:1em 0; padding:.6em .95em; border-radius:0 6px 6px 0; font-size:.95rem;}
+  .adv{
+    background:var(--danger-bg); border:1.5px solid var(--danger-border); border-radius:7px;
+    padding:.85em 1.1em; margin:.9em 0; color:var(--ink);
+  }
+  .adv .adv-tag{display:inline-block; font-weight:700; color:var(--danger); margin-right:.4em;}
+  .verif{
+    background:var(--verif-bg); border-left:4px solid var(--verif); border-radius:0 6px 6px 0;
+    padding:.6em .95em; margin:.8em 0 0; font-size:.92rem;
+  }
+  .verif .verif-tag{color:var(--verif); font-weight:700; margin-right:.4em;}
+  .nota-fija{
+    background:var(--note-bg); border-left:4px solid var(--note-border); color:var(--note-ink);
+    font-family:'JetBrains Mono',monospace; font-size:.85rem; line-height:1.6;
+  }
+
+  dl.terms dt{font-weight:700; color:var(--blue); font-family:'JetBrains Mono',monospace; font-size:.86rem;}
+  dl.terms dd{margin:.1em 0 .5em; color:var(--ink-soft);}
+  dl.glos dt{font-weight:700; color:var(--blue); font-family:'JetBrains Mono',monospace; font-size:.85rem;}
+  dl.glos dd{margin:.15em 0 0;}
+
+  footer.doc-foot{margin-top:3em; padding-top:1em; border-top:1px solid var(--line); font-size:.82rem; color:var(--ink-mute);}
+
+  .campo{display:inline-block; width:5.5em; border-bottom:1.5px solid var(--ink-mute); height:1em; vertical-align:-.15em; margin:0 .15em;}
+  ol.pruebas{list-style:none; padding-left:0; counter-reset:prueba;}
+  ol.pruebas > li{counter-increment:prueba; position:relative; padding-left:3.1em; max-width:70ch;}
+  ol.pruebas > li::before{content:counter(prueba); position:absolute; left:0; width:1.1em; text-align:right; top:.1em;
+    font:700 .85rem 'JetBrains Mono',monospace; color:var(--ink-mute);}
+  .chk{position:absolute; left:1.6em; top:.22em; width:1em; height:1em; border:1.6px solid var(--ink-mute); border-radius:3px;}
+
+  /* ---- SVG conventions: pieza nueva vs. ya armada (referencia LEGO 10266) ---- */
+  .halo-new{fill:var(--new-bg); stroke:var(--new); stroke-width:2.6;}
+  .halo-built{fill:var(--built-bg); stroke:var(--built); stroke-width:1.4;}
+  .wire-r{stroke:#a8524a; stroke-width:2.8; fill:none; stroke-linecap:round;}
+  .wire-k{stroke:#3a3833; stroke-width:2.8; fill:none; stroke-linecap:round;}
+  .wire-b{stroke:#5c7a99; stroke-width:2.4; fill:none; stroke-linecap:round;}
+
+  @media print{
+    html,body{width:100%; background:var(--paper) !important;}
+    body{max-width:680px; margin:0 auto; padding:0; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    figure.fig{max-width:100%; overflow:hidden; box-shadow:none;}
+    figure.fig svg{max-width:100%; width:100%; height:auto;}
+    table{max-width:100%;}
+    figure.fig, .adv, .verif, .t1, .compuerta, tr, ol li, .paso-head{break-inside:avoid; page-break-inside:avoid;}
+    .paso{-webkit-box-decoration-break:clone; box-decoration-break:clone; box-shadow:none;}
+    h2, h3, .paso-head{break-after:avoid; page-break-after:avoid;}
+    p{orphans:3; widows:3;}
+    .pag-apaisada{page:apaisada; width:230mm; margin-left:calc((100% - 230mm) / 2);}
+    .pag-apaisada figure.fig{margin:0;}
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-head">
+  <div class="doc-kicker">Megáfono Analógico · Documentación técnica</div>
+  <h1>Manual de armado</h1>
+  <div class="doc-sub">Secuencia completa de construcción, del BOM a las pruebas. Método de edición de Maestro Axel.</div>
+</div>
+
+<div class="t1">
+  <span class="t1-tag">Advertencia acústica T-1 — leer antes de comprar, armar o probar</span>
+  <div class="t1-cifras">
+    <div class="t1-cifra"><div class="n">~122 dB</div><div class="d">SPL a 25 cm, <strong>pico instantáneo</strong></div></div>
+    <div class="t1-cifra"><div class="n">102 dB</div><div class="d">SPL a 1 m, <strong>promedio en banda de voz</strong></div></div>
+  </div>
+  <p>Las dos cifras son correctas y <strong>no se convierten una en la otra con la ley de la
+  distancia</strong> — una es un pico, la otra un promedio de banda — así que no restes ni sumes entre
+  ellas. Para seguridad manda siempre la de pico.</p>
+  <p><strong>NO APUNTAR A MENOS DE 1 m DE LA CARA DE NADIE. NUNCA HACIA EL PROPIO OÍDO.</strong> Arriba de
+  ~75 dB en el oído del receptor la inteligibilidad empeora: apuntar de cerca aturde, no comunica. Probar
+  siempre al aire libre, nunca en un cuarto chico.</p>
+  <div class="etiqueta-permanente">⚠ Etiqueta esta advertencia de forma <strong>permanente</strong> en el aparato terminado — no es solo para este manual.</div>
+</div>
+
+<p>Este documento es la secuencia de armado. Explica <strong>qué hacer</strong>, en qué orden y con qué
+verificar. El porqué de cada decisión de diseño está en el otro documento: <em>Manual científico</em>.
+Los dos usan los mismos nombres para cada pieza.</p>
+<p><strong>Antes de leer el BOM: la sección 0 de abajo es una compuerta que detiene la compra. Léela
+primero y complétala antes de comprar cualquier cosa, incluidos los tornillos.</strong></p>
+
+<!-- ===================== SECCIÓN 0 — COMPUERTA DE PRESUPUESTO ===================== -->
+<div class="compuerta">
+<h3>0. Compuerta de presupuesto — ANTES DE COMPRAR NADA</h3>
+<p>El proyecto tiene un techo de <strong>$2,500 MXN</strong>. La trompeta (MK2) es entre el 60 y el
+70&nbsp;% de ese total, la compra a un solo proveedor y, en la práctica, no es retornable una vez que
+sale de la tienda. Todo lo demás del BOM —tornillería, madera, cable, portapilas, filamento— es pasivo
+genérico o herramienta reutilizable: dinero que se recupera si algo no cierra.</p>
+<p><strong>El único orden de compra que deja a alguien a medias con dinero gastado es comprar todo lo
+barato primero y descubrir después que la trompeta no cabe en lo que queda.</strong> Por eso este orden
+va primero, no como sugerencia sino como compuerta:</p>
+
+<div class="flujo">
+  <div class="flujo-paso"><div class="flujo-num">1</div><div>Cotizar la TOA SC-615 de mostrador en Morelia (o donde compres). <strong>Cotizar, no comprar todavía.</strong></div></div>
+  <div class="flujo-arrow">↓</div>
+  <div class="flujo-paso"><div class="flujo-num">2</div><div>¿Cuánto costó la cotización?</div></div>
+  <div class="flujo-rama">
+    <div class="rama si"><span class="rt">≤ $1,800 MXN</span>Comprar la trompeta <strong>primero</strong>. Después, el resto del BOM (§1.1 a 1.4).</div>
+    <div class="rama no"><span class="rt">&gt; $1,800 MXN</span><strong>PARAR.</strong> No comprar nada más todavía. Ver la salida alternativa abajo.</div>
+  </div>
+  <div class="flujo-arrow">↓</div>
+  <div class="flujo-paso"><div class="flujo-num">3</div><div>Antes de pagar nada, confirma si ya tienes protoboard, un transistor 2N3904 (o equivalente) y resistencias/capacitores comunes. Son $135–215 MXN de diferencia entre el escenario ajustado y el cómodo del BOM (versión frugal, §1.1).</div></div>
+</div>
+
+<h4 style="font-family:'Space Grotesk',sans-serif; color:var(--ink); margin-top:1.2em;">Salida alternativa si la trompeta cotiza arriba de $1,800 MXN</h4>
+<p>(Documentada, no inventada en el momento.) Comprar una trompeta de retail barata y <strong>medirla</strong>
+con sonómetro clase 2, exigiendo que la sensibilidad medida sea ≥103 dB/W en la banda 300 Hz–4 kHz.
+Antes de pagar por esa vía, aplica esta regla de tamizado: <strong>rechazar cualquier trompeta que solo
+declare "PMPO", que mencione "piezo" o "cristal", o que dé potencia sin impedancia.</strong> Exigir que
+diga <strong>8 Ω</strong> y potencia <strong>RMS</strong>.</p>
+<div class="stop-box">Esta salida alternativa NO EXISTE sin sonómetro clase 2 calibrado</div>
+<p>Una aplicación de celular da ±5 a 8 dB de error sin calibrar — del mismo tamaño que la incertidumbre
+completa que se quiere resolver. Medir con el celular no reduce el riesgo: lo disfraza. Si no hay
+sonómetro clase 2 disponible (pedir prestado a un laboratorio de acústica o de seguridad e higiene),
+esta salida no es viable y la decisión correcta es volver a cotizar en otro proveedor o replantear el
+presupuesto con quien lo autoriza.</p>
+<div class="stop-box" style="background:var(--ink);">No sigas a la sección 1 hasta completar esta compuerta</div>
+</div>
+
+<!-- ===================== SECCIÓN 1 — LISTA DE MATERIALES ===================== -->
+<h2><span class="num">1</span>Lista de materiales y partes</h2>
+<p>Todos los precios son <strong>rangos estimados, sin cotizar de mostrador, consultados el
+2026-09-30.</strong> Cotiza en tu localidad antes de comprar; un rango con fecha no es un dato
+inventado, un precio firme sin fecha sí lo sería.</p>
+
+<h3>1.1 Micrófono y su rail de alimentación (Bloque A)</h3>
+<p>El micrófono es una cápsula electret: un transductor miniatura que convierte presión sonora en una
+señal eléctrica pequeña. Necesita un poco de corriente para polarizarse (por eso lleva su propio
+resistor de carga) y su rail de alimentación se filtra aparte del resto del circuito para que el ruido
+de la etapa de potencia no le entre por el sesgo.</p>
+<table>
+<tr><th>#</th><th>Ref</th><th>Parte</th><th>Cant</th><th>Dónde</th><th>MXN</th><th>Nota</th></tr>
+<tr><td>1</td><td>MK1</td><td><strong>Cápsula electret CMA-4544PF-W, 2 terminales, Ø9.7×4.5 mm</strong></td><td>1 (comprar 2)</td><td>Mouser MX (exacta), Steren (genérica)</td><td>15–120</td><td><strong>CRÍTICO: el diámetro es requisito, no dato.</strong> El grommet de mecánica está dimensionado para Ø9.7 mm. Un genérico de Ø6 mm queda flojo y pierde el aislamiento de vibración — si lo sustituyes, pide también el grommet de Ø6</td></tr>
+<tr><td>2</td><td>R1</td><td>Resistor 470 Ω, 1/4 W</td><td>1</td><td>cualquier tienda</td><td>1</td><td>filtro de rail</td></tr>
+<tr><td>3</td><td>C1</td><td>Capacitor electrolítico 220 µF/16 V</td><td>1</td><td>idem</td><td>3</td><td>100 µF aceptable</td></tr>
+<tr><td>4</td><td>R2</td><td>Resistor 2.2 kΩ, 1/4 W</td><td>1</td><td>idem</td><td>1</td><td>fija la condición de hoja del micrófono; no cambiar</td></tr>
+<tr><td>5</td><td>C2</td><td>Capacitor cerámico o poliéster 100 nF</td><td>1</td><td>idem</td><td>2</td><td>acoplo a Q1</td></tr>
+<tr><td>—</td><td>—</td><td>Cable blindado 2 conductores, 28 AWG, OD ≤3 mm, flexible trenzado, 1 m</td><td>1</td><td>Steren (cable de micrófono), tiendas de audio</td><td>20–40</td><td><strong>CRÍTICO.</strong> Se corta a <strong>450 ± 50 mm</strong>. No sirve el cable de 1 solo conductor</td></tr>
+</table>
+
+<h3>1.2 Preamplificador (Bloque B)</h3>
+<p>Q1 es un único transistor en configuración de emisor común: sube la señal del micrófono antes de que
+llegue a la etapa de potencia. Sin él, el circuito completo se queda corto de ganancia a nivel de voz
+normal.</p>
+<table>
+<tr><th>#</th><th>Ref</th><th>Parte</th><th>Cant</th><th>Dónde</th><th>MXN</th><th>Nota</th></tr>
+<tr><td>6</td><td>Q1</td><td>Transistor 2N3904, TO-92</td><td>1 (comprar 5)</td><td>cualquier tienda</td><td>3 c/u</td><td>sustituible por BC547, 2N2222A, BC337</td></tr>
+<tr><td>7</td><td>R3</td><td>Resistor 82 kΩ, 1/4 W</td><td>1</td><td>idem</td><td>1</td><td></td></tr>
+<tr><td>8</td><td>R4</td><td>Resistor 22 kΩ, 1/4 W</td><td>1</td><td>idem</td><td>1</td><td></td></tr>
+<tr><td>9</td><td>R5</td><td>Resistor 4.7 kΩ, 1/4 W</td><td>1</td><td>idem</td><td>1</td><td></td></tr>
+<tr><td>10</td><td>R6</td><td>Resistor 220 Ω, 1/4 W</td><td>1</td><td>idem</td><td>1</td><td><strong>no sustituir: fija la ganancia del preamplificador</strong></td></tr>
+<tr><td>11</td><td>R7</td><td>Resistor 1.8 kΩ, 1/4 W</td><td>1</td><td>idem</td><td>1</td><td>2.2 kΩ es aceptable</td></tr>
+<tr><td>12</td><td>C3</td><td>Capacitor electrolítico 22 µF/16 V</td><td>1</td><td>idem</td><td>3</td><td>10–47 µF aceptable</td></tr>
+<tr><td>13</td><td>C4</td><td>Capacitor cerámico 12 nF</td><td>1</td><td>idem</td><td>2</td><td>10 nF aceptable</td></tr>
+<tr><td>14</td><td>C5</td><td>Capacitor de poliéster 220 nF</td><td>1</td><td>idem</td><td>2</td><td>100 nF aceptable</td></tr>
+</table>
+
+<h3>1.3 Etapa de potencia (Bloque C)</h3>
+<p>U1 es el circuito integrado de audio: toma la señal ya preamplificada y entrega la corriente que
+mueve la bocina.</p>
+<table>
+<tr><th>#</th><th>Ref</th><th>Parte</th><th>Cant</th><th>Dónde</th><th>MXN</th><th>Nota</th></tr>
+<tr><td>15</td><td>U1</td><td><strong>LM386N-3, DIP-8</strong></td><td>1</td><td>tiendas de electrónica</td><td>25–45</td><td><strong>CRÍTICO: el sufijo -3 importa.</strong> El N-1 es de 6 V y da 3.3 dB menos de ganancia garantizada a esta alimentación</td></tr>
+<tr><td>16</td><td>—</td><td>Zócalo DIP-8</td><td>1</td><td>idem</td><td>5</td><td>recomendado: protege el IC al soldar</td></tr>
+<tr><td>17</td><td>RV1</td><td>Potenciómetro 10 kΩ logarítmico (audio) + perilla, montaje de panel con tuerca</td><td>1</td><td>tiendas de electrónica</td><td>25–40</td><td>control de volumen. Va en el panel de la caja, no en la placa</td></tr>
+<tr><td>18</td><td>R8</td><td>Resistor 10 Ω, 1/2 W</td><td>1</td><td>idem</td><td>2</td><td><strong>CRÍTICO (red de Zobel), no omitir</strong></td></tr>
+<tr><td>19</td><td>C7</td><td><strong>Capacitor electrolítico 1000 µF/16 V, low-ESR, altura ≤20 mm</strong></td><td>1</td><td>idem</td><td>8–20</td><td><strong>CRÍTICO, no bajar de 470 µF.</strong> Comprar el de 16 V, no el de 25 V — el de 25 V mide ~25 mm de alto y no entra en la caja</td></tr>
+<tr><td>20</td><td>C8</td><td>Capacitor cerámico 100 nF</td><td>1</td><td>idem</td><td>2</td><td></td></tr>
+<tr><td>21</td><td>C9</td><td>Capacitor electrolítico 10 µF/16 V</td><td>1</td><td>idem</td><td>2</td><td><strong>CRÍTICO</strong></td></tr>
+<tr><td>22</td><td>C10</td><td>Capacitor electrolítico 10 µF/16 V</td><td>1</td><td>idem</td><td>2</td><td>solo para Config B</td></tr>
+<tr><td>23</td><td>C11</td><td>Capacitor electrolítico 100 µF/16 V</td><td>1</td><td>idem</td><td>3</td><td>acoplo de salida</td></tr>
+<tr><td>24</td><td>C12</td><td>Capacitor cerámico 47 nF</td><td>1</td><td>idem</td><td>2</td><td><strong>CRÍTICO (red de Zobel)</strong></td></tr>
+<tr><td>25</td><td>—</td><td>Resistor 10 Ω, 5 W</td><td>1</td><td>idem</td><td>8</td><td>carga de prueba para la puesta en marcha, sin arriesgar la bocina</td></tr>
+</table>
+
+<h3>1.4 Alimentación y protección</h3>
+<table>
+<tr><th>#</th><th>Ref</th><th>Parte</th><th>Cant</th><th>Dónde</th><th>MXN</th><th>Nota</th></tr>
+<tr><td>26</td><td>SW1</td><td>Interruptor SPST ≥1 A, montaje de panel, R≤0.05 Ω</td><td>1</td><td>Steren</td><td>20–35</td><td><strong>CRÍTICO</strong> (el consumo en reposo es ~44 % del uso real)</td></tr>
+<tr><td>27</td><td>F1</td><td>Polyfuse PTC 0.75 A hold, R_max ≤0.15 Ω de hoja (o portafusible + fusible de vidrio 0.5 A)</td><td>1</td><td>tiendas de electrónica</td><td>10–30</td><td>seguridad. El R_max hay que leerlo de la hoja: uno malo se come solo el presupuesto de caída de voltaje</td></tr>
+<tr><td>28</td><td>—</td><td>Portapilas 6×AA con cable, sin switch integrado</td><td>1</td><td>Steren</td><td>40–80</td><td>si trae switch, se puentea</td></tr>
+<tr><td>29</td><td>—</td><td>Pilas AA alcalinas</td><td>6</td><td>cualquiera</td><td>60–120</td><td>no mezclar marcas ni pilas nuevas con usadas</td></tr>
+</table>
+
+<h3>1.5 Protoboard, placa final y transductor</h3>
+<table>
+<tr><th>#</th><th>Ref</th><th>Parte</th><th>Cant</th><th>Dónde</th><th>MXN</th><th>Nota</th></tr>
+<tr><td>30</td><td>—</td><td>Protoboard 830 puntos + jumpers</td><td>1</td><td>tiendas de electrónica</td><td>120–180</td><td>$0 si ya lo tienes</td></tr>
+<tr><td>31</td><td>—</td><td>Perfboard 50×70 mm</td><td>2</td><td>idem</td><td>20–40</td><td>placa final</td></tr>
+<tr><td>32</td><td>MK2</td><td><strong>TOA SC-615, trompeta re-entrante, 8 Ω, 15 W, 112–113 dB pico (1 W/1 m)</strong></td><td>1</td><td>distribuidor de audio profesional</td><td><strong>900–2,000</strong> (sin cotizar de mostrador)</td><td><strong>CRÍTICO — ver la puerta de compra, §1.6, antes de pagar</strong></td></tr>
+</table>
+<p class="bom-total">Subtotal electrónica sin transductor: ~$420–750 MXN. Versión frugal (si ya tienes
+protoboard, transistor y resistencias comunes): ~$205–615 MXN. Total electrónica + transductor:
+~$1,320–2,750 MXN contra el techo de $2,500 — cabe en el escenario optimista y medio; el peor caso
+combinado (BOM alto + mecánica alta + trompeta al tope del rango) excede el techo por ~$770 MXN, que es
+exactamente el riesgo que la compuerta de la sección 0 administra.</p>
+<div class="qr-row">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAagAAAGoAQAAAAA7yUxtAAAD2klEQVR4nO1c0W7jQAiEqP//y5wWZtiN1Ye7PhhfOlRKna0tNZ4Aw8Daw35gr59cZLrqNN2N33A3vsy8jgIH4ee7dRCeTujRS8//XK8Pveor7/9CwywWIguU8HxLjBZgwBJnPv9zvT4YLytwvOABOHAwALjfJmbP/1yvT8aLFuljC6NyrQQxFwqy/+hzvX4DXg5cHL5UMZKBcug/fOmqK16AIiokwqPSuRgI0832mbqHp915NyzoN/EXP7xEeJ12593wHeacQQ+sA0y/V4+IKLwm/StwEFzqwJdL2614nvzrze7+9vqKdeFOD6rktYB0TzQzGILl5ynyr9PuvhthRMYXLkU8qnQuaSN5ogNC1csP4PO+PMdPNSpSiEppIzZ5XG4W8q9RvALlscGWC4HRr1+UO05VUfHwtJvvhqNO9mYUzFksoGMlr67KhNfFbv/2Rmka0boGFKnUNsyTiRTbr9pZ/jXMDz19yJK9L19C3DuICGXg8kHFw8F62Vvj9ZYJq1reuuHmi9Lnx/GyZdGgQeTlCRu1Tl/yr/H8FUktsrqizpF5rCRftFQWx0/xXvFwlM/bKrc8ox1a/mXlceg6s8Os/DWu9zqRsZQ4elID0bEzHP6m+Y1ZvJyVcGxewQL6+BtS2zpSPJzlG0H6ntatFHpY0RGeI/8azl8Oh7KNXhbKHIyqaHiAJ/+a16M835bkW2wRk2yLLpbwUYqv4uET/MswrlGuxJVU5/dyeZ38a7a/HFuZt7jMalSn8pzyyDfiG8N8wyBkgNZTMUQG41RHAyu85uexYym7CQmoe6nzQG2PCih/Xe3+b6+/eY8lv0jtiT2VJB3VdZa+MZ2/LF8iG5NYLHfCKjxwpznlr9n8FX1k3PDA7krpVazCcJ7y1/C8jWPGxlB3Zfu/dz8UltxVpHj4gP5XdHeLDUzKVK32bmIi/xquv+KouQJZaycvjNxgMlH11yP2O0TNbuy5bI5zECICmS+qv0bnN2xvqAzuqOxZjT4NsVH7l5/A5w0Bj4vHrgfOTfWWI/nXcL8yqEZZ74UlCyGtx8YinK54OOtfxlfLpaNKRi5rkaNymPAa13sdTnRpL++pAJrmN56yv9J6+hDK77G/kivqfz3m+TaR04Z7pK326rFibrQWfIqHD3i+jYNsvD0gIK26KntTkfAa378c3EXUq/WLveXjcSniGxebijaemyerEONYdm2qBKtXf/lbG8sOzkIrsdlRsUhIgZiLyl+z+x0C1ZfnKBt0qCSG9UIFn0lMeI3vJzI2T8jbOUjfD0vhowLED59Rf/2Dyb9O0904TXfDDvsDec2gaLNRiNoAAAAASUVORK5CYII=" alt="QR BOM electrónica">
+  <div class="qr-txt"><span class="qr-cap">bom-electronica · 1260e33</span>hardware/bom-electronica.md — lista completa de electrónica, con notas de sustitución, en GitHub.</div>
+</div>
+
+<h3>1.6 La puerta de compra de la trompeta (MK2) — paso obligatorio con la trompeta en la mano</h3>
+<p>Ejecutar <strong>en este orden</strong>, antes de destapar la caja de la trompeta o de soldar nada:</p>
+<ol>
+  <li><strong>Multímetro primero, antes que cualquier papel.</strong> Medir la resistencia DC entre las
+  dos terminales del driver. <strong>Esperado: 5–7 Ω.</strong> Esta sola medición detecta los tres modos
+  de falla posibles aunque el vendedor se equivoque de caja: la variante <strong>SC-615M</strong> con su
+  transformador de línea todavía en el circuito (resistencia de cientos de ohms, nada parecido a 5–7 Ω),
+  una unidad <strong>piezoeléctrica</strong> (circuito abierto o megaohms) o una <strong>impedancia
+  equivocada</strong> (4 Ω o 16 Ω dan una lectura fuera de rango). <strong>Si la lectura no cae en 5–7 Ω,
+  PARAR</strong> antes de seguir con los pasos de papel.</li>
+  <li>Confirmar que dice <strong>"SC-615"</strong> en el cuerpo o en la caja — <strong>no
+  "TC-615"</strong> (typo fácil, otro producto) y <strong>no "SC-615M"</strong>. La versión M lleva un
+  transformador de línea de 25/70.7 V entre las terminales y el driver: no es un sustituto directo, es
+  otro producto. Si te la ofrecen por error o confusión de modelo:
+    <ul>
+      <li><strong>(a) Primera opción, siempre:</strong> cambiarla por la SC-615 lisa. Es exactamente la
+      razón de que esta puerta esté antes de pagar: devolver una caja sellada es fácil, abrir una
+      trompeta ya instalada no.</li>
+      <li><strong>(b) Solo si el cambio es imposible y aceptas modificar la pieza:</strong> abrir la
+      carcasa, desconectar por completo el transformador de línea, cablear el amplificador directo a las
+      dos terminales del driver, repetir la medición de 5–7 Ω ahora sobre el driver desnudo, y repetir
+      los pasos 3 y 4 de la puesta en marcha (Bloque 2) como si fuera una unidad nueva.</li>
+      <li><strong>Cualquier otra cosa: parar y consultar.</strong></li>
+    </ul>
+  </li>
+  <li>Pedir la hoja de datos que acompaña a la unidad y verificar que declare <strong>"112 dB" o "113
+  dB"</strong> como <strong>nivel pico</strong> ("peak level"), no como promedio ni como PMPO.</li>
+  <li><strong>Si la hoja del vendedor da una cifra distinta sin condición declarada</strong> (por ejemplo
+  "108 dB" a secas) — <strong>PARAR.</strong> No es la misma cifra que validó el diseño. Confirmar contra
+  la hoja oficial de TOA (toaelectronics.com) antes de continuar.</li>
+  <li>Confirmar <strong>8 Ω</strong> en la etiqueta o la hoja. Si la unidad es de otra impedancia, el
+  diseño de este documento (ganancia, presupuesto de potencia, red de Zobel) no aplica sin recalcular —
+  no improvises, detente y consulta.</li>
+  <li><strong>Con la trompeta ya sobre la mesa, aprovechar el momento:</strong> anotar el patrón y el
+  diámetro de barreno del U-bracket de montaje, y pesar la unidad completa en una báscula. Es el único
+  momento del proyecto en que la trompeta real está en la mano; estos dos datos son indispensables para
+  el Bloque 4 y no se pueden posponer.</li>
+</ol>
+<div class="adv"><span class="adv-tag">⚠</span>Si el paso 1 o el paso 4 fallan, <strong>el circuito no se
+arma con esa unidad</strong> hasta resolver la discrepancia.</div>
+<div class="qr-row">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAagAAAGoAQAAAAA7yUxtAAADu0lEQVR4nO1cXZPbMAgEz/3/v0yHjwU5cw/tPQQ3t+pVcWR5JvEGtCzIavKDdv3kIuFVZ+Pd+A1340tE88hETVRMTcPmVPLFpuuZz/9e14de9RX3P+CRxCN6/1/IOYqDVJ57/ve6PvQqMQsUss+X6jDB55hh3Ht7/ve6Pti+upmGSWn4PwuHGMdhbYPg//C9rt+Al4YP9C4XtfCRAV2Ct/IJL171itcJhbZ9JeVI6HKoZ/Iebq5f2ewv/tVMrl9reOnYloLTN48HXzz5/ds/4cWrvuGHMLR4ex87mWKM0b62f1GW3FAiYMZhj6UztDS0AI2/+UV/qBkQWznENihQxft4MH7itYuXODKSiIDEN2C1xNW0eCVeq3xDOzi2QqmMamSqFKYwTLzO9ua7oUErDHDlupVnS9iItat1Dq5f+/qh1V+TxDl50saiIYy/NvUoKw9obj+dSzmWruzqXcyiP1y0LysTs4m16m2aF2R5/DH+2td7NThhsfqSOKDOI06e5Yv2tR0vm5PAAGwEqjj2EWcfcd5CC6Y/XNd7DXKvpL9LbOAXO1VZ08k3ltcvmeSyHUp8kUNIisUQvSPf2Ky3MT+wlJoOcR5FG5rRVwXWb/+EF686G+ihwMhgTThbB6PO0x9u80NrZUMy9EJ+OUKzrg/oOfzN7+dTNF7L6aGmzQHzsdKnfIT64b5+qL1+SXo+xF9hX+prVxF+rl+P0DcsD+WlGhGZypcsNPnhcj22TQZF0xWWNdUKBqWq1URytuX8shTpSJgSoclT3ooSmf9a54faFQACG8pYrJX7SlViaaN97eq9Orhovq/kSRvXYOUziddmPYDWEqUDShcjYgWr0pu6hHht8kM5tqUIEl6QDO+KMOsPH8A3pEQMBeno8Bn1a5iz8QkvXnW2ktzj8Ii30Nd4zqxxxl+7+oaV19Nm8RWNZcbSpzlKU+TB3/y+P5TavNzusTc69DSE0+Qb2/lK6z+ZYpsRNMA6KplJf7jN5wWilKJidIprJv5COT3taxkvgQilTQORXe5ibPhK1s/vr1/SmqHgCQ559oieu3F/ynP2V3prZnHbX4l9LKzfeMzzbaw3PKQvbC7fhTjUD5/0fBtFFkUPJxnNg6+p1uZ+ovV8itT2V8mwOExsiAa28OFBRYyXn/J8G8nn2/Reyyq66YopbFqhpne2rbuh2AnrK5e7RXjFFoJR/Eu8dusPJXu9PTUKMm/XbwzlJ1678Zc363qNfmZAZ5SP89QPnxJ//UOjfZ2Nd+NsvBtytD8Nr8QYB7/gMQAAAABJRU5ErkJggg==" alt="QR puerta de compra de la trompeta">
+  <div class="qr-txt"><span class="qr-cap">puerta-compra-trompeta · 1260e33</span>hardware/puerta-de-compra-transductor.md — el procedimiento completo con las cifras de referencia, en GitHub.</div>
+</div>
+
+<h3>1.7 Piezas mecánicas y del cuerpo</h3>
+<table style="font-size:.83rem;">
+<tr><th>#</th><th>Item</th><th>Especificación</th><th>Cant</th><th>Dónde</th><th>MXN</th></tr>
+<tr><td>33</td><td>Pino cepillado 1×2"</td><td>19×38 mm, 1 m (espina 330 mm + empuñadura 110 mm)</td><td>1</td><td>maderería/ferretería</td><td>45</td></tr>
+<tr><td>34</td><td>Filamento PETG</td><td>~70 g</td><td>—</td><td>ya lo tienes / servicio de impresión</td><td>0–150</td></tr>
+<tr><td>35</td><td>Grommet de hule de panel</td><td>OD 14–16 / ID 9.5 mm, barreno 12.5 mm</td><td>2 (1 repuesto)</td><td>eléctrico/tlapalería</td><td>15</td></tr>
+<tr><td>36</td><td>Arandela de neopreno/EPDM</td><td>OD 18 / ID 6 / t 3 mm</td><td>6</td><td>tlapalería, o de cámara de llanta</td><td>25</td></tr>
+<tr><td>37</td><td>Tubo de silicón</td><td>ID 5 / OD 8, 100 mm (bujes de perno)</td><td>1</td><td>acuario/ferretería</td><td>20</td></tr>
+<tr><td>38</td><td>Perno M5×70 mm + 2 rondanas + tuerca nylock</td><td>empuñadura</td><td>2</td><td>tornillería</td><td>30</td></tr>
+<tr><td>39</td><td>Perno M5×60 mm + 2 rondanas + tuerca nylock</td><td>bracket de la trompeta (largo, verificar contra la unidad real)</td><td>2</td><td>tornillería</td><td>30</td></tr>
+<tr><td>40</td><td>Perno M4×45 mm + 2 rondanas + tuerca nylock</td><td>pie del boom</td><td>2</td><td>tornillería</td><td>20</td></tr>
+<tr><td>41</td><td>Tornillo M3×12 autorroscante</td><td>jaula al boom</td><td>2</td><td>tornillería</td><td>10</td></tr>
+<tr><td>42</td><td>Tornillo de madera #6×16 mm + rondana</td><td>portapilas y caja</td><td>6</td><td>tornillería</td><td>20</td></tr>
+<tr><td>43</td><td>Armella Ø4 mm</td><td>anclajes del strap</td><td>2</td><td>tlapalería</td><td>15</td></tr>
+<tr><td>44</td><td>Banda de nylon 25 mm×1.2 m + 2 mosquetones</td><td>strap</td><td>1</td><td>mercería/Steren</td><td>70</td></tr>
+<tr><td>45</td><td>Caja de proyecto ABS</td><td>~100×60×35 mm</td><td>1</td><td>Steren/electrónica local</td><td>60</td></tr>
+<tr><td>46</td><td>Espuma de celda abierta</td><td>recorte 50×50×10 mm (antifona)</td><td>1</td><td>tapicería/recorte</td><td>10</td></tr>
+<tr><td>47</td><td>Cintas de amarre 100 mm + bases adhesivas</td><td>ruteo de cable</td><td>10</td><td>eléctrico</td><td>20</td></tr>
+<tr><td>48</td><td>Perfil de canto / tubo de silicón partido, 1 m</td><td>solo si el canto del flare está filoso</td><td>1</td><td>ferretería</td><td>30</td></tr>
+<tr><td>49</td><td>Lija 120 y 220</td><td>acabado</td><td>2</td><td>tlapalería</td><td>20</td></tr>
+<tr><td>50</td><td>Cable flexible trenzado 20 AWG, 600 mm</td><td>conexión al driver de la trompeta, con bucle de 60 mm</td><td>1</td><td>eléctrico</td><td>incluido</td></tr>
+</table>
+<p class="bom-total">Total mecánica: ~$355–520 MXN. Herramienta de servicio de impresión (si no tienes
+impresora 3D): ~$80–150 MXN adicionales por las dos piezas (~70 g de PETG).</p>
+<div class="qr-row">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYgAAAGIAQAAAABzOEqLAAADYklEQVR4nO1b27LbIAyUNP3/X1ZHqwvkPHSMO1DXkdLjAIFJw3rR1ay0KLK6gHrFdZGFuS69Yude/SJibylaThdW+xfv1mKtWY3HZjwIGDB2PzYeWGBUldQh0ZjVeOzGg5wXtu3YekMC9CAGQ2IqOyaNx3WRv1rBBoYWTZiNHaBIYdJ4HMRD47ACGE4HIwiaQ5of288rjQ7YgEZwxOjiHapZjcd1EVoWHWD8+eWi2nhs5odWp5iQCj7bTpS73yG94rIwPAxrhSL39xgJQwuDFCO9u9dFaFXYdlptwwOGxCcGJqqwz2s8NusPdR1iFx0D6NllUjBkvcbjusj9FcquLsK8dTjCR/ce93l15rxSqOwIYGHj/RCDr546nlObND8245EShhSaGToBNvhMXYE0HifwYLQzohvtoEbAxH5p+2pF5M4KLmfQIlYYhRYBAEaMpBBDtfR5tZsfnKrj07INPlQCRO9+h/SKpb1SqG8/m/By09eNKjexGJObH8f8QRoe4Y9soc+gsrX6bt+uz7mMrHTUq+sBrAzFd772DB4E8U3PvxgoI4tCrzc/9tczqGvx8sJTw3tiKvvc8cRFkXsr1IoZQptXAj2Y4kBQ4tT82I+HZvlIJAPBg7noJPrc9SWH4rvkzTm463YwXnOEVzu+eyReollfMqInGbOqCdzxqzPxXZoQmMO5GbNKT50MlbavTuSjdCShPJw1ChhSfSgm93m13d5VtvghOODpWT+Y/Axz5c5VA9T8WBC5tYJx55eNy2y5whFFGe4g3/+ONZGvXcFVDJqKZGQLRwYkEyAdvzpT384Z3NVPH909jnBKyAF55n0lL1nB45wyCS0OLgyKVDCR2746US+q4fsFPeIanqDZVDGj60VP1TNwJASz1icfzkELM7TrfeSU/0HOD88Kpg8yfRzpQm1+HPPPtVIdQ5tUbLEqfJ+rB+WF9VcaidnQ5VlFPVU8aNtXJ/LnkElXVGpwDGrx55n3lbzv+VrOKJVrd7wNx1wzG/LM3yHve74WkoULw6iq2C65Wnnm75AXrtCJIuF0wEGvFBX/i//VF/KjJA+rjycNpvgWt39+xN6lCixmVVyWNcTzUjo8xWfeV/LG52tNKiFVH1aSSjHlmb9D3ud//Ne/Q3rFZZHrU+nbV/wG01AgcU8WP6cAAAAASUVORK5CYII=" alt="QR BOM mecánica">
+  <div class="qr-txt"><span class="qr-cap">bom-mecanica · 1260e33</span>mecanica/bom-mecanica.md — lista completa de mecánica, columna "frugal" incluida, en GitHub.</div>
+</div>
+
+<!-- ===================== SECCIÓN 2 — HERRAMIENTAS ===================== -->
+<h2><span class="num">2</span>Herramientas necesarias</h2>
+<ul>
+  <li>Cautín, estaño, chupón o mecha desoldadora</li>
+  <li>Multímetro con probador de diodos</li>
+  <li>Protoboard 830 puntos (para la puesta en marcha)</li>
+  <li>Serrucho</li>
+  <li>Taladro con brocas de 2.5, 3, 4.5, 5.5 y 12.5 mm, y broca escalonada (para agrandar el barreno del bracket de la trompeta si hace falta)</li>
+  <li>2 desarmadores (plano y de cruz)</li>
+  <li>2 llaves para tuercas M4 y M5</li>
+  <li>Lija 120 y 220</li>
+  <li>Cúter</li>
+  <li>Cinta métrica</li>
+  <li>Lápiz redondo (para hallar el punto de balance del aparato)</li>
+  <li>Marcador permanente (para las marcas testigo)</li>
+  <li>Báscula (para pesar la trompeta al comprarla)</li>
+  <li>Impresora 3D con PETG, o acceso a un servicio de impresión</li>
+</ul>
+
+<!-- ===================== SECCIÓN 3 — ADVERTENCIAS ===================== -->
+<h2><span class="num">3</span>Advertencias de seguridad</h2>
+<p><strong>Léelas todas antes de energizar el circuito por primera vez.</strong></p>
+<table>
+<tr><th>#</th><th>Peligro</th><th>Qué puede pasar</th><th>Mitigación</th></tr>
+<tr><td>1</td><td><strong>~122 dB SPL a 25 cm (pico), 102 dB a 1 m (promedio en banda)</strong></td><td>Daño auditivo permanente. Arriba de ~75 dB en el oído del receptor, la inteligibilidad empeora</td><td>Ver la advertencia completa al inicio de este documento. Nunca a menos de 1 m de una cara. Nunca hacia el propio oído. Etiqueta permanente en el aparato. Probar siempre al aire libre</td></tr>
+<tr><td>2</td><td><strong>C7 (1000 µF) invertido</strong></td><td>El electrolítico se calienta, se hincha y puede reventar expulsando electrolito caliente</td><td>Revisar la polaridad dos veces antes de energizar. Usar lentes de seguridad en el primer encendido</td></tr>
+<tr><td>3</td><td><strong>Corto del paquete de 6×AA</strong></td><td>Las alcalinas AA dan varios amperes en corto: cables calientes, quemaduras, fuga o venteo de celdas</td><td>F1 (polyfuse 0.75 A, R_max ≤0.15 Ω) instalado; SW1 en el lado positivo; sacar las pilas si el aparato se guarda más de un mes; no mezclar marcas ni pilas nuevas con usadas</td></tr>
+<tr><td>4</td><td><strong>Sobrepasar el rango de U1</strong></td><td>Arriba de 15 V el LM386 se destruye</td><td><strong>6 celdas alcalinas exactas, nunca 8</strong> (12.8 V excede el rango recomendado). Recargable válido: 8×NiMH = 9.6 V, nunca 8×alcalina</td></tr>
+<tr><td>5</td><td>Cautín</td><td>Quemaduras, humo de colofonia</td><td>Ventilación, base para el cautín, nunca soldar con la alimentación puesta</td></tr>
+<tr><td>6</td><td>Bocina conectada o desconectada con el circuito encendido</td><td>Transitorio eléctrico en la salida</td><td>Conectar y desconectar la bocina siempre con SW1 en OFF</td></tr>
+<tr><td>7</td><td>Ruido a terceros con el usuario apuntando sin darse cuenta</td><td>Ver peligro 1</td><td>El eje de la trompeta apunta siempre lejos del propio usuario; el strap cuelga el aparato con la boca al frente</td></tr>
+<tr><td>8</td><td>Canto filoso del flare de la trompeta o del borde de la jaula impresa</td><td>Cortes</td><td>Inspeccionar y limar el canto de la trompeta; redondeo R2 completo y lija 220 en el borde de la jaula, obligatorio</td></tr>
+<tr><td>9</td><td>Rosca expuesta de los pernos de la empuñadura</td><td>Raspones contra la mano</td><td>Cortar a ras o usar tuercas de bellota</td></tr>
+<tr><td>10</td><td>Astillas de la espina o la empuñadura de pino</td><td>Cortes / astillado en la piel</td><td>Lijar 120 → 220 todas las caras y cantos antes de armar</td></tr>
+</table>
+
+<!-- ===================== SECCIÓN 4 — CONEXIONES ELÉCTRICAS ===================== -->
+<h2><span class="num">4</span>Conexiones eléctricas</h2>
+<p>Descripción precisa de cada bloque, para que quien arme lo haga sin ambigüedad. Toda referencia
+(R#, C#, Q1, U1) usa la numeración fija del proyecto.</p>
+
+<figure class="fig" id="figA-pinout">
+<svg viewBox="0 0 860 260" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .pk{fill:var(--panel); stroke:var(--ink-mute); stroke-width:1.6;}
+    .pkt{font:700 12px 'Space Grotesk',sans-serif; fill:var(--ink); text-anchor:middle;}
+    .pks{font:600 9.5px 'JetBrains Mono',monospace; fill:var(--blue); text-anchor:start;}
+    .pin{fill:var(--ink-soft);}
+  </style>
+  <!-- Q1 TO-92 -->
+  <text class="pkt" x="150" y="30">Q1 — 2N3904 (TO-92)</text>
+  <text style="font:500 10.5px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="150" y="46" text-anchor="middle">cara plana hacia el armador, patas hacia abajo</text>
+  <path class="pk" d="M 100 60 a 50 50 0 1 1 0 0.1 Z" />
+  <line x1="100" y1="60" x2="200" y2="60" stroke="var(--ink-mute)" stroke-width="1.6"/>
+  <line x1="115" y1="110" x2="115" y2="150" stroke="var(--wire-k)" stroke-width="3"/>
+  <line x1="150" y1="110" x2="150" y2="150" stroke="var(--wire-b)" stroke-width="3"/>
+  <line x1="185" y1="110" x2="185" y2="150" stroke="var(--wire-r)" stroke-width="3"/>
+  <text class="pks" x="95" y="168" text-anchor="middle">E</text>
+  <text class="pks" x="150" y="168" text-anchor="middle">B</text>
+  <text class="pks" x="200" y="168" text-anchor="middle">C</text>
+  <text style="font:500 10px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="150" y="190" text-anchor="middle">Emisor · Base · Colector, izq. a der.</text>
+  <text style="font:500 9.5px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="150" y="206" text-anchor="middle">Verificar con el probador de diodos antes de soldar.</text>
+
+  <!-- U1 DIP-8 -->
+  <text class="pkt" x="600" y="30">U1 — LM386N-3 (DIP-8, vista superior)</text>
+  <rect class="pk" x="500" y="45" width="200" height="150" rx="6"/>
+  <path d="M 500 90 a 20 20 0 0 0 0 40" fill="var(--panel)" stroke="var(--ink-mute)" stroke-width="1.6"/>
+  <circle class="pin" cx="515" cy="60" r="4"/><text class="pks" x="525" y="64">1 GAIN</text>
+  <circle class="pin" cx="515" cy="90" r="4"/><text class="pks" x="525" y="94">2 −IN</text>
+  <circle class="pin" cx="515" cy="120" r="4"/><text class="pks" x="525" y="124">3 +IN</text>
+  <circle class="pin" cx="515" cy="150" r="4"/><text class="pks" x="525" y="154">4 GND</text>
+  <circle class="pin" cx="685" cy="60" r="4"/><text class="pks" x="615" y="64" text-anchor="end">8 GAIN</text>
+  <circle class="pin" cx="685" cy="90" r="4"/><text class="pks" x="615" y="94" text-anchor="end">7 BYPASS</text>
+  <circle class="pin" cx="685" cy="120" r="4"/><text class="pks" x="615" y="124" text-anchor="end">6 V_S</text>
+  <circle class="pin" cx="685" cy="150" r="4"/><text class="pks" x="615" y="154" text-anchor="end">5 V_OUT</text>
+  <text style="font:500 9.5px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="600" y="215" text-anchor="middle">Muesca a la izquierda. Comprobar contra la muesca del encapsulado antes de energizar.</text>
+</svg>
+<figcaption><span class="fig-num">Figura A.</span> Pinout de referencia de Q1 y U1, para verificar antes de soldar en cada bloque.</figcaption>
+</figure>
+
+<h3>4.1 Bloque A — Micrófono y su rail filtrado</h3>
+<ul>
+  <li>V+ (9.0 V) alimenta R1 (470 Ω). Del otro extremo de R1 sale el nodo V_A (~8.46 V), que alimenta a
+  la vez a C1 (220 µF, + hacia V_A, − a masa) y a R2 (2.2 kΩ).</li>
+  <li>Del otro extremo de R2 sale el nodo de drenaje del micrófono (~7.4 V). Ahí se conecta la terminal
+  "+" (señal) de MK1; la terminal "−" (retorno) de MK1 va a masa.</li>
+  <li>El cable de MK1 es de 2 conductores blindados: conductor 1 = señal, conductor 2 = retorno de la
+  cápsula. La malla del blindaje se conecta a masa <strong>solo en el extremo de la placa</strong>; en el
+  extremo de la cápsula queda al aire, aislada con termofit.</li>
+  <li>El nodo de drenaje del micrófono, a través de C2 (100 nF), acopla la señal hacia la base de Q1
+  (Bloque B).</li>
+</ul>
+
+<h3>4.2 Bloque B — Preamplificador (Q1)</h3>
+<ul>
+  <li>V_A alimenta el divisor de polarización de base: R3 (82 kΩ) de V_A a la base de Q1, R4 (22 kΩ) de
+  la base de Q1 a masa.</li>
+  <li>V_A también alimenta R5 (4.7 kΩ), que va al colector de Q1. Del colector sale la señal amplificada
+  hacia C5 (220 nF) y de ahí a RV1 (control de volumen).</li>
+  <li>El emisor de Q1 va a R6 (220 Ω) y de ahí, en paralelo, a R7 (1.8 kΩ) hacia masa y a C3 (22 µF, +
+  hacia el emisor) hacia masa. <strong>R6 no lleva capacitor de desvío</strong>: así la ganancia queda
+  fijada por dos resistencias, no por la corriente del transistor.</li>
+  <li>C4 (12 nF) va del colector de Q1 a masa: filtro pasa-bajas de la etapa.</li>
+</ul>
+
+<h3>4.3 Bloque C — Etapa de potencia (U1, LM386N-3)</h3>
+<ul>
+  <li>El wiper de RV1 va al pin 3 (+IN). El otro extremo de RV1 va a masa (lado de "mínimo").</li>
+  <li>Pin 2 (−IN) va directo a masa, con el cable más corto posible.</li>
+  <li>Pin 4 (GND) va al <strong>punto estrella</strong> (§4.5).</li>
+  <li>Pin 6 (V_S) recibe V+ (9.0 V), a través de F1 y SW1 desde las pilas. Junto a este pin, físicamente
+  pegados al chip: C7 (1000 µF, + hacia el pin 6) y C8 (100 nF), ambos con el otro extremo al punto
+  estrella.</li>
+  <li>Pin 7 (BYPASS) lleva C9 (10 µF, + hacia el pin 7) hacia el punto estrella.</li>
+  <li>Pin 1 y pin 8 (GAIN) quedan <strong>sin nada en Config A</strong>. En Config B llevan C10 (10 µF, +
+  hacia el pin 1, − hacia el pin 8).</li>
+  <li>Pin 5 (V_OUT) alimenta la red de salida: R8 (10 Ω) en serie hacia C12 (47 nF) hacia el punto
+  estrella (red de Zobel), y C11 (100 µF, + hacia el pin 5) hacia la terminal (+) de la bocina MK2. La
+  terminal (−) de la bocina va directo al punto estrella.</li>
+</ul>
+
+<h3>4.4 Alimentación</h3>
+<ul>
+  <li>Pilas (+) → SW1 → F1 → pin 6 de U1 (V+ general del circuito).</li>
+  <li>Pilas (−) → punto estrella.</li>
+</ul>
+
+<h3>4.5 El punto estrella</h3>
+<p>Un único punto físico —en perfboard, una zona de cobre o un tramo de alambre desnudo grueso
+dedicado— que reúne, y solo reúne, estos cinco retornos: pin 4 de U1, (−) de C7, (−) de la bocina, (−)
+de C12 (red de Zobel) y (−) del paquete de pilas. Ningún otro retorno de masa se conecta a este punto
+por un camino distinto; en protoboard, el riel de masa de señal (micrófono, Bloques A y B) se conecta al
+punto estrella con <strong>un solo cable</strong>, no compartiendo el riel con el retorno de potencia.</p>
+<div class="adv"><span class="adv-tag">⚠</span><strong>Por qué esto no es opcional:</strong> el retorno
+de la bocina lleva picos de 330 mA. Si ese retorno comparte un tramo resistivo con la masa de señal del
+micrófono, la caída resultante entra al micrófono como si fuera señal de entrada y se amplifica hasta
+niveles que recortan la salida. Se percibe como un sonido de motor fuera de borda o un aullido continuo
+que <strong>no se apaga tapando el micrófono</strong> — a diferencia del pitido acústico real.</div>
+<div class="qr-row">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYgAAAGIAQAAAABzOEqLAAADVUlEQVR4nO1b2W7jMAwkhf3/X54FT2mfarcQ0W2HAWJJkRDEzPAY0gp5KevtAeGJ57Je7A3hiZv36o+Ixgg+ghpgFLKvNlL0Lurjsj7ETZb63TeF5IorQAFXFPYu6uO2PsRw4RiwV2jEdSMawAgfozGgPp7L+tIJhd3/tk+qAkdMWLIS6uO5rC+dgPsPcyFqyLCluBzaEOrjvr1CThwf7tMdIzZBXI5dxMdzWfJa0Mr44BUCUB+X8YEaOxzKSGVUVUZMehf18VyWvBX1DMNGoQDNSCtXQim2qLVCfVy3V7BLWqWyX74QgIkhch/1cRkf4rDofC8XIjMPuMRWxIfUx4A+ZJMlYayCMIngd2eJoL2a8R/wW+8rPWyQ1Ebxd+LjenwFt0RlulAaKUrRwYM0XtTHbX+OcNY+3IlGZR3u0Js4Af35CN+u7jtqFPxuWqoyWNCADO3Vdf8h6c3daEUSkgpK2ndrh/ZqwH9omalgr8pGhW/3dcmPiY8BfEiEUzuU2tXC3iEda9Fe3deH9LR5q6yHFAMviRH6j4H4KmUzuenBc+GgUMD4aqD+IRsAUSkPmFitsMofsDnzj5eyPnNCI/kri5TkbtHs1dqg5d3pP57L+tQJVPtIuorOA7PpxHGBUhn1cT8/lxhGIp7Z+Ok/egP59gF+VyrE6sDK3opr35mJOnqIj+v+Q9xZayXqVZzK9p+jv0SZf8zwieLlvw5322QdvkSScyQ+ZvgrVBqe12QVK0nX4rOoj9v5h8JqHh1inaFWSjYzkL+aqdeKSVBUsXq2tzcZD/JXo/2Juo1Wk4hNNUqU1xlfDfT74OgYzSJg5R2dkriwPjjEJ6IDqc0oZlNWV3HB+Eru60Mr3Wv/ffSTdCNQtp2QTxzj25EpyIZGTg74gPnHUP6h2Ta9R/5ht+4e/bzMPybslcnRv9DUVZdu0Q2MzAeHnq9FdMJ1GaQZRf1nvl5/x+KJzzxfq10/L4B4y9Vut1b2X00+XyvVgLV72k9OS9Kt8N8+93ytZCzVZSo3X50S6te/45msX97PEFIcrj3n3D7jTEBAfneQv0Led3cbEfs6pZV9cpoA+p7/q/Uzn69FtbJX9WlbMMlO+O/5O9bPyz/+69+xeOKxrOdb5bef+AtjdUs4MvDXfwAAAABJRU5ErkJggg==" alt="QR esquemático">
+  <div class="qr-txt"><span class="qr-cap">esquemático · 1260e33</span>hardware/esquematico.md — el circuito completo, con todas las referencias y el trazado del punto estrella, en GitHub. El manual científico trae la Figura 2 con el diagrama completo agrupado por bloque.</div>
+</div>
+
+<!-- ===================== SECCIÓN 5 — ORDEN DE ARMADO ===================== -->
+<h2><span class="num">5</span>Orden de armado</h2>
+<p><strong>Este orden combina el trabajo de mecánica y de electrónica en cuatro bloques, y el orden
+importa:</strong> no se puede ejecutar la mecánica sola ni la electrónica sola sin invertir un paso que
+después es irreversible. El Bloque 1 (conjunto de micrófono) va antes que la puesta en marcha eléctrica
+porque el umbral de pitido solo significa algo con la cápsula ya montada en su geometría real de 30 mm —
+probarlo con la cápsula suelta en la mano no prueba nada. El Bloque 4 (cuerpo completo) va al final
+porque el balanceo de la empuñadura exige el aparato completo y con las pilas puestas.</p>
+<p>Los pasos marcados con <span class="obligatorio">NO SE SALTA</span> no se pueden hacer después: si se
+saltan, hay que desarmar para corregirlos.</p>
+
+<h3 style="color:var(--accent-step-ink); background:var(--accent-step-bg); display:inline-block; padding:.2em .7em; border-radius:6px;">BLOQUE 1 — Conjunto de micrófono</h3>
+<p><strong>Piezas de esta sección:</strong> MK1, boom (impreso), jaula de voz (impresa), grommet, disco
+de espuma, tornillo M3×12, cable blindado de 450 mm.</p>
+
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">1</div><div><div class="paso-titulo">Imprimir boom y jaula de voz</div></div></div>
+  <p>Imprimir el boom <strong>acostado, con toda la curva en el plano de la cama de impresión</strong> (4
+  perímetros, 30&nbsp;% relleno gyroid, sin soportes). Imprimir la jaula de voz con el anillo de borde
+  sobre la cama (4 perímetros, 20&nbsp;% relleno).</p>
+  <div class="adv"><span class="adv-tag">⚠</span><strong>Orientación obligatoria:</strong> si el boom se imprime parado, su raíz falla en la primera línea de capa la primera vez que el aparato se apoye sobre él.</div>
+</div>
+
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">2</div><div><div class="paso-titulo">Lijar el anillo de la jaula</div></div></div>
+  <p>Lijar el canto del anillo de la jaula con lija 220 hasta que quede liso al tacto: toca la cara del usuario en cada uso.</p>
+</div>
+
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">3</div><div><div class="paso-titulo">Soldar el cable a MK1<span class="obligatorio">ANTES DEL GROMMET</span></div></div></div>
+  <p><strong>Soldar el cable blindado de 450 mm a la cápsula MK1 antes de meterla en el grommet.</strong>
+  Soldar con el grommet ya puesto derrite el hule y arruina el aislamiento de vibración.</p>
+
+  <figure class="fig" id="figB1">
+  <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+    <style>
+      .mkc{fill:#fff; stroke:var(--blue); stroke-width:2.2;}
+      .mkt{font:700 12px 'Space Grotesk',sans-serif; fill:var(--ink); text-anchor:middle;}
+      .mks{font:600 10px 'JetBrains Mono',monospace; text-anchor:start;}
+      .term{fill:var(--ink-soft);}
+    </style>
+    <circle class="mkc" cx="120" cy="110" r="46"/>
+    <text class="mkt" x="120" y="106">MK1</text>
+    <text style="font:500 9px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="120" y="122" text-anchor="middle">electret</text>
+    <circle class="term" cx="100" cy="150" r="4"/>
+    <circle class="term" cx="140" cy="150" r="4"/>
+    <text class="mks" x="88" y="172" text-anchor="middle">+</text>
+    <text class="mks" x="152" y="172" text-anchor="middle">−</text>
+
+    <path class="wire-r" d="M 100 150 C 100 190, 250 190, 300 150"/>
+    <path class="wire-k" d="M 140 150 C 140 200, 250 210, 300 175"/>
+    <path d="M 90 145 C 90 210, 260 225, 310 180" fill="none" stroke="var(--ink-mute)" stroke-width="1" stroke-dasharray="3 3"/>
+
+    <rect x="300" y="130" width="260" height="70" rx="8" fill="var(--panel-2)" stroke="var(--line-strong)"/>
+    <text class="mks" x="315" y="150" fill="var(--wire-red)">conductor 1 = señal (+)</text>
+    <text class="mks" x="315" y="168" fill="#2b2925">conductor 2 = retorno (−)</text>
+    <text class="mks" x="315" y="186" fill="var(--ink-mute)" font-size="9">malla del blindaje: libre en este extremo, con termofit</text>
+
+    <text style="font:600 11px 'Space Grotesk',sans-serif; fill:var(--ink);" x="450" y="40" text-anchor="middle">Cable blindado de 450 mm, hacia la placa</text>
+    <line x1="560" y1="150" x2="640" y2="150" stroke="var(--ink-mute)" stroke-width="2" marker-end="url(#none)"/>
+    <text style="font:500 10px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="600" y="140" text-anchor="middle">→ placa</text>
+  </svg>
+  <figcaption><span class="fig-num">Figura B1.</span> Cableado de MK1 antes de meter la cápsula en el grommet. Conductor 1 a la terminal "+", conductor 2 a la terminal "−"; la malla queda libre en este extremo.</figcaption>
+  </figure>
+
+  <div class="verif"><span class="verif-tag">✓ Verificación</span>Revisar con el multímetro (continuidad)
+  que el conductor 1 llegue a la terminal "+" de MK1 y el conductor 2 a la terminal "−". Confirmar que la
+  malla del blindaje no toca ningún conductor de señal en este extremo.</div>
+</div>
+
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">4</div><div><div class="paso-titulo">Montar la cápsula en el grommet<span class="obligatorio">ANTES DE UNIR AL BOOM</span></div></div></div>
+  <p>Meter la cápsula con sus cables en el grommet, a mano, sin herramienta y sin pegamento (si necesitas
+  pinzas para meterla, el aprieto es excesivo). Meter el grommet en el barreno de la placa trasera de la
+  jaula.</p>
+  <div class="adv"><span class="adv-tag">⚠</span>Este paso va antes de unir la jaula al boom — después no hay acceso.</div>
+</div>
+
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">5</div><div><div class="paso-titulo">Unir jaula al boom y verificar G1</div></div></div>
+  <p>Colocar el disco de espuma dentro de la jaula, delante de la cápsula, y unir la jaula al boom con el
+  tornillo M3×12. Formar un bucle de servicio de 40 mm en el cable, inmediatamente después del grommet.
+  Colocar la primera cinta de amarre del cable a 50 mm de la cápsula, sobre el brazo del boom — nunca
+  amarrar el cable en la cápsula misma.</p>
+
+  <figure class="fig" id="figB2">
+  <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
+    <style>
+      .boomg{stroke:var(--built); stroke-width:11; fill:none; stroke-linecap:round;}
+      .cageg{fill:var(--new-bg); stroke:var(--new); stroke-width:2.6;}
+      .dimg{stroke:var(--danger); stroke-width:1.4;}
+      .dimt2{font:700 11px 'JetBrains Mono',monospace; fill:var(--danger); text-anchor:middle;}
+    </style>
+    <path class="boomg" d="M 40 220 C 160 200, 260 200, 340 210"/>
+    <text style="font:600 11px 'Space Grotesk',sans-serif; fill:var(--ink-mute);" x="150" y="180">boom — pie ya armado (gris)</text>
+
+    <g transform="translate(420,210)">
+      <path class="cageg" d="M 0 -40 C 48 -40 72 -12 72 0 C 72 12 48 40 0 40 L -8 34 C 24 26 40 14 40 0 C 40 -14 24 -26 -8 -34 Z"/>
+      <circle cx="12" cy="0" r="15" fill="#fff" stroke="var(--blue)" stroke-width="2.4"/>
+      <text style="font:700 9px 'JetBrains Mono',monospace; fill:var(--ink); text-anchor:middle;" x="12" y="4">MK1</text>
+      <text style="font:700 10px 'Space Grotesk',sans-serif; fill:var(--new-strong); text-anchor:middle;" x="18" y="-56">jaula — pieza nueva de este paso</text>
+    </g>
+
+    <line class="dimg" x1="432" y1="150" x2="432" y2="60"/>
+    <line class="dimg" x1="485" y1="150" x2="485" y2="60"/>
+    <line class="dimg" x1="432" y1="105" x2="485" y2="105"/>
+    <text class="dimt2" x="458" y="98">G1: 30 ± 3 mm</text>
+    <text style="font:500 10px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="458" y="130" text-anchor="middle">cápsula → plano del borde de la jaula</text>
+  </svg>
+  <figcaption><span class="fig-num">Figura B2.</span> Cota G1: distancia de la cápsula al plano del
+  borde de la jaula. Es la cota que decide el margen contra el pitido (manual científico, §3.3). La
+  jaula (contorno naranja) es la pieza nueva de este paso; el boom (gris) ya estaba armado.</figcaption>
+  <div class="legend">
+    <span><span class="swatch" style="background:var(--new-bg); border-color:var(--new);"></span>pieza nueva de este paso</span>
+    <span><span class="swatch" style="background:var(--built-bg); border-color:var(--built);"></span>ya armado</span>
+  </div>
+  </figure>
+
+  <div class="verif"><span class="verif-tag">✓ Verificación</span>Con una regla, medir la distancia de
+  la cápsula al plano del borde de la jaula. Esperado: <strong>30 ± 3 mm.</strong> Es la cota que decide
+  el margen contra el pitido — si no cae en ese rango, revisar el montaje del grommet antes de seguir.</div>
+</div>
+
+<p><strong>El Bloque 1 termina aquí.</strong> No armes nada más de la mecánica todavía: el Bloque 2 necesita este conjunto sobre la mesa.</p>
+
+<h3 style="color:var(--accent-step-ink); background:var(--accent-step-bg); display:inline-block; padding:.2em .7em; border-radius:6px;">BLOQUE 2 — Puesta en marcha en protoboard</h3>
+<p><strong>Piezas de esta sección:</strong> todo el BOM electrónico de las secciones 1.1 a 1.5 (excepto
+la placa final de perfboard), más el conjunto de micrófono del Bloque 1.</p>
+
+<figure class="fig" id="figC1">
+<svg viewBox="0 0 860 260" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .zoneA{fill:#eef4f0; stroke:#6f9b84;}
+    .zoneB{fill:#eaf0f5; stroke:#5c7a99;}
+    .zoneC{fill:#f6f0e6; stroke:#a98a5c;}
+    .zonet{font:700 10.5px 'JetBrains Mono',monospace; letter-spacing:.03em;}
+    .zonel{font:500 9.5px 'Source Sans 3',sans-serif; fill:var(--ink-mute);}
+  </style>
+  <rect x="20" y="20" width="820" height="26" rx="4" fill="var(--panel-2)" stroke="var(--line-strong)"/>
+  <text style="font:700 10px 'JetBrains Mono',monospace; fill:var(--blue);" x="30" y="38">RIEL SUPERIOR — V+ (9.0 V, a través de SW1 y F1)</text>
+
+  <rect class="zoneA" x="20" y="60" width="220" height="150" rx="8" stroke-width="1.6"/>
+  <text class="zonet" x="35" y="80" fill="#3f6b53">ZONA A — MICRÓFONO + PREAMP</text>
+  <text class="zonel" x="35" y="98">R1, C1, R2, MK1, C2</text>
+  <text class="zonel" x="35" y="112">R3, R4, Q1, R5, R6, R7, C3, C4</text>
+  <text class="zonel" x="35" y="130">montar primero: alejado de la salida</text>
+
+  <rect class="zoneB" x="255" y="60" width="150" height="150" rx="8" stroke-width="1.6"/>
+  <text class="zonet" x="265" y="80" fill="#2f4a63">ZONA B</text>
+  <text class="zonet" x="265" y="94" fill="#2f4a63">CONTROL</text>
+  <text class="zonel" x="265" y="112">RV1 al centro</text>
+
+  <rect class="zoneC" x="420" y="60" width="200" height="150" rx="8" stroke-width="1.6"/>
+  <text class="zonet" x="432" y="80" fill="#7a5a24">ZONA C — U1 + FILTRO</text>
+  <text class="zonel" x="432" y="98">U1, C7, C8, C9, C10/JP1</text>
+  <text class="zonel" x="432" y="112">punto estrella: fila dedicada,</text>
+  <text class="zonel" x="432" y="126">a &lt;3 cm del pin 4 de U1</text>
+
+  <rect x="640" y="60" width="200" height="150" rx="8" fill="#f5e4d8" stroke="var(--new)" stroke-width="1.6"/>
+  <text class="zonet" x="652" y="80" fill="var(--new-strong)">ZONA SALIDA</text>
+  <text class="zonel" x="652" y="98">R8, C12, C11, cable a MK2</text>
+  <text class="zonel" x="652" y="112">tan separada de la entrada</text>
+  <text class="zonel" x="652" y="126">como sea posible: 330 mA</text>
+  <text class="zonel" x="652" y="140">pico contra señal de alta Z</text>
+
+  <rect x="20" y="222" width="820" height="26" rx="4" fill="var(--panel-2)" stroke="var(--line-strong)"/>
+  <text style="font:700 10px 'JetBrains Mono',monospace; fill:var(--danger);" x="30" y="240">RIEL INFERIOR — GND DE SEÑAL únicamente. El GND de potencia NO va por el riel: usa el punto estrella (§4.5).</text>
+</svg>
+<figcaption><span class="fig-num">Figura C1.</span> Mapa de zonas en protoboard de 830 puntos. Cuatro
+zonas de izquierda a derecha, en el mismo orden que la señal fluye, con la salida de potencia tan
+separada de la entrada de micrófono como el protoboard permite.</figcaption>
+<div class="qr-row">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAagAAAGoAQAAAAA7yUxtAAAEAElEQVR4nO1cSW4jMQxUCfn/lzkgi4vi02QOoyVUAkNWNwGzy9xKlCHjH8b8F6HRUuvop/EbnsbXGOBMxoAgZ7UMgRmhX9Wl8/Waj0p9ER9HDQaNAgMuG0a6SqjizvP1mg/jNQgOuIJh8LiB6Tu9mm8Ns/P1mi/jFUNAewrnaCC6a1TILtJr/gYpWOBSWwLUJQIwmPzlgE84frvUl77INwsb4QN14o7QzKzuPF+v+ajUkABL/uIvRM7Xaz4qhbItrBmgBy8zuViUi/SaD9dfQlzEFpgNMuswZwhB4JaInq/XfFgKnrBDgVHYzLhEYat8w0DUtR2f8OdjPiwllltAxDN3SzAUHSvFwj8qgrbW9fIJKIu6PoXNzMvsSlNFxUeBJIospm/5Hr6cb4CAeJ3MkLaYlnOKUUufr9d8Vwqe/InFrsgN6STpLUU9IXkOuUevV6XEXB4iGzSvSNtayI7kFO36FXq9KoV0eMNsq8heC1sayph5FEd/hV7PSsFsaXjuZ9WWgmR2RkfpjJSTVbfo9aIUYptSclOS6WHeYFcMpQxfF+g1H5WCpe1BN8GZXr7xEqzS+Lz/fL3mo1KIHEKKkq9LvPYZvW7Qaz4qhfBz8E6NdJCZg3gHh9tYx6/99qVDysbCHepysL5L8dz5xu74heiLQkSztWmKk2+9U+f7jfn0/jIIDLRwDvsKaoqp41KiXaHXfFdKovNpGEFvNRc5KgPMSCrilL04V+j1qhScL+SwuTlFTrTrRre9PLZ1fri9f0OyM0OczPhY4eZl3N79G4fUX5JLtcIIFimIXOU3npQCM8KgoZCOMWe+a8nEQxc6fu3OD3VI9IrqIFOfxsUmDqfv7/gezkelsPRsCFfqpEq2BASrGLn/+XrNp6XEiytUmeXtUb6fwnaOzg+PqL+G99roiE1kr5nVvrSV3u0sGj5u+R6+JwWe8uJ8ZJNNNHI427twiP/9E86W+nwaTmtIsrrGaNANqnXRAsXm5jP7Ge7kN0DHJxagsnFDk0Pvj1r66PnfeG3vBxiLx/N9k+97l+kbG6/9fJTw32lDsk6R4SdHFX30fZ5oL16DDdejAHK+ULGss5UEzG5vf7i9H2BE2Rws1EJBeSdONA10/NrNb0gEshEbzbxazVM1FLe2r631FwcW23IWeNl8Dl7Y7mi8NvK94Ezi52uSofddsLVvyovpxmsnPy9LvzXqx1KqXcNqswSy49fu/RQUsSHu+qJWjhMp0XNDBNu+1rHraUicemUmGJlGNWezDms+6mNs+/aK0YXF84ZXpH1l50Db1wnnHeQ7D1WHUuqnODzSdb6xN36BU8Ruv6FFg/L9yiITO34dU3/9YHS+sY5+GuvopzGW8Qf+WVzsdfSNWAAAAABJRU5ErkJggg==" alt="QR colocación en protoboard">
+  <div class="qr-txt"><span class="qr-cap">colocacion-protoboard · 1260e33</span>hardware/colocacion-protoboard.md — tabla completa de colocación por fila, en GitHub.</div>
+</div>
+</figure>
+
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">6</div><div><div class="paso-titulo">Montar el filtro de alimentación</div></div></div>
+  <p>Montar SW1, F1, el punto estrella (una fila del protoboard dedicada, a menos de 3 cm del pin 4 de
+  U1), C7 y C8. <strong>No montar nada más todavía.</strong></p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">7</div><div><div class="paso-titulo">Revisar polaridad de C7</div></div></div>
+  <div class="adv"><span class="adv-tag">⚠</span>Revisar dos veces la polaridad de C7 antes de energizar.</div>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">8</div><div><div class="paso-titulo">Primer encendido — solo el filtro</div></div></div>
+  <p>Poner las pilas, SW1 en ON.</p>
+  <div class="verif"><span class="verif-tag">✓ Puesta en marcha — Paso 1</span></div>
+  <table>
+    <tr><th>Punto</th><th>Esperado</th><th>Si no</th></tr>
+    <tr><td>Riel V+ al punto estrella</td><td>9.0–9.7 V</td><td>revisar pilas, SW1 o F1</td></tr>
+    <tr><td>Corriente total</td><td>&lt;1 mA</td><td>hay un corto</td></tr>
+  </table>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">9</div><div><div class="paso-titulo">Montar Bloque A y Bloque B</div></div></div>
+  <p><strong>SW1 en OFF.</strong> Montar R1, C1, R2, el cable de MK1, MK1, C2, R3, R4, Q1, R5, R6, R7, C3, C4.</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">10</div><div><div class="paso-titulo">Verificar el preamplificador</div></div></div>
+  <p>SW1 en ON. Medir en DC (punta negra del multímetro en el punto estrella).</p>
+  <div class="verif"><span class="verif-tag">✓ Puesta en marcha — Paso 2</span></div>
+  <table>
+    <tr><th>Punto</th><th>Esperado</th><th>Qué significa si falla</th></tr>
+    <tr><td>V_A (unión R1/R3/R5)</td><td>8.2–8.7 V</td><td>si está en ~9 V, no circula corriente: revisar Q1 o el micrófono</td></tr>
+    <tr><td>Drenaje de MK1 (unión R2/C2)</td><td>6.5–8.2 V</td><td>pegado a 8.5 V = micrófono al revés o abierto; cerca de 0 V = en corto. No busques un número exacto — busca que no esté en ninguno de esos dos extremos</td></tr>
+    <tr><td>Base de Q1</td><td>1.70–1.90 V</td><td>revisar R3/R4</td></tr>
+    <tr><td>Emisor de Q1</td><td>1.00–1.25 V</td><td></td></tr>
+    <tr><td>Colector de Q1</td><td>5.5–6.1 V</td><td>~8.5 V = Q1 en corte (pinout invertido); ~1.2 V = saturado</td></tr>
+    <tr><td>Corriente total</td><td>0.8–1.5 mA</td><td></td></tr>
+  </table>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">11</div><div><div class="paso-titulo">Confirmar que hay señal</div></div></div>
+  <p>Con el multímetro en V AC, puntas en el colector de Q1 y masa, hablar fuerte a 3 cm de la cápsula.
+  La lectura debe <strong>moverse</strong> de unos pocos mV a 100–200 mV. <em>(Un multímetro común
+  promedia y no es preciso arriba de ~1 kHz: esto solo confirma "hay señal / no hay señal", no es una
+  medición formal.)</em> Si no se mueve nada: revisar el micrófono, C2 o Q1.</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">12</div><div><div class="paso-titulo">Montar U1 y su periferia<span class="obligatorio">CONFIG A</span></div></div></div>
+  <p><strong>SW1 en OFF.</strong> Insertar U1 en el zócalo, muesca hacia el lado correcto según tu
+  colocación. Montar C9, RV1, los puentes de conexión, R8, C12, C11. Para empezar, dejar los pines 1 y 8
+  sin nada (Config A).</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">13</div><div><div class="paso-titulo">Carga de prueba, no la bocina todavía</div></div></div>
+  <p>En lugar de la bocina, conectar la resistencia de prueba de 10 Ω/5 W. RV1 al mínimo.</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">14</div><div><div class="paso-titulo">Encender y verificar la etapa de potencia</div></div></div>
+  <p>SW1 en ON.</p>
+  <div class="verif"><span class="verif-tag">✓ Puesta en marcha — Paso 3</span></div>
+  <table>
+    <tr><th>Punto</th><th>Esperado</th><th>Si no</th></tr>
+    <tr><td>Pin 6 a pin 4 de U1</td><td>9.0–9.7 V</td><td></td></tr>
+    <tr><td>Pin 5 en DC</td><td>4.2–4.9 V</td><td>0 V o ~9 V: apagar de inmediato. IC al revés, pin 2 sin masa, o U1 dañado</td></tr>
+    <tr><td>Corriente de reposo total</td><td>4.5–6.5 mA</td><td>más de 20 mA = el circuito está oscilando: revisar la red de Zobel, C8, y el largo de las patas del pin 5</td></tr>
+    <tr><td>Pin 5 en AC, en silencio</td><td>&lt;20 mV</td><td>ruido u oscilación</td></tr>
+  </table>
+  <div class="qr-row">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAagAAAGoAQAAAAA7yUxtAAAD80lEQVR4nO1c23LrMAgET///lzkDuyCcp54+BDeFtokjWzO1NtwWZDX5gVw/mSQ7q8uuxl9YjS8RxZGJmpqomIorHV7jM0b8jVc+/76uD531FesfuEjA5aBYfgRSJqaAKq98/n1dH4yXFEQSsDhuAZH/QNF4mlf+gvu6PhmvFAvj5zCZ6xRQigGHyX7TfV1/YZa6kwI06hZQVQMmvjzgP5S/PuvLXwiFVbAB1GgJYRN9qK58/n1dHzpLLPXGvvGTU55/X9eHzlK7HWocWf/E8D7j+7f/h9fOapIhPPIvBBcn1wpjeNIuju0ajn6jLLyVue9S0fRfDou1eAPujEZxv/Nd3rwaao6WHmOY7wzvmTyHq3O923x51n9p/Ap9metXeiwA1l0crObq13S8oemr7iOlWnUCw2sPJ/lea0Ap/whaJsvkgsNGrv8azr8M6FgdnJzMXdu5ih83/7rLu62NBhSGAfNIMRxYKlNwiU5wnORs7eFovKEZYmgaxow6SPZWIsbkefGazL8EVUmB84oXmL0oqMBMeu4Vfm3zrwfYQyUYEnDQMgbHm5YQAAaCm389oB9Ak4jC8IkVyVd177X2cNYeWvIXmsQT6l8RczglRZoj1C+G138N11OsonlUviJ0r5MxjggS5xavUX5DGbhrZ55CTomlGHufsngNxxvC/Iu1ZESCkYBFiJ+xYeK5eE3y8+KiRRmiRsluDg2Q9OWaxavLu1fDSBia4xKYMLyAFdToliLJuPHheLxhp4NDApnWqwHasHd5LH84zkdJ6+UV0vNZTjnDvYFj7eEsfyhZl9RTB6tCGK5g7RJquHh1ef9qWC9GCvtFIzhEugx7CIJq+d75/EvumOlplirlyk0QYRZXv6bxsmw4vBlGu+8nqimL12j+ZYgslAEFO7FhAauegtAeBnLxGuU35GxnsGzfyLwrMEvqPvsDFq/RfFm8zKVoGfVBpzMywij9QpMiKI7Fa1a/lM2gUq0bjDvgwQJLODH8Ll7D/aKSfb3ZO396NeoybnFevKb5KKFfsgo3YiyryayLVR/91r9e5O3WxnrBy6o9ii2H3FuUnVSufWsPJ/MvvYWFgvwr+zXSSB4c13+N873W2FwFMCG1E6LN8NOrX4/YX6nxDvLpZX8lN7Hw8sVrup9NWPOPI1aTq68+qipnR8Tq1+zzAcwPlM6pkRkvQUhyIOu/pp/noIzelXsc2Ndbfi2fVVSebO3hKF4UrbpJ2wEWzfTsya7de4tXl6nVsLOvPOgpNrOBTnTyF5Bt/vWM59tYUk6onnTGnkxvPfhr9WsSL8WhZh2snqznLG/b9XBokMXrAfnXf8ji1WVXo8uuhjT5B0Itbskz7Oi+AAAAAElFTkSuQmCC" alt="QR puesta en marcha">
+    <div class="qr-txt"><span class="qr-cap">puesta-en-marcha · 1260e33</span>hardware/puesta-en-marcha.md — procedimiento completo de energizado por etapas, en GitHub.</div>
+  </div>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">15</div><div><div class="paso-titulo">Confirmar zumbido en la carga</div></div></div>
+  <p>Subir RV1 poco a poco hablando a 3 cm de la cápsula. Debe oírse un zumbido débil en la resistencia
+  (es normal que casi no suene: es una resistencia, no un transductor).</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">16</div><div><div class="paso-titulo">Conectar la trompeta real</div></div></div>
+  <p><strong>SW1 en OFF.</strong> Quitar la resistencia de prueba y conectar la trompeta MK2: (+) a C11,
+  (−) directo al punto estrella.</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">17</div><div><div class="paso-titulo">Primera prueba con MK2, Config A</div></div></div>
+  <div class="adv"><span class="adv-tag">⚠</span><strong>Antes de encender: apuntar la trompeta lejos de
+  cualquier cara y de cualquier pared cercana.</strong></div>
+  <p>SW1 en ON, RV1 al mínimo, subir despacio hablando a 3 cm de la cápsula.</p>
+  <div class="verif"><span class="verif-tag">✓</span>Con Config A va a faltar volumen: es lo esperado, no una falla.</div>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">18</div><div><div class="paso-titulo">Pasar a Config B — configuración de trabajo</div></div></div>
+  <p>Apagar. Agregar C10 (Config B, + hacia el pin 1). Volver a subir RV1 <strong>desde el mínimo</strong>, hablando a 3 cm. <strong>Config B es la configuración de trabajo.</strong></p>
+  <div class="verif"><span class="verif-tag">✓ Verificación</span>Anotar la posición de RV1 con la que el
+  volumen suena claro y sin aspereza. Ese dato se transfiere a la placa final y es el punto de partida de
+  la prueba de margen de pitido (§7, prueba 2.3).</div>
+</div>
+
+<p><strong>El Bloque 2 termina cuando el circuito suena bien en Config B, con Q1 verificado y sin oscilación.</strong></p>
+
+<h3 style="color:var(--accent-step-ink); background:var(--accent-step-bg); display:inline-block; padding:.2em .7em; border-radius:6px;">BLOQUE 3 — Placa final en perfboard y caja</h3>
+<p><strong>Piezas de esta sección:</strong> perfboard 50×70 mm, caja de proyecto ABS, portapilas.</p>
+
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">19</div><div><div class="paso-titulo">Transferir el circuito a perfboard</div></div></div>
+  <p>Transferir el circuito completo del protoboard a la perfboard, punto a punto, replicando exactamente
+  la topología del Bloque 2. Usar un tramo de alambre desnudo grueso, dedicado, que recorra la placa
+  hasta el punto estrella físico.</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">20</div><div><div class="paso-titulo">Montar RV1 y SW1 en el panel</div></div></div>
+  <p>Montar RV1 y SW1 en el panel de la caja (no en la placa), conectados con cable corto —
+  especialmente el de RV1, que es señal de bajo nivel y debe mantenerse lejos del cable de bocina.</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">21</div><div><div class="paso-titulo">Repetir las verificaciones sobre la placa nueva</div></div></div>
+  <p>Repetir las mediciones de los pasos 1 a 3 de la puesta en marcha (Bloque 2, pasos 8, 10 y 14) sobre
+  la placa nueva.</p>
+  <div class="verif"><span class="verif-tag">✓ Verificación</span>Las lecturas deben coincidir con las
+  del protoboard. <strong>El protoboard no se desarma hasta que la perfboard mida igual.</strong></div>
+</div>
+
+<h3 style="color:var(--accent-step-ink); background:var(--accent-step-bg); display:inline-block; padding:.2em .7em; border-radius:6px;">BLOQUE 4 — Cuerpo</h3>
+<p><strong>Piezas de esta sección:</strong> espina de pino, bloque de empuñadura, portapilas, caja de
+circuito ya armada (Bloque 3), stack de aislamiento de la trompeta, MK2, armellas, strap.</p>
+
+<figure class="fig" id="figD1">
+<svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .exp{fill:var(--panel-2); stroke:var(--built); stroke-width:1.6;}
+    .expn{fill:var(--new-bg); stroke:var(--new); stroke-width:2.4;}
+    .expt{font:700 11px 'Space Grotesk',sans-serif; fill:var(--ink); text-anchor:middle;}
+    .expl{stroke:var(--ink-mute); stroke-width:1; stroke-dasharray:3 3;}
+  </style>
+  <!-- trumpet -->
+  <path class="exp" d="M 30 100 L 100 90 L 160 60 L 160 180 L 100 150 L 30 140 Z"/>
+  <text class="expt" x="90" y="200">MK2 · trompeta</text>
+
+  <!-- bracket -->
+  <rect class="expn" x="175" y="95" width="34" height="70" rx="4"/>
+  <text class="expt" x="192" y="180">bracket +</text>
+  <text class="expt" x="192" y="192" font-size="9.5">stack aislante</text>
+
+  <!-- spine -->
+  <rect class="exp" x="225" y="120" width="420" height="24" rx="3"/>
+  <text class="expt" x="435" y="170">espina de pino, 330 mm</text>
+
+  <!-- battery box -->
+  <rect class="exp" x="280" y="90" width="120" height="26" rx="3"/>
+  <text class="expt" x="340" y="80" font-size="10">portapilas 6×AA</text>
+  <line class="expl" x1="340" y1="90" x2="340" y2="116"/>
+
+  <!-- circuit box -->
+  <rect class="exp" x="440" y="146" width="110" height="40" rx="4"/>
+  <text class="expt" x="495" y="205" font-size="10">caja de circuito (Bloque 3)</text>
+  <line class="expl" x1="495" y1="186" x2="495" y2="200"/>
+
+  <!-- grip -->
+  <rect class="exp" x="650" y="118" width="110" height="28" rx="5"/>
+  <text class="expt" x="705" y="80" font-size="10">empuñadura, 110 mm</text>
+  <line class="expl" x1="705" y1="90" x2="705" y2="118"/>
+  <text class="expt" x="705" y="210" font-size="9.5">posición fijada por balanceo (paso 27)</text>
+
+  <!-- boom -->
+  <path d="M 645 132 C 720 105, 780 105, 830 118" fill="none" stroke="var(--built)" stroke-width="9" stroke-linecap="round"/>
+  <g transform="translate(838,118)">
+    <path class="expn" d="M 0 -22 C 26 -22 40 -6 40 0 C 40 6 26 22 0 22 L -4 18 C 14 14 22 8 22 0 C 22 -8 14 -14 -4 -18 Z"/>
+    <circle cx="8" cy="0" r="9" fill="#fff" stroke="var(--blue)" stroke-width="1.8"/>
+  </g>
+  <text class="expt" x="800" y="70" font-size="10">boom + jaula (Bloque 1)</text>
+  <line class="expl" x1="800" y1="80" x2="820" y2="105"/>
+
+  <text style="font:600 11px 'Space Grotesk',sans-serif; fill:var(--ink-mute);" x="450" y="290" text-anchor="middle">Vista despiezada — orden de integración: espina → bracket con stack → portapilas y caja → boom → empuñadura</text>
+</svg>
+<figcaption><span class="fig-num">Figura D1.</span> Vista despiezada del cuerpo completo. El boom y su
+jaula (naranja) llegan ya armados del Bloque 1; el bracket con su stack de aislamiento (naranja) se monta
+en este bloque, paso 23.</figcaption>
+</figure>
+
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">22</div><div><div class="paso-titulo">Cortar y lijar la madera</div></div></div>
+  <p>Cortar la espina a 330 mm y el bloque de empuñadura a 110 mm. Redondear todos los cantos (R2–R8) y
+  lijar con 120 y luego 220: sin astillas.</p>
+</div>
+
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">23</div><div><div class="paso-titulo">Montar el bracket con el stack de aislamiento completo<span class="obligatorio">NO SE SALTA</span></div></div></div>
+  <p>Por cada perno, de arriba hacia abajo: rondana de acero, arandela de neopreno, U-bracket, arandela de
+  neopreno, cara de la espina, rondana de acero, tuerca nylock. Antes de apretar, verificar el diámetro
+  del barreno del bracket (medido en la puerta de compra, §1.6, paso 6) y agrandarlo con la broca
+  escalonada si es menor a 8.5 mm — el buje de silicón necesita ese espacio.</p>
+  <div class="adv"><span class="adv-tag">⚠</span>Este stack no se puede agregar después sin desmontar la trompeta.</div>
+
+  <figure class="fig" id="figD2">
+  <svg viewBox="0 0 860 200" xmlns="http://www.w3.org/2000/svg">
+    <style>
+      .st{fill:var(--new-bg); stroke:var(--new); stroke-width:2;}
+      .stt{font:700 11px 'Space Grotesk',sans-serif; fill:var(--ink); text-anchor:middle;}
+      .std{font:500 9.5px 'Source Sans 3',sans-serif; fill:var(--ink-mute); text-anchor:middle;}
+      .stv{font:700 10px 'JetBrains Mono',monospace; fill:var(--danger); text-anchor:middle;}
+      .chain2{stroke:var(--ink-mute); stroke-width:2; fill:none;}
+    </style>
+    <text x="30" y="30" class="stt" text-anchor="start">MK2</text>
+    <line class="chain2" x1="70" y1="35" x2="110" y2="35"/>
+
+    <rect class="st" x="115" y="10" width="150" height="70" rx="8"/>
+    <text class="stt" x="190" y="32">Etapa 1</text>
+    <text class="std" x="190" y="48">bracket: neopreno +</text>
+    <text class="std" x="190" y="60">buje de silicón</text>
+    <line class="chain2" x1="265" y1="45" x2="300" y2="45"/>
+
+    <rect x="305" y="10" width="140" height="70" rx="8" fill="var(--built-bg)" stroke="var(--built)" stroke-width="1.4"/>
+    <text class="stt" x="375" y="32" fill="#585650">Etapa 2</text>
+    <text class="std" x="375" y="48">espina de pino</text>
+    <line class="chain2" x1="445" y1="45" x2="480" y2="45"/>
+
+    <rect x="485" y="10" width="160" height="70" rx="8" fill="var(--built-bg)" stroke="var(--built)" stroke-width="1.4"/>
+    <text class="stt" x="565" y="28" fill="#585650">Etapa 3</text>
+    <text class="std" x="565" y="44">boom PETG — resonancia</text>
+    <text class="std" x="565" y="56">propia ~390 Hz</text>
+    <line class="chain2" x1="645" y1="45" x2="680" y2="45"/>
+
+    <rect class="st" x="685" y="10" width="150" height="70" rx="8"/>
+    <text class="stt" x="760" y="32">Etapa 4</text>
+    <text class="std" x="760" y="48">grommet + espuma</text>
+    <text class="std" x="760" y="60">delante de MK1</text>
+
+    <text x="820" y="30" class="stt" text-anchor="end">MK1</text>
+
+    <rect x="115" y="110" width="720" height="72" rx="8" fill="#eef4f0" stroke="#6f9b84"/>
+    <text class="stt" x="475" y="130" fill="#3f6b53">Resultado neto — ninguna etapa es opcional (§4.8-4.9 del manual científico)</text>
+    <text class="std" x="300" y="152" fill="var(--ink)">a 390 Hz (resonancia del boom)</text>
+    <text class="stv" x="300" y="168">−7 a 0 dB — no protege ahí</text>
+    <text class="std" x="650" y="152" fill="var(--ink)">a 1–3 kHz (pico del lazo acústico)</text>
+    <text class="stv" x="650" y="168">≥25 dB de atenuación</text>
+  </svg>
+  <figcaption><span class="fig-num">Figura D2.</span> Las cuatro etapas de aislamiento de vibración, en
+  serie. En este paso se monta la Etapa 1 (naranja); las etapas 2 y 3 ya existen en la madera y el boom
+  (gris); la Etapa 4 se montó en el Bloque 1.</figcaption>
+  <div class="legend">
+    <span><span class="swatch" style="background:var(--new-bg); border-color:var(--new);"></span>se monta en este paso</span>
+    <span><span class="swatch" style="background:var(--built-bg); border-color:var(--built);"></span>ya existe en la estructura</span>
+  </div>
+  </figure>
+
+  <div class="verif"><span class="verif-tag">✓ Verificación</span>Apretar solo hasta que el neopreno pase
+  de 3.0 a 2.0 ± 0.3 mm, no más. Comprobar a mano que la trompeta se puede mecer ~1 mm; si está rígida,
+  está sobre-apretada y el aislador queda anulado.</div>
+</div>
+
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">24</div><div><div class="paso-titulo">Rutear los cables<span class="obligatorio">NO SE SALTA</span></div></div></div>
+  <p>Rutear el cable del micrófono (Bloque 1) por el lado izquierdo de la espina, y el cable de
+  bocina/pilas por el lado derecho, <strong>antes de atornillar la caja de circuito</strong>. Si se
+  cruzan en algún punto, que sea a 90°, nunca en paralelo. Después de este paso, la caja tapa el acceso.</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">25</div><div><div class="paso-titulo">Atornillar portapilas y caja</div></div></div>
+  <p>Barrenar y atornillar el portapilas (cara superior, tapa hacia arriba) y la caja de circuito (cara
+  inferior/lateral).</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">26</div><div><div class="paso-titulo">Atornillar el pie del boom</div></div></div>
+  <p>Atornillar el pie del boom (conjunto del Bloque 1) con los 2 pernos M4 y sus tuercas nylock.</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">27</div><div><div class="paso-titulo">Balanceo<span class="obligatorio">NO SE SALTA</span></div></div></div>
+  <p><strong>Con todo el aparato montado y las 6 pilas puestas</strong>, apoyar la espina sobre un lápiz
+  redondo y deslizarla hasta hallar el punto de equilibrio. Marcar ese punto. <strong>Recién ahora</strong>
+  taladrar los 2 barrenos de 5.5 mm de la empuñadura ahí.</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">28</div><div><div class="paso-titulo">Empernar la empuñadura</div></div></div>
+  <p>Empernar la empuñadura con los pernos M5×70. Cortar a ras la rosca sobrante o usar tuercas de bellota.</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">29</div><div><div class="paso-titulo">Instalar armellas y strap</div></div></div>
+  <p>Instalar las armellas y el strap.</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">30</div><div><div class="paso-titulo">Apuntar la trompeta y marcar testigo</div></div></div>
+  <p>Apuntar la trompeta a la posición deseada y <strong>apretar a fondo la mordaza de inclinación del
+  bracket</strong> (esa mordaza no lleva aislamiento). Hacer una marca testigo con marcador, cruzando
+  tuerca y pieza, en <strong>todos</strong> los tornillos y pernos del aparato.</p>
+</div>
+<div class="paso">
+  <div class="paso-head"><div class="paso-num">31</div><div><div class="paso-titulo">Verificar cotas y correr pruebas</div></div></div>
+  <p>Verificar las cotas de control (§6) y correr las pruebas completas (§7).</p>
+  <div class="qr-row">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAagAAAGoAQAAAAA7yUxtAAADz0lEQVR4nO1c2XLcQAgcVP7/XyYFNMduXhI/CHndJF7rrFpNC+hpGIueb9j1nZsO75rG0fgNo/F1jsSWYkNl7tmGijuhaB16/nNdH3rXl4+/oXGOGiIGiorvJkYGGLDElc9/ruuD8ToBjgQ8AAcOBgB71zF7/nNdn4xXmjpa9hmu5SBKQGWQ/aDnun7DXeLJynxJxEKig5VY6c99rk/zL41tDWgcsIiQYrvmXY3c7d/w4l3TNP1G/+Ff3sIxnHbnaEiHOSkCGHkMTB/pzJjHyje8eNc0Tb/RylHtS+587Vb4Rf/afaPEMRBHJjCxvGVAegIDgH4BgOQ7vzpfFogZEhQxp8oZFmMuXXxfqG+82srbq57KPP6lluHYGTP0UJkk0i6jfy3zDbGPgMzljfaydC1cGoeJ17SbR0OCGerUfIEjhA3PboiUzF/r/iVJ2gV+hZ3Wd0uldzmR+WvXv3Qydw390F3JA6BTxCEDU+9d9i+JvKSYKPtReNs8UP/J59fjoQZzF8RBFCjjgkYNoiL5xpstsC+NYOczsWTuclykD7UjTvtv1iu3/Ut961QrQEbH8KhRxEz9g3x+2p2jcYysBw4aP0OJx6mQo8Ds/ZN4LfP5UyWvzmOTzM/JM/PXMj883ROlKXmgFWp0TXWw5PxrVe9V8D9BdoJ/gd+DLqYmdf83vHjXtKxqncpbKfuikhJJrKpits/8tflGKeA5pWlA8oDriRjLeKmP8Z1f1ecltrUVjqLvxT9GFzDz13Y/tk7QBDUwR6rEjUAOMzD617S7R0NDtdB2M59vef3SUPKYGOe8MZF4beu9knqhFAssTb5P9dIH+temvnG6A0qxAabofpYsA9UW9h8+YL2DjplzVrqgG3rHbzZuoMeD/rW8nkiqv6aEX6SvOGQt9YGjB0TitaxHnVyP0tkMsCFppRjF+tcD9HkdPb3anWvVHgphHpdRn3+z26ON5GRZu6FeLfyhYyNCYqqKzF/r/YfyUjXR5B29wuGldsn8tcznD4i7xoG59qHIfQdN6r3r8y+t1HTGwpS/51+ZyMgPd/3rNGLnFSUcSY0qThKvfT4vOSF+Vew7v6Vxfcpz1ldq92i8ra/EtAyXMx7u1lPMNDSMLnXFWr2cMRdarH895O/bSFSUS4XKzt+YgvXKWPL5Xb5xXrs1TlN7rIKo83kH+cZT/l6KYBnsaMseSyFqmSXz17TF0dCopLRc7xJVxMioYLJ/fh8vzbgnUfwHz6g1fNU/laow/Wt3/mWm5VSTvo8FYTUxY3/UI+Zf/2H0r2kcjWkcjTPsD9+1tSl4IR+8AAAAAElFTkSuQmCC" alt="QR cuerpo portátil">
+    <div class="qr-txt"><span class="qr-cap">cuerpo-portátil · 1260e33</span>mecanica/cuerpo-portatil.md — diseño mecánico completo del cuerpo, con todas las cotas, en GitHub.</div>
+  </div>
+</div>
+
+<!-- ===================== SECCIÓN 6 — COTAS DE CONTROL ===================== -->
+<h2><span class="num">6</span>Cotas de control — verificar antes de las pruebas</h2>
+<table>
+<tr><th>#</th><th>Qué</th><th>Cómo</th><th>Criterio</th></tr>
+<tr><td>G1</td><td>Cápsula → borde de la jaula</td><td>regla</td><td>30 ± 3 mm</td></tr>
+<tr><td>G2</td><td>Distancia bocina → cápsula (D_lazo)</td><td>cinta métrica, plano de la boca de la trompeta hasta la cápsula</td><td>≥ 400 mm</td></tr>
+<tr><td>G3</td><td>En uso real, borde de la jaula en el labio: labios → cápsula</td><td>regla, con el aparato en posición de uso</td><td>25–35 mm</td></tr>
+<tr><td>G4</td><td>Contacto entre metal de la cápsula y PETG</td><td>inspección visual</td><td>ningún contacto</td></tr>
+<tr><td>G5</td><td>Mecido de la trompeta a mano</td><td>prueba manual</td><td>~1 mm, no rígida</td></tr>
+<tr><td>G6</td><td>Marcas testigo en todos los tornillos</td><td>inspección visual</td><td>presentes</td></tr>
+</table>
+<div class="qr-row">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAagAAAGoAQAAAAA7yUxtAAAD1UlEQVR4nO1c227rQAgEq///yxzBAEv6Up0+GCedrZrGN6nZybDDgK0mvxjXby4SXjUHZ+MvzMaXiOKdiZqaqJiKkw6vsY09/ifPfP7nuj70qq+Y/8BFAi4HxWoTSJmYAqo68/mf6/pgvKQhkoDFcQuI/AdEy8N55ht8ruuT8aphDpNjouacAkoRI/2YvdPnuv7CVRormGMl6hEwwCqs7H0/16fxy3LDHCSnUwTEwC+XroPc7f/hxavmsAZLfv6pSziHc9w5G3rCnMbqBWGPA6k+Wtiv/IcXrxqjJDziYEiLSL7OPoBYG9SH698o81Wq5WDIjgx+FgtYhcoDF7/zm3gp4LJ8E3oeSVd4GydSWut9xqg57p8NTW2ooJINd8qVYezI1SsQJF6rekPx3gIjEA3CY4qQPpV4LcdDCY1uiUqtW73hxzwMthghv7b1vB52yUCt/d0Kj2UHMx7OcfdsaNHLB7gEeQhxEV6i8yuJSH7t8ksr95Iy6isV65WsE7HkHPm1qzcMyl1jFzQHjs4y5lm+iNcqv6zYJAlMHeoF7bhWOJn8WvTnDYuVHIOjVQhUoWNWzQDQjcRrjjtnQyA02nSyUZpE5ox6GHJolyX+SryW8RIA0ZVJAFNgArXK0Ix4PUBvyFCJHRfblEeTVPsc5NdmfVnTm9eXAlhmx9U3dfJo6sMn9B9qtmgEKAEbpEZbHLWHeuP7uDvaWJu7mhwKlKJ64gyLbqnsS6R/uK437NT5rWRgJWEtDY9dxf6NfT9Kso4iLStOX0DZvrOBg3pjux/bHJlansqHahzhHLZXT7xexsa3V0sEtmpPcQgdgtwLKxn5tZ9/SffSpA+fWnCQ69yhwvxrFy/tPFjbne+IOO8n6ku4fq3qeQOvtH1Df4ud2YETzq9L++jRJl7L/LL8I1XpavPp8OtUv4jXcv+hqRf87ZsKtFd++fGosLD/cDtftpR9duz4UxYrox5pNPPlB8RDS5dXTvPh6dWo06o3gPnXNr8EzBFYU/3bZzT3skLG+tcyXlb4WMW8joxZt4ytrjCzvrzML2mWyXmp8sq0gRNP5l/b/YeicwGbHfVx1rjCTyFeT7i/0k4qNlBrc6PuumT+9YT6skQWVu0bPtKrP7et1B0q5Ncjnm+jx6YfQTJz56o4s57ymOfbCB4+lHX/eIxDN9d3zw3IyPXrCc+30aAWbqoc+Zf7VaNp248Rrzm2ZsMKJNQowy20bnQLIKM1m3gt3+8gpxBmUyZWP9t4kh7rX8/ox5bstC6XtzqjXtq1qyeb+fIT8q//GFy/5uBszMHZkDH+ASk9s1E+zyN/AAAAAElFTkSuQmCC" alt="QR cotas de control">
+  <div class="qr-txt"><span class="qr-cap">cotas-de-control · 1260e33</span>mecanica/cotas-de-control.md — la misma tabla, mantenida junto con el diseño mecánico, en GitHub.</div>
+</div>
+
+<!-- ===================== SECCIÓN 7 — PRUEBAS ===================== -->
+<h2><span class="num">7</span>Pruebas</h2>
+
+<h3>Criterio 1 — Amplifica sin distorsión</h3>
+<table>
+<tr><th>#</th><th>Prueba</th><th>Método</th><th>Valor esperado</th><th>Pasa si</th></tr>
+<tr><td>1.1</td><td>Umbral de recorte</td><td>Tono de 1 kHz de un celular frente a la cápsula; multímetro en V AC sobre la carga de 10 Ω; subir RV1</td><td>El recorte empieza en ~1.86 V rms (0.43 W en 8 Ω; 2.08 V rms sobre la carga de prueba de 10 Ω)</td><td>Se llega a ~1.8 V rms antes de que se oiga áspero</td></tr>
+<tr><td>1.2</td><td>Volumen de trabajo</td><td>Con voz de uso real, RV1 en su posición final</td><td>Picos de voz por debajo de 1.3 V rms en la bocina</td><td>Voz clara, sin aspereza en las vocales fuertes</td></tr>
+<tr><td>1.3</td><td>Recorte visual (si tienes osciloscopio)</td><td>Sonda en pin 5, tono de 1 kHz</td><td>Senoide limpia hasta 2.6 V pico</td><td>Cimas redondas al nivel de trabajo</td></tr>
+<tr><td>1.4</td><td>Prueba de oído</td><td>Contar "uno dos tres" al nivel de uso, a 3 m</td><td>Consonantes /s/ /t/ /k/ distinguibles</td><td>Se entienden las palabras, no solo el ritmo</td></tr>
+</table>
+
+<h3>Criterio 2 — No oscila</h3>
+<table>
+<tr><th>#</th><th>Prueba</th><th>Método</th><th>Valor esperado</th><th>Pasa si</th></tr>
+<tr><td>2.1</td><td>Oscilación ultrasónica</td><td>Corriente total en reposo, sin voz, RV1 al máximo</td><td>4.5–6.5 mA</td><td>&lt;8 mA y U1 frío al tacto</td></tr>
+<tr><td>2.2</td><td>Realimentación acústica</td><td>Al aire libre, trompeta al frente, cápsula a 3 cm de la boca, RV1 al máximo, sin hablar</td><td>silencio (solo un siseo leve)</td><td>no chilla</td></tr>
+<tr><td>2.3</td><td>Margen real de realimentación</td><td>Desde 2.2, alejar la boca de la cápsula hasta que chille</td><td>debería aguantar ~10 cm y chillar cerca de 20 cm</td><td>chilla después de 10 cm</td></tr>
+<tr><td>2.4</td><td>Separar realimentación de acoplamiento por masa</td><td>Si suena algo, tapar la cápsula con el dedo</td><td>realimentación acústica: se apaga. Falla de masa: sigue sonando</td><td>se apaga al tapar</td></tr>
+<tr><td>2.5</td><td>Prueba de pared</td><td>A 1 m de una pared, apuntando a la pared, RV1 de trabajo</td><td>puede chillar: −6 dB de margen es esperado</td><td>se entiende que es la pared, no el circuito</td></tr>
+</table>
+
+<h3>Criterio 3 — Resiste uso portátil</h3>
+<p><strong>Subsistema electrónico:</strong></p>
+<table>
+<tr><th>#</th><th>Prueba</th><th>Método</th><th>Valor esperado</th><th>Pasa si</th></tr>
+<tr><td>3.1</td><td>Vibración / contactos</td><td>Encendido y hablando, sacudir el conjunto y golpear suave la placa</td><td>en protoboard va a crujir — eso no se arregla, se pasa a perfboard</td><td>en perfboard: sin crujidos ni cortes</td></tr>
+<tr><td>3.2</td><td>Tirón del cable del micrófono</td><td>Jalar suave el cable</td><td>sin cambio en el sonido</td><td>hay alivio de tensión mecánico</td></tr>
+<tr><td>3.3</td><td>Camino de alimentación</td><td>Medir V+ en DC durante una ráfaga de voz a volumen de trabajo</td><td>caída &lt;0.3 V respecto al reposo</td><td>se lee &lt;0.3 V</td></tr>
+<tr><td>3.4</td><td>Autonomía y deriva</td><td>30 min continuos; repetir 3.3 y medir pin 5 en DC</td><td>pin 5 sigue en ~V+/2; V+ ≥7.5 V</td><td>sigue sonando igual</td></tr>
+<tr><td>3.5</td><td>Temperatura</td><td>Tocar U1 tras 15 min a volumen de trabajo</td><td>tibio</td><td>no quema al tacto</td></tr>
+<tr><td>3.6</td><td>Ciclo de encendido</td><td>20 ciclos de SW1</td><td>sin "pop" fuerte ni fallas de arranque</td><td>arranca siempre</td></tr>
+</table>
+
+<p><strong>Subsistema mecánico:</strong></p>
+<table>
+<tr><th>#</th><th>Prueba</th><th>Método</th><th>Pasa si</th></tr>
+<tr><td>D1</td><td>Caída funcional</td><td>3 caídas desde 0.75 m sobre madera, o concreto con tapete de hule de 10 mm, en 3 orientaciones (empuñadura abajo, boca de trompeta abajo, boom abajo)</td><td>sigue funcionando · ninguna pieza impresa agrietada · ninguna marca testigo rota · G1 sigue en 30 ± 3 mm · ninguna pila desalojada</td></tr>
+<tr><td>D2</td><td>Carga lateral del boom</td><td>30 N lateral en el borde de la jaula (colgar 3 kg, o empujar con báscula de gancho), 30 s</td><td>flecha ≤5 mm y recupera completo, sin grieta en la raíz</td></tr>
+<tr style="background:var(--gate-bg);"><td><strong>V1</strong></td><td><strong>Vibración estructural al micrófono — la prueba que de verdad decide el criterio 3</strong></td><td>Al aire libre, sin paredes a 3 m. Cápsula a 3 cm de la boca. (1) Subir la ganancia al máximo de trabajo y hablar; anotar si pita y en qué punto del potenciómetro. (2) Sustituir las 4 arandelas de neopreno por rondanas de acero del mismo espesor y el grommet por un inserto rígido (o pegar la cápsula con cianoacrilato), 5 min. (3) Repetir (1) y comparar el umbral de pitido. (4) Volver a poner los aisladores</td><td>con los aisladores puestos, no pita en ningún ajuste de ganancia al aire libre; y el umbral de pitido con aisladores es igual o mejor que sin ellos</td></tr>
+<tr><td>V2</td><td>Prueba del nudillo (30 s, hazla siempre)</td><td>Aparato encendido a ganancia de trabajo, nadie hablando. Golpear el flare con el nudillo</td><td>el golpe se oye por la bocina claramente más bajo que tu propia voz hablando normal</td></tr>
+<tr><td>B1</td><td>Reemplazo de pilas</td><td>Cambiar las 6 pilas</td><td>menos de 60 s, con máximo un desarmador, sin quitar ninguna otra pieza ni tocar soldaduras, sin alterar la geometría del boom</td></tr>
+<tr><td>T1</td><td>Marcas testigo</td><td>Revisar después de D1 y de 30 min de cargarlo</td><td>ninguna marca testigo rota</td></tr>
+<tr><td>F1</td><td>Carga y caminata</td><td>Colgado del strap, 15 min caminando incluyendo escaleras</td><td>nada flojo · G1 sin cambio · no pita al encenderlo después</td></tr>
+<tr><td>C1</td><td>Creep térmico</td><td>Dejar el aparato armado, con la trompeta en voladizo, 4 h dentro de un coche cerrado al sol</td><td>la punta del boom no se pandeó más de 2 mm (medir G1 antes y después); ningún aislador tomó deformación permanente &gt;0.5 mm</td></tr>
+</table>
+<div class="verif"><span class="verif-tag">✓</span><strong>Lo que la prueba 3.3 NO mide, y conviene
+saberlo:</strong> un multímetro en DC lee el promedio de la corriente (~40 mA), no el pico de 330 mA —
+ese pico lo absorbe C7, que es justamente su trabajo. Esta prueba pasa casi siempre; se conserva porque
+descarta un camino groseramente resistivo (un portapilas oxidado, un polyfuse defectuoso, una soldadura
+fría), que sí es una falla real y común.</div>
+<div class="qr-row">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYgAAAGIAQAAAABzOEqLAAADhklEQVR4nO1c7Y7jMAgEtO//ypyYAZJqf1yru1qui5u0lhu0tTEMX151ebHZqwQyFM83e+FZtqF451r9iCh7LuoqLqIeQyE36vHCgPdTw48380OgsmK9FZfniGizQWtMRz7ezw9JcZBY/bhj+VU8xkJWEmKUT418PN/sHykcTFHXFAuIBjSX/Le/8Uyz75aPahrSARQJhvC6s2LjedhJ/HB0gd24qaPijQDC733dr7KvpRCoI3T+8mJz33MedgiF3vxBADYGWj6grWj17j0PO4RC270oDyMa+/BDkkXaLNlzHnYOhReSu4s73lJ98aJ/KAH1438s4aDezahYfvocWH6aWRqc0b331THxEm+dxCWnZqLpW0IiKSK7zsPOsneV8kFET0xPJqTkeMjM+OeL9JUDPAAh4IPSSQeQxJhk1GTiV2vwXGL1gRbQXtHK4gpXPXgVNljwak85t5MoPFYalpUAQtgpyws6TOm5j3ysiu9qKSQ6G9ln8KTDvLr3vjqEQqGmgBK56pdrSIu3DeLRVwv44WVhhcpiKxcwfcHSWYPna/DD6Z9n2oPxQ6x+8gffJLP2lfMTKCSDI+wTxcvCSli/Qokebc952CEUP+l1F4qXgqr4LqK76Rz62LsrOKhdz0CeUCIYtnpADgHH9txXdg6FgyGdECy0qCfSN/cMdO07jyMoBDZVJ2QJF4ncFXK/npXBjxX6ymPnX+5gxhUzuJsMc6D76Ksl9SVe4duGjPLZWaLYeZDRV2s0nDKq285hVsNV0D3BBcGtPfWuneV/ePaZrU0lVdyp2KLj3nMedg6FI1iYCdoOJV5SUVaXT/xqWbxEKu8BJEGN6IOnrjE68at1+CHlhHdCCnUNLCrptK3vLOdHUCgPe5RV1eZVpdJRm9VFozr21aL6RC1DqgvkyhHM4gYtodlzX9lZ9e1aNaHxUW5IM+VWZiKbzsMO4oc+6KiMYxHUM+Zbx9ZW/Sr7WgrJ+tCrPPR30Ormnsj4H2vwQ1o9sc7nyn80mijvPfeVHUKhtwR5F/fUGYM8cFv4ImPvLsEPjw6K3RLAa+n7/PNV9DDysQA/pAPqD+hR3avqJNqecm7nUSjEgYYUkLsOhSTaf8o8TqHwtmlp5SJP1f8ZQPA58fYV/qCzXwnBSkbpL1b5J+yrY87XypUNudVgVS7EJ38ua8/XfvK+sqF4utnzj8q3U/wBoRkEkynvQxgAAAAASUVORK5CYII=" alt="QR pruebas mecánicas">
+  <div class="qr-txt"><span class="qr-cap">pruebas-mecanicas · 1260e33</span>mecanica/pruebas.md — el detalle completo de D1, D2, V1, V2, B1, T1, F1, C1, en GitHub.</div>
+</div>
+
+<!-- ===================== SECCIÓN 8 — SOLUCIÓN DE PROBLEMAS ===================== -->
+<h2><span class="num">8</span>Solución de problemas</h2>
+<table style="font-size:.85rem;">
+<tr><th>Síntoma</th><th>Causa probable</th><th>Qué revisar</th></tr>
+<tr><td>Silbido agudo entre 1 y 3 kHz, arranca al subir el volumen</td><td>Realimentación acústica</td><td>Tapar la cápsula con el dedo: si el silbido <strong>se apaga</strong>, confirma realimentación. Bajar RV1; acercar la boca a la cápsula (cada duplicación de distancia regala ~6 dB); verificar que la cápsula esté detrás del plano de la boca de la trompeta y sin superficie reflectante a menos de 1 m enfrente; pasar de Config B a Config A si nada más funciona (cuesta 20 dB de ganancia)</td></tr>
+<tr><td>"Putt-putt" grave o aullido continuo que no depende de la posición del micrófono</td><td>Acoplamiento por el rail de alimentación o lazo de masa</td><td>Tapar el micrófono: si <strong>no</strong> se apaga, confirma masa/rail, no realimentación acústica. Revisar el punto estrella (§4.5), C7 ≥1000 µF, C9 en el pin 7, filtro R1/C1</td></tr>
+<tr><td>Siseo constante sin voz</td><td>Ruido normal de la cadena en Config B</td><td>Baja al pasar a Config A: se tolera, es el precio de los 20 dB de reserva que Config B necesita</td></tr>
+<tr><td>Sin sonido y U1 se calienta</td><td>Oscilación ultrasónica (no audible)</td><td>Corriente de reposo &gt;20 mA confirma. Revisar la red de Zobel (R8+C12), patas cortas en el pin 5, C8 en el pin 6</td></tr>
+<tr><td>Drenaje de MK1 pegado a 8.5 V</td><td>Micrófono al revés o abierto</td><td>Revisar polaridad de MK1 y continuidad del cable</td></tr>
+<tr><td>Drenaje de MK1 cerca de 0 V</td><td>Micrófono en corto</td><td>Revisar soldadura y el propio MK1</td></tr>
+<tr><td>Colector de Q1 en ~8.5 V</td><td>Q1 en corte, pinout invertido</td><td>Verificar con el probador de diodos antes de resoldar</td></tr>
+<tr><td>Colector de Q1 en ~1.2 V</td><td>Q1 saturado</td><td>Revisar R5, R3/R4</td></tr>
+<tr><td>El aparato pita solo cuando se sostiene con la mano en cierta posición, no en la mesa</td><td>Camino de vibración estructural vivo (no es acústico)</td><td>Correr la prueba V1. Revisar apriete del stack de neopreno (debe mecerse ~1 mm, no estar rígido), tensión del cable del micrófono, y que ningún metal de la cápsula toque el PETG</td></tr>
+<tr><td>El golpe del nudillo en la trompeta se oye tan fuerte como la voz (prueba V2 falla)</td><td>Camino estructural vivo</td><td>Mismo que el anterior: revisar el stack de aislamiento completo</td></tr>
+<tr><td>Corriente de reposo del paquete de pilas más alta de lo esperado, autonomía corta</td><td>SW1 no se está apagando, o el portapilas trae switch integrado no puenteado</td><td>Confirmar que SW1 corta el positivo real; revisar que el switch del portapilas (si lo trae) esté puenteado</td></tr>
+<tr><td>Caída de voltaje notoria al hablar fuerte, el sonido se oye débil con pilas nuevas</td><td>Camino de alimentación resistivo (contactos oxidados, F1 con R_max alto)</td><td>Medir la resistencia del camino de 0.3 Ω (contactos + cable + SW1 + F1) con el multímetro; limpiar contactos; confirmar el R_max de F1 contra su hoja de datos</td></tr>
+<tr><td>Config A suena bajo o casi no se oye</td><td>Comportamiento esperado, no falla</td><td>Config A queda corta ya a 94 dB SPL en la cápsula por diseño. Usar Config B (agregar C10) como configuración normal de trabajo</td></tr>
+</table>
+
+<!-- ===================== SECCIÓN 9 — GLOSARIO ===================== -->
+<h2><span class="num">9</span>Glosario</h2>
+<dl class="glos">
+  <dt>SPST</dt><dd><em>Single Pole, Single Throw</em>, interruptor de un polo y una posición de corte.</dd>
+  <dt>TO-92</dt><dd>Encapsulado plástico pequeño típico de transistores de baja potencia, como el 2N3904.</dd>
+  <dt>DIP-8</dt><dd><em>Dual In-line Package</em> de 8 pines, encapsulado del LM386.</dd>
+  <dt>AWG</dt><dd><em>American Wire Gauge</em>, calibre de cable; a menor número, más grueso el conductor.</dd>
+  <dt>OD / ID</dt><dd>Diámetro exterior / diámetro interior.</dd>
+  <dt>ESR</dt><dd><em>Equivalent Series Resistance</em>, resistencia interna equivalente de un capacitor; en electrolíticos, importa para filtrar corriente pulsante.</dd>
+  <dt>Low-ESR</dt><dd>Capacitor electrolítico diseñado para tener baja resistencia interna, mejor para filtrar picos de corriente.</dd>
+  <dt>Polyfuse / PTC</dt><dd>Fusible resettable de coeficiente positivo de temperatura.</dd>
+  <dt>BOM</dt><dd><em>Bill of Materials</em>, lista de materiales.</dd>
+  <dt>PETG</dt><dd>Tereftalato de polietileno modificado con glicol, plástico de impresión 3D.</dd>
+  <dt>Gyroid</dt><dd>Patrón de relleno de impresión 3D con buena relación rigidez/material en todas direcciones.</dd>
+  <dt>Nylock</dt><dd>Tuerca con inserto de nylon que resiste el aflojamiento por vibración.</dd>
+  <dt>Red de Zobel</dt><dd>Red RC en la salida del amplificador que evita oscilación por la inductancia de la bocina.</dd>
+  <dt>Punto estrella</dt><dd>Punto único donde convergen todos los retornos de corriente de potencia, sin compartir camino con la señal de bajo nivel.</dd>
+  <dt>THD</dt><dd><em>Total Harmonic Distortion</em>, distorsión armónica total.</dd>
+</dl>
+
+<footer class="doc-foot">
+  Megáfono Analógico · Manual de armado · Maquetado por Maestro Axel · Método de edición visual de
+  Maestro Axel (Axel García Villagómez) · Los QR de esta edición anclan a
+  <code>github.com/the-baltman/Megafono-Analogico</code>, commit <code>1260e33f</code>. El manual
+  científico complementa este documento con el porqué de cada decisión de diseño.
+</footer>
+
+</body>
+</html>

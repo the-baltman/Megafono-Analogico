@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Megáfono Analógico — Manual científico descriptivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  /* Paleta pastel formal, igual que el resto de la colección de manuales del equipo
+     (ver Referencias-Visuales/01-Sistema-Visual-Manual-Armado.md en la bóveda de Maestro Axel).
+     El acento azul pizarra es el mismo que usa el manual de armado de este mismo proyecto, para
+     que los dos documentos lean como una sola colección aunque cambien de rol tipográfico. */
+  :root{
+    --paper:#f8f6f2; --ink:#23262b; --ink-soft:#4b4f56; --ink-mute:#82868c;
+    --accent:#5c7a99; --accent-2:#7d97b3; --accent-soft:#eef2f6;
+    --rule:#ddd8cd; --rule-soft:#eeebe3;
+    --intuicion:#6f9b84; --intuicion-bg:#eef4f0;
+    --mecanismo:#5c7a99; --mecanismo-bg:#eaf0f5;
+    --ecuacion-bg:#f3f1ec; --ecuacion-border:#d6d2c6;
+    --porque:#a98a5c; --porque-bg:#f6f0e6;
+    --supuesto:#b98266; --supuesto-bg:#f7ece5;
+    --hallazgo:#b5535e; --hallazgo-bg:#f8ecee; --hallazgo-border:#d9a3ac;
+    --cifras-bg:#f8f0dc; --cifras-border:#cfa855;
+    --danger:#a8323f; --danger-bg:#fbe9ea; --danger-border:#c96b76;
+    --fs-util:0.8rem; --fs-body:1rem; --fs-h3:1.25rem; --fs-h2:1.56rem; --fs-h1:1.95rem;
+  }
+  @page{
+    size:letter; margin:16mm 14mm;
+    @bottom-left{ content:"Megáfono Analógico · Manual científico"; font:600 7.5pt 'Source Sans 3',sans-serif; color:#82868c; }
+    @bottom-right{ content:"página " counter(page) " de " counter(pages); font:600 7.5pt 'Source Sans 3',sans-serif; color:#82868c; }
+  }
+  *{box-sizing:border-box;}
+  html,body{background:var(--paper);}
+  body{
+    font-family:'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+    color:var(--ink); max-width:860px; margin:0 auto; padding:28px 16px 80px;
+    font-size:15.5px; line-height:1.58; -webkit-font-smoothing:antialiased;
+  }
+  .doc-head{border-bottom:3px solid var(--accent); padding-bottom:16px; margin-bottom:22px;}
+  .doc-kicker{
+    font-family:'JetBrains Mono', monospace; font-size:var(--fs-util); letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ink-mute); margin-bottom:6px;
+  }
+  h1{
+    font-family:'Newsreader', Georgia, serif; font-weight:700; font-size:calc(var(--fs-h1) * 1.55);
+    color:var(--accent); margin:0 0 6px; line-height:1.12; letter-spacing:-0.02em;
+  }
+  .doc-sub{color:var(--ink-mute); font-size:14px;}
+  h2{
+    font-family:'Newsreader', Georgia, serif; font-weight:600; font-size:calc(var(--fs-h2) * 1.24);
+    color:var(--accent); margin:2.2em 0 0.8em; padding-bottom:6px;
+    border-bottom:1.5px solid var(--rule); letter-spacing:-0.015em; line-height:1.18;
+  }
+  h2 .num{color:var(--ink-mute); font-weight:400; margin-right:.35em;}
+  h3{
+    font-family:'Newsreader', Georgia, serif; font-weight:600; font-size:calc(var(--fs-h3) * 0.94);
+    color:var(--accent-2); margin:1.7em 0 .6em; letter-spacing:-0.01em; line-height:1.2;
+  }
+  p, li, dd{max-width:66ch; margin:.6em 0;}
+  strong{color:var(--accent);}
+  ul,ol{padding-left:1.4em;}
+  li{margin-bottom:.35em;}
+  code{
+    font-family:'JetBrains Mono', monospace; font-size:.86em;
+    background:var(--rule-soft); color:var(--accent); padding:.08em .32em; border-radius:3px;
+  }
+  a{color:var(--accent-2);}
+
+  .t1{
+    background:var(--danger-bg); border:2px solid var(--danger-border); border-radius:10px;
+    padding:1.1em 1.3em; margin:1em 0 1.6em; break-inside:avoid; page-break-inside:avoid;
+    box-shadow:0 1px 0 rgba(0,0,0,.03), 0 8px 20px rgba(168,50,63,.08);
+  }
+  .t1-tag{
+    font-family:'JetBrains Mono',monospace; font-weight:700; font-size:.78rem; letter-spacing:.1em;
+    text-transform:uppercase; color:#fff; background:var(--danger); border-radius:4px;
+    padding:.2em .6em; display:inline-block; margin-bottom:.6em;
+  }
+  .t1 p{max-width:none; color:var(--ink); font-size:.98rem;}
+  .t1 .t1-cifras{display:flex; gap:1.4em; flex-wrap:wrap; margin:.7em 0;}
+  .t1-cifra{background:#fff; border:1.5px solid var(--danger-border); border-radius:8px; padding:.55em .9em; min-width:180px;}
+  .t1-cifra .n{font-family:'Newsreader',serif; font-weight:700; font-size:1.5rem; color:var(--danger); line-height:1;}
+  .t1-cifra .d{font-size:.78rem; color:var(--ink-soft); margin-top:.15em;}
+  .t1 strong{color:var(--danger);}
+
+  .lbl{margin:.85em 0; padding:.6em .9em .6em 1em; border-left:3px solid var(--rule); border-radius:0 4px 4px 0;}
+  .lbl-tag{
+    display:inline-block; font-family:'JetBrains Mono', monospace; font-size:.72rem;
+    letter-spacing:.06em; text-transform:uppercase; font-weight:700;
+    margin-right:.5em; padding:.05em .4em; border-radius:3px;
+  }
+  .lbl-intuicion{border-color:var(--intuicion); background:var(--intuicion-bg);}
+  .lbl-intuicion .lbl-tag{color:#fff; background:var(--intuicion);}
+  .lbl-mecanismo{border-color:var(--mecanismo); background:var(--mecanismo-bg);}
+  .lbl-mecanismo .lbl-tag{color:#fff; background:var(--mecanismo);}
+  .lbl-porque{border-color:var(--porque); background:var(--porque-bg);}
+  .lbl-porque .lbl-tag{color:#fff; background:var(--porque);}
+  .lbl-supuesto{border-color:var(--supuesto); background:var(--supuesto-bg);}
+  .lbl-supuesto .lbl-tag{color:#fff; background:var(--supuesto);}
+  .lbl-cifras{border-color:var(--cifras-border); background:var(--cifras-bg);}
+  .lbl-cifras .lbl-tag{color:#5a4415; background:var(--cifras-border);}
+
+  .eq{
+    background:var(--ecuacion-bg); border:1px solid var(--ecuacion-border); border-radius:6px;
+    padding:.85em 1.1em; margin:.9em 0; overflow-x:auto; break-inside:avoid; page-break-inside:avoid;
+    font-family:'JetBrains Mono', monospace; font-size:.92rem; line-height:1.7; text-align:center;
+  }
+  .eq .eq-note{
+    font-family:'Source Sans 3', sans-serif; font-size:.82rem; color:var(--ink-mute);
+    margin-top:.5em; line-height:1.45; text-align:left;
+  }
+
+  .hallazgo{
+    background:var(--hallazgo-bg); border:1.5px solid var(--hallazgo-border); border-radius:6px;
+    padding:.9em 1.1em; margin:1em 0; color:var(--ink);
+  }
+  .hallazgo strong{color:var(--hallazgo);}
+
+  figure.fig{
+    border:1px solid var(--rule); border-radius:8px; background:var(--rule-soft);
+    padding:1rem 1.1rem 0.9rem; margin:1.4em 0; break-inside:avoid;
+  }
+  figure.fig svg{width:100%; height:auto; display:block; background:var(--paper); border-radius:5px; border:1px solid var(--rule);}
+  figcaption{margin-top:.7em; font-size:.92rem; color:var(--ink-soft);}
+  figcaption .fig-num{font-weight:700; color:var(--accent);}
+  figure.fig .fig-note{font-size:.86rem; color:var(--ink-mute); margin-top:.4em;}
+
+  .qr-row{display:flex; align-items:center; gap:.85em; margin-top:.8em; padding-top:.7em; border-top:1px dashed var(--rule);}
+  .qr-row img{width:64px; height:64px; border:1px solid var(--rule); border-radius:4px; background:#fff;}
+  .qr-row .qr-txt{font-size:.8rem; color:var(--ink-mute); line-height:1.4;}
+  .qr-row .qr-cap{font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--accent); display:block; font-size:.82rem;}
+
+  table{width:100%; border-collapse:collapse; margin:1em 0; font-size:.92rem;}
+  th,td{border:1px solid var(--rule); padding:.45em .6em; text-align:left; vertical-align:top;}
+  th{background:var(--accent-soft); color:var(--accent); font-weight:700;}
+
+  dl.glosario dt{font-weight:700; color:var(--accent); margin-top:.7em; font-family:'JetBrains Mono',monospace; font-size:.85rem;}
+  dl.glosario dd{margin:.15em 0 0;}
+
+  footer.doc-foot{
+    margin-top:3em; padding-top:1em; border-top:1px solid var(--rule);
+    font-size:.82rem; color:var(--ink-mute);
+  }
+  .verweite{font-size:.85rem; color:var(--ink-mute); font-style:italic;}
+
+  @media print{
+    :root{ color-scheme: light; }
+    .lbl, figure.fig, .hallazgo, .t1, table, tr, .eq, dl.glosario dt{break-inside:avoid; page-break-inside:avoid;}
+    h2, h3{break-after:avoid; page-break-after:avoid;}
+    html,body{width:100%;}
+    body{max-width:680px; margin:0 auto; padding:0; background:var(--paper) !important; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    figure.fig{max-width:100%; overflow:hidden;}
+    figure.fig svg{max-width:100%; width:100%; height:auto;}
+    .eq{max-width:100%; overflow-x:hidden;}
+    table{max-width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-head">
+  <div class="doc-kicker">Megáfono Analógico · Documentación técnica</div>
+  <h1>Manual científico descriptivo</h1>
+  <div class="doc-sub">Cómo funciona el aparato y por qué se diseñó así. Método de edición de Maestro Axel.</div>
+</div>
+
+<div class="t1">
+  <span class="t1-tag">Advertencia acústica T-1 — leer antes de construir o probar</span>
+  <div class="t1-cifras">
+    <div class="t1-cifra"><div class="n">~122 dB</div><div class="d">SPL a 25 cm, <strong>pico instantáneo</strong></div></div>
+    <div class="t1-cifra"><div class="n">102 dB</div><div class="d">SPL a 1 m, <strong>promedio en banda de voz</strong></div></div>
+  </div>
+  <p>Las dos cifras son correctas y <strong>no se convierten una en la otra con la ley de la distancia</strong>:
+  una es un pico instantáneo y la otra un promedio de banda, y no hay factor de 1/r que las relacione —
+  extrapolar los 102 dB a 25 cm daría 114 dB, que <strong>no</strong> es la cifra de seguridad correcta.
+  Para seguridad manda siempre la de pico.</p>
+  <p><strong>No apuntar a menos de 1 m de la cara de nadie. Nunca hacia el propio oído.</strong> Arriba de
+  ~75 dB en el oído del receptor la inteligibilidad empeora: apuntar de cerca aturde, no comunica.
+  Probar siempre al aire libre, nunca en un cuarto chico.</p>
+</div>
+
+<p>Este documento explica <strong>cómo funciona</strong> el aparato y <strong>por qué se diseñó así</strong>.
+Si buscas la secuencia de armado paso a paso, ese es el otro documento: <em>Manual de armado</em>. Los dos
+describen el mismo objeto y usan los mismos nombres de componentes.</p>
+
+<h2><span class="num">1</span>Qué es y para qué sirve</h2>
+<p>Es un megáfono portátil, completamente analógico: no lleva microcontrolador ni una sola línea de
+código. Un micrófono capta la voz de cerca, un circuito con dos etapas de amplificación la refuerza, y
+una bocina de trompeta con driver de compresión la proyecta. Todo corre con seis pilas AA comunes.</p>
+<p>El objetivo de diseño es concreto: que la voz se oiga <strong>claramente más fuerte que un grito</strong>,
+sin que el sonido se distorsione al subir el volumen y sin que el aparato "pite" por retroalimentación
+entre la bocina y el micrófono — el chillido agudo característico de un sistema de sonido mal ajustado.
+Cumple esos tres criterios con margen medible, y este documento explica de dónde sale ese margen y qué
+tan cerca está del límite en cada uno.</p>
+
+<h2><span class="num">2</span>Cómo funciona, en general</h2>
+<p>La cadena de señal tiene tres eslabones eléctricos y uno mecánico-acústico, en este orden: micrófono,
+preamplificador, etapa de potencia, bocina — con un camino de realimentación que cierra el lazo por el
+aire, de vuelta al micrófono.</p>
+
+<figure class="fig" id="fig1">
+<svg viewBox="0 0 860 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5c7a99"/>
+    </marker>
+    <marker id="arr1d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b5535e"/>
+    </marker>
+  </defs>
+  <style>
+    .blk{fill:#eaf0f5; stroke:#5c7a99; stroke-width:1.6; rx:8;}
+    .blkt{font:700 14px 'Newsreader',serif; fill:#23262b; text-anchor:middle;}
+    .blks{font:500 10.5px 'Source Sans 3',sans-serif; fill:#4b4f56; text-anchor:middle;}
+    .sig{stroke:#5c7a99; stroke-width:2.4; fill:none; marker-end:url(#arr1);}
+    .fb{stroke:#b5535e; stroke-width:2; fill:none; stroke-dasharray:6 5; marker-end:url(#arr1d);}
+    .lab{font:600 10.5px 'JetBrains Mono',monospace; fill:#4b4f56; text-anchor:middle;}
+    .labr{font:600 10.5px 'JetBrains Mono',monospace; fill:#b5535e; text-anchor:middle;}
+  </style>
+
+  <text x="35" y="140" font="700 22px sans-serif" font-family="Newsreader,serif" font-size="20" fill="#23262b">voz</text>
+
+  <rect class="blk" x="90" y="105" width="120" height="70" rx="8"/>
+  <text class="blkt" x="150" y="135">MK1</text>
+  <text class="blks" x="150" y="153">cápsula electret</text>
+
+  <line class="sig" x1="70" y1="140" x2="88" y2="140"/>
+  <line class="sig" x1="210" y1="140" x2="268" y2="140"/>
+
+  <rect class="blk" x="270" y="105" width="120" height="70" rx="8"/>
+  <text class="blkt" x="330" y="135">Q1</text>
+  <text class="blks" x="330" y="153">preamplificador</text>
+
+  <line class="sig" x1="390" y1="140" x2="448" y2="140"/>
+
+  <rect class="blk" x="450" y="105" width="120" height="70" rx="8"/>
+  <text class="blkt" x="510" y="135">U1</text>
+  <text class="blks" x="510" y="153">etapa de potencia</text>
+
+  <line class="sig" x1="570" y1="140" x2="628" y2="140"/>
+
+  <rect class="blk" x="630" y="105" width="120" height="70" rx="8"/>
+  <text class="blkt" x="690" y="135">MK2</text>
+  <text class="blks" x="690" y="153">trompeta</text>
+
+  <line class="sig" x1="750" y1="140" x2="805" y2="140"/>
+  <text x="812" y="145" font-family="Newsreader,serif" font-size="17" fill="#23262b">aire</text>
+
+  <text class="lab" x="148" y="98">≈mV</text>
+  <text class="lab" x="330" y="98">+21.6 dB</text>
+  <text class="lab" x="510" y="98">+26 / +46 dB</text>
+  <text class="lab" x="690" y="98">+112–113 dB/W/m</text>
+
+  <path class="fb" d="M 690 230 C 690 260, 150 260, 150 230"/>
+  <text class="labr" x="420" y="278">realimentación acústica — camino bocina → aire → cápsula (§3.3)</text>
+</svg>
+<figcaption><span class="fig-num">Figura 1.</span> Cadena de señal completa. Tres eslabones eléctricos
+(MK1 → Q1 → U1) y uno acústico (MK2 → aire). El camino punteado es el lazo de realimentación: si su
+ganancia llega a 1 en fase, el sistema pita (§3.3).</figcaption>
+</figure>
+
+<p><strong>MK1</strong>, una cápsula electret miniatura, convierte la presión sonora de la voz en una
+señal eléctrica muy pequeña — del orden de milivolts. Esa señal es demasiado débil para mover una
+bocina directamente, así que pasa por dos etapas de amplificación antes de llegar a la salida.</p>
+<p><strong>Q1</strong>, un transistor único en configuración de emisor común, es un preamplificador de
+voltaje: sube la señal del micrófono <strong>+21.6 dB</strong> antes de que llegue al segundo eslabón.
+Existe porque el segundo eslabón, por sí solo, no alcanza a dar toda la ganancia que el proyecto
+necesita (§4.3).</p>
+<p><strong>U1</strong>, un circuito integrado de audio LM386N-3, es la etapa de potencia: toma la señal
+ya preamplificada y la convierte en la corriente que puede mover una bocina, con una ganancia adicional
+configurable de 26 o 46 dB (Config A / Config B — ver §4.2).</p>
+<p><strong>MK2</strong>, la trompeta con driver de compresión, convierte esa potencia eléctrica en
+presión sonora con una eficiencia muy superior a la de una bocina de cono común. Esta es la pieza que
+decide si el proyecto funciona o no — ver §3.1 y §4.1.</p>
+<p>Y el eslabón mecánico-acústico, invisible en el diagrama de bloques pero decisivo: la distancia entre
+la boca del usuario y MK1, y la distancia entre MK2 y MK1 <strong>dentro</strong> del cuerpo del aparato.
+De esas dos distancias depende que el sistema amplifique sin chillar (§3.3, Figura 3).</p>
+
+<h2><span class="num">3</span>Los fundamentos</h2>
+
+<figure class="fig" id="fig2">
+<svg viewBox="0 0 960 620" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4b4f56"/>
+    </marker>
+  </defs>
+  <style>
+    .zone{opacity:.55;}
+    .zt{font:700 12px 'JetBrains Mono',monospace; letter-spacing:.05em; fill:#4b4f56;}
+    .w{stroke:#4b4f56; stroke-width:1.6; fill:none;}
+    .wg{stroke:#82868c; stroke-width:1.4; fill:none;}
+    .rbox{fill:#fff; stroke:#4b4f56; stroke-width:1.4;}
+    .rt{font:600 10px 'JetBrains Mono',monospace; fill:#23262b; text-anchor:middle;}
+    .cap{stroke:#4b4f56; stroke-width:2;}
+    .nd{fill:#4b4f56;}
+    .lbl2{font:600 10.5px 'JetBrains Mono',monospace; fill:#5c7a99; text-anchor:middle;}
+    .gnd{stroke:#4b4f56; stroke-width:1.4;}
+  </style>
+
+  <rect class="zone" x="10" y="10" width="290" height="595" fill="#eef4f0" rx="8"/>
+  <text class="zt" x="26" y="32">BLOQUE A · MICRÓFONO</text>
+  <rect class="zone" x="310" y="10" width="290" height="595" fill="#eaf0f5" rx="8"/>
+  <text class="zt" x="326" y="32">BLOQUE B · PREAMPLIFICADOR (Q1)</text>
+  <rect class="zone" x="610" y="10" width="340" height="595" fill="#f6f0e6" rx="8"/>
+  <text class="zt" x="626" y="32">BLOQUE C · ETAPA DE POTENCIA (U1)</text>
+
+  <!-- V+ rail -->
+  <line class="w" x1="40" y1="55" x2="930" y2="55"/>
+  <text class="lbl2" x="60" y="48">V+ 9.0 V</text>
+
+  <!-- Block A: R1, C1, R2, MK1, C2 -->
+  <line class="w" x1="60" y1="55" x2="60" y2="90"/>
+  <rect class="rbox" x="45" y="90" width="30" height="46"/>
+  <text class="rt" x="60" y="110">R1</text><text class="rt" x="60" y="122">470</text>
+  <line class="w" x1="60" y1="136" x2="60" y2="165"/>
+  <circle class="nd" cx="60" cy="165" r="2.6"/>
+  <text class="lbl2" x="100" y="158">V_A ≈8.46V</text>
+
+  <line class="w" x1="60" y1="165" x2="130" y2="165"/>
+  <line class="cap" x1="130" y1="150" x2="130" y2="180"/>
+  <line class="cap" x1="138" y1="150" x2="138" y2="180"/>
+  <text class="rt" x="134" y="145">C1 220µF</text>
+  <line class="wg" x1="134" y1="180" x2="134" y2="210"/>
+
+  <line class="w" x1="60" y1="165" x2="60" y2="200"/>
+  <rect class="rbox" x="45" y="200" width="30" height="46"/>
+  <text class="rt" x="60" y="220">R2</text><text class="rt" x="60" y="232">2.2k</text>
+  <line class="w" x1="60" y1="246" x2="60" y2="280"/>
+  <circle class="nd" cx="60" cy="280" r="2.6"/>
+  <text class="lbl2" x="200" y="272">drenaje MK1 ≈7.4V</text>
+
+  <!-- MK1 capsule -->
+  <circle cx="60" cy="330" r="26" fill="#fff" stroke="#6f9b84" stroke-width="2"/>
+  <text class="rt" x="60" y="326">MK1</text>
+  <text class="rt" x="60" y="340" font-size="8">electret</text>
+  <line class="w" x1="60" y1="280" x2="60" y2="304"/>
+  <line class="wg" x1="60" y1="356" x2="60" y2="380"/>
+
+  <line class="w" x1="60" y1="280" x2="180" y2="280"/>
+  <line class="cap" x1="180" y1="265" x2="180" y2="295"/>
+  <line class="cap" x1="188" y1="265" x2="188" y2="295"/>
+  <text class="rt" x="184" y="260">C2 100nF</text>
+  <line class="w" x1="188" y1="280" x2="330" y2="280"/>
+
+  <!-- GND symbol block A -->
+  <line class="gnd" x1="50" y1="380" x2="70" y2="380"/>
+  <line class="gnd" x1="54" y1="386" x2="66" y2="386"/>
+  <line class="gnd" x1="57" y1="392" x2="63" y2="392"/>
+  <line class="gnd" x1="126" y1="210" x2="146" y2="210"/>
+  <line class="gnd" x1="130" y1="216" x2="142" y2="216"/>
+  <line class="gnd" x1="133" y1="222" x2="139" y2="222"/>
+
+  <!-- Block B: R3/R4 bias, R5, Q1, R6/R7/C3, C4, C5 -->
+  <line class="w" x1="360" y1="55" x2="360" y2="90"/>
+  <rect class="rbox" x="345" y="90" width="30" height="42"/>
+  <text class="rt" x="360" y="108">R3</text><text class="rt" x="360" y="120">82k</text>
+  <line class="w" x1="360" y1="132" x2="360" y2="160"/>
+  <circle class="nd" cx="360" cy="160" r="2.6"/>
+  <line class="w" x1="360" y1="160" x2="405" y2="160"/>
+
+  <rect class="rbox" x="345" y="170" width="30" height="42"/>
+  <text class="rt" x="360" y="188">R4</text><text class="rt" x="360" y="200">22k</text>
+  <line class="w" x1="360" y1="160" x2="360" y2="170"/>
+  <line class="wg" x1="360" y1="212" x2="360" y2="240"/>
+
+  <!-- Q1 transistor -->
+  <circle cx="440" cy="160" r="28" fill="#fff" stroke="#5c7a99" stroke-width="2"/>
+  <text class="rt" x="440" y="150">Q1</text>
+  <text class="rt" x="440" y="164" font-size="8">2N3904</text>
+  <text class="rt" x="440" y="176" font-size="7.5">B</text>
+  <line class="w" x1="440" y1="90" x2="440" y2="132"/>
+  <text class="lbl2" x="500" y="104">colector</text>
+  <line class="w" x1="440" y1="188" x2="440" y2="230"/>
+  <text class="lbl2" x="500" y="246">emisor</text>
+
+  <line class="w" x1="440" y1="55" x2="440" y2="60"/>
+  <rect class="rbox" x="425" y="60" width="30" height="30"/>
+  <text class="rt" x="440" y="79">R5 4.7k</text>
+
+  <line class="w" x1="440" y1="230" x2="440" y2="250"/>
+  <rect class="rbox" x="425" y="250" width="30" height="34"/>
+  <text class="rt" x="440" y="267">R6</text><text class="rt" x="440" y="278">220</text>
+  <line class="w" x1="440" y1="284" x2="440" y2="300"/>
+  <circle class="nd" cx="440" cy="300" r="2.6"/>
+
+  <line class="w" x1="440" y1="300" x2="500" y2="300"/>
+  <rect class="rbox" x="500" y="285" width="30" height="34"/>
+  <text class="rt" x="515" y="302">R7</text><text class="rt" x="515" y="313" font-size="8">1.8k</text>
+  <line class="wg" x1="515" y1="319" x2="515" y2="340"/>
+
+  <line class="w" x1="440" y1="300" x2="440" y2="320"/>
+  <line class="cap" x1="425" y1="330" x2="455" y2="330"/>
+  <line class="cap" x1="425" y1="338" x2="455" y2="338"/>
+  <text class="rt" x="440" y="322" font-size="8">C3 22µF</text>
+  <line class="wg" x1="440" y1="338" x2="440" y2="360"/>
+
+  <line class="w" x1="440" y1="132" x2="580" y2="132"/>
+  <line class="cap" x1="580" y1="118" x2="580" y2="146"/>
+  <line class="cap" x1="588" y1="118" x2="588" y2="146"/>
+  <text class="rt" x="584" y="104" font-size="8">C4</text>
+  <text class="rt" x="584" y="113" font-size="7">12nF</text>
+  <line class="wg" x1="584" y1="146" x2="584" y2="168"/>
+
+  <line class="w" x1="440" y1="90" x2="440" y2="80"/>
+  <line class="w" x1="440" y1="132" x2="440" y2="160"/>
+  <line class="w" x1="330" y1="280" x2="410" y2="280"/>
+  <line class="w" x1="410" y1="280" x2="410" y2="176"/>
+  <line class="w" x1="410" y1="176" x2="412" y2="176"/>
+  <text class="lbl2" x="360" y="296">acoplo C2 → base Q1</text>
+
+  <line class="w" x1="440" y1="132" x2="620" y2="132"/>
+  <line class="cap" x1="620" y1="118" x2="620" y2="146"/>
+  <line class="cap" x1="628" y1="118" x2="628" y2="146"/>
+  <text class="rt" x="624" y="164" font-size="8">C5</text>
+  <text class="rt" x="624" y="173" font-size="7">220nF</text>
+  <line class="w" x1="628" y1="132" x2="700" y2="132"/>
+
+  <!-- RV1 -->
+  <rect class="rbox" x="695" y="110" width="60" height="44" rx="4"/>
+  <text class="rt" x="725" y="130">RV1</text>
+  <text class="rt" x="725" y="142" font-size="8">10k log</text>
+  <line class="w" x1="755" y1="132" x2="800" y2="132"/>
+  <line class="wg" x1="725" y1="154" x2="725" y2="180"/>
+
+  <!-- GND symbols block B -->
+  <line class="gnd" x1="430" y1="360" x2="450" y2="360"/>
+  <line class="gnd" x1="434" y1="366" x2="446" y2="366"/>
+  <line class="gnd" x1="437" y1="372" x2="443" y2="372"/>
+  <line class="gnd" x1="505" y1="340" x2="525" y2="340"/>
+  <line class="gnd" x1="509" y1="346" x2="521" y2="346"/>
+  <line class="gnd" x1="512" y1="352" x2="518" y2="352"/>
+  <line class="gnd" x1="574" y1="168" x2="594" y2="168"/>
+  <line class="gnd" x1="578" y1="174" x2="590" y2="174"/>
+  <line class="gnd" x1="581" y1="180" x2="587" y2="180"/>
+  <line class="gnd" x1="715" y1="180" x2="735" y2="180"/>
+  <line class="gnd" x1="719" y1="186" x2="731" y2="186"/>
+  <line class="gnd" x1="722" y1="192" x2="728" y2="192"/>
+
+  <!-- Block C: U1 DIP-8 -->
+  <rect x="800" y="90" width="90" height="150" rx="4" fill="#fff" stroke="#a98a5c" stroke-width="2"/>
+  <text class="rt" x="845" y="112" font-weight="700">U1</text>
+  <text class="rt" x="845" y="124" font-size="8">LM386N-3</text>
+  <text class="rt" x="845" y="136" font-size="8">DIP-8</text>
+  <text class="rt" x="815" y="152" font-size="7.5" text-anchor="start">1 GAIN</text>
+  <text class="rt" x="815" y="166" font-size="7.5" text-anchor="start">2 -IN</text>
+  <text class="rt" x="815" y="180" font-size="7.5" text-anchor="start">3 +IN</text>
+  <text class="rt" x="815" y="194" font-size="7.5" text-anchor="start">4 GND</text>
+  <text class="rt" x="875" y="152" font-size="7.5" text-anchor="end">8 GAIN</text>
+  <text class="rt" x="875" y="166" font-size="7.5" text-anchor="end">7 BYP</text>
+  <text class="rt" x="875" y="180" font-size="7.5" text-anchor="end">6 V_S</text>
+  <text class="rt" x="875" y="194" font-size="7.5" text-anchor="end">5 OUT</text>
+
+  <line class="w" x1="800" y1="180" x2="756" y2="180"/>
+  <line class="w" x1="756" y1="180" x2="756" y2="132"/>
+  <line class="wg" x1="800" y1="194" x2="770" y2="194"/>
+  <line class="wg" x1="770" y1="194" x2="770" y2="250"/>
+  <line class="w" x1="890" y1="180" x2="930" y2="180"/>
+  <line class="w" x1="930" y1="180" x2="930" y2="55"/>
+  <text class="lbl2" x="905" y="172">V_S</text>
+
+  <!-- pin1/8 JP1 -->
+  <line class="wg" x1="800" y1="152" x2="770" y2="152"/>
+  <line class="wg" x1="890" y1="152" x2="920" y2="152"/>
+  <path class="wg" d="M770,152 C750,152 750,230 800,230" stroke-dasharray="4 3"/>
+  <path class="wg" d="M920,152 C940,152 940,230 890,230" stroke-dasharray="4 3"/>
+  <rect x="795" y="222" width="100" height="18" rx="3" fill="#f6f0e6" stroke="#a98a5c"/>
+  <text class="rt" x="845" y="235" font-size="8">JP1 / C10 — Config B (10µF)</text>
+
+  <!-- output net: R8, C12, C11, MK2 -->
+  <line class="w" x1="890" y1="194" x2="890" y2="280"/>
+  <line class="w" x1="890" y1="280" x2="930" y2="280"/>
+  <rect class="rbox" x="895" y="290" width="30" height="30"/>
+  <text class="rt" x="910" y="307" font-size="8">R8 10Ω</text>
+  <line class="w" x1="910" y1="320" x2="910" y2="336"/>
+  <line class="cap" x1="895" y1="336" x2="925" y2="336"/>
+  <line class="cap" x1="895" y1="344" x2="925" y2="344"/>
+  <text class="rt" x="910" y="358" font-size="8">C12 47nF</text>
+  <line class="wg" x1="910" y1="358" x2="910" y2="380"/>
+
+  <line class="cap" x1="850" y1="270" x2="850" y2="298"/>
+  <line class="cap" x1="858" y1="270" x2="858" y2="298"/>
+  <text class="rt" x="854" y="264" font-size="8">C11 100µF</text>
+  <line class="w" x1="854" y1="298" x2="854" y2="440"/>
+
+  <!-- MK2 speaker symbol -->
+  <path d="M 800 420 L 830 420 L 860 400 L 860 480 L 830 460 L 800 460 Z" fill="#fff" stroke="#a98a5c" stroke-width="2"/>
+  <text class="rt" x="795" y="445" font-size="9" text-anchor="end">MK2</text>
+  <text class="rt" x="795" y="457" font-size="7.5" text-anchor="end">TOA SC-615</text>
+  <line class="w" x1="854" y1="440" x2="830" y2="435"/>
+  <line class="wg" x1="800" y1="450" x2="750" y2="450"/>
+
+  <!-- star point -->
+  <circle cx="700" cy="540" r="5" fill="#b5535e"/>
+  <text class="rt" x="700" y="565" font-size="9" fill="#b5535e" font-weight="700">PUNTO ESTRELLA</text>
+  <line class="wg" x1="770" y1="250" x2="770" y2="500"/>
+  <line class="wg" x1="770" y1="500" x2="705" y2="537"/>
+  <line class="wg" x1="915" y1="405" x2="915" y2="500"/>
+  <line class="wg" x1="915" y1="500" x2="705" y2="538"/>
+  <line class="wg" x1="750" y1="450" x2="750" y2="500"/>
+  <line class="wg" x1="750" y1="500" x2="697" y2="537"/>
+  <line class="wg" x1="910" y1="380" x2="910" y2="500"/>
+  <line class="wg" x1="910" y1="500" x2="702" y2="539"/>
+  <line class="wg" x1="60" y1="380" x2="60" y2="590"/>
+  <line class="wg" x1="60" y1="590" x2="700" y2="547"/>
+  <line class="wg" x1="134" y1="210" x2="134" y2="592"/>
+  <line class="wg" x1="134" y1="592" x2="700" y2="547"/>
+  <text class="rt" x="60" y="605" font-size="7.5" fill="#82868c" text-anchor="start">retornos de señal (mic/pream.) → 1 solo cable al punto estrella (§4.5)</text>
+</svg>
+<figcaption><span class="fig-num">Figura 2.</span> Esquemático completo, agrupado por bloque funcional.
+Zona verde: Bloque A (micrófono y su rail filtrado). Zona azul: Bloque B (preamplificador Q1). Zona
+ocre: Bloque C (etapa de potencia U1, red de Zobel R8/C12, salida a MK2). Todos los retornos de
+potencia convergen en el punto estrella (§4.5); el retorno de señal de baja potencia (micrófono,
+Bloque A/B) llega ahí por un único cable dedicado, nunca compartiendo riel con la corriente de la
+bocina.</figcaption>
+<div class="qr-row">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYgAAAGIAQAAAABzOEqLAAADVUlEQVR4nO1b2W7jMAwkhf3/X54FT2mfarcQ0W2HAWJJkRDEzPAY0gp5KevtAeGJ57Je7A3hiZv36o+Ixgg+ghpgFLKvNlL0Lurjsj7ETZb63TeF5IorQAFXFPYu6uO2PsRw4RiwV2jEdSMawAgfozGgPp7L+tIJhd3/tk+qAkdMWLIS6uO5rC+dgPsPcyFqyLCluBzaEOrjvr1CThwf7tMdIzZBXI5dxMdzWfJa0Mr44BUCUB+X8YEaOxzKSGVUVUZMehf18VyWvBX1DMNGoQDNSCtXQim2qLVCfVy3V7BLWqWyX74QgIkhch/1cRkf4rDofC8XIjMPuMRWxIfUx4A+ZJMlYayCMIngd2eJoL2a8R/wW+8rPWyQ1Ebxd+LjenwFt0RlulAaKUrRwYM0XtTHbX+OcNY+3IlGZR3u0Js4Af35CN+u7jtqFPxuWqoyWNCADO3Vdf8h6c3daEUSkgpK2ndrh/ZqwH9omalgr8pGhW/3dcmPiY8BfEiEUzuU2tXC3iEda9Fe3deH9LR5q6yHFAMviRH6j4H4KmUzuenBc+GgUMD4aqD+IRsAUSkPmFitsMofsDnzj5eyPnNCI/kri5TkbtHs1dqg5d3pP57L+tQJVPtIuorOA7PpxHGBUhn1cT8/lxhGIp7Z+Ok/egP59gF+VyrE6sDK3opr35mJOnqIj+v+Q9xZayXqVZzK9p+jv0SZf8zwieLlvw5322QdvkSScyQ+ZvgrVBqe12QVK0nX4rOoj9v5h8JqHh1inaFWSjYzkL+aqdeKSVBUsXq2tzcZD/JXo/2Juo1Wk4hNNUqU1xlfDfT74OgYzSJg5R2dkriwPjjEJ6IDqc0oZlNWV3HB+Eru60Mr3Wv/ffSTdCNQtp2QTxzj25EpyIZGTg74gPnHUP6h2Ta9R/5ht+4e/bzMPybslcnRv9DUVZdu0Q2MzAeHnq9FdMJ1GaQZRf1nvl5/x+KJzzxfq10/L4B4y9Vut1b2X00+XyvVgLV72k9OS9Kt8N8+93ytZCzVZSo3X50S6te/45msX97PEFIcrj3n3D7jTEBAfneQv0Led3cbEfs6pZV9cpoA+p7/q/Uzn69FtbJX9WlbMMlO+O/5O9bPyz/+69+xeOKxrOdb5bef+AtjdUs4MvDXfwAAAABJRU5ErkJggg==" alt="QR esquemático">
+  <div class="qr-txt"><span class="qr-cap">esquemático · 1260e33</span>hardware/esquematico.md — esquemático fuente, con todas las referencias y notas de trazado, en GitHub (permalink al commit exacto).</div>
+</div>
+</figure>
+
+<h3>3.1 Por qué la ganancia vive en la bocina, y no en los watts</h3>
+<div class="lbl lbl-intuicion"><span class="lbl-tag">Intuición</span>Piensa en la potencia eléctrica
+como el dinero que traes, y en la <strong>sensibilidad</strong> del transductor como el tipo de cambio.
+Duplicar el dinero (la potencia) te da +3 dB. Cambiar de un tipo de cambio malo a uno bueno — de una
+bocina de cono a una trompeta con driver de compresión — te puede dar +28 dB. Con un aparato alimentado
+por pilas, el tipo de cambio importa mucho más que el dinero, y es el error que casi todos cometen al
+diseñar un megáfono casero: buscan más watts cuando el problema está en el transductor.</div>
+
+<div class="lbl lbl-mecanismo"><span class="lbl-tag">El mecanismo real</span>Una bocina de cono directo
+es un transductor ineficiente: convierte menos del 1&nbsp;% de la potencia eléctrica en potencia
+acústica, porque hay un desacoplamiento de impedancia enorme entre la membrana (rígida, se mueve mucho)
+y el aire libre (muy "blando", empuja poco). Una bocina de trompeta con driver de compresión resuelve
+ese desacoplamiento con dos mecanismos que actúan juntos: la <strong>razón de compresión</strong> (el
+diafragma empuja sobre un área de garganta mucho menor que su propia superficie, así que la presión en
+la garganta sube fuerte) y la <strong>directividad</strong> (la bocina concentra la radiación hacia
+adelante en vez de repartirla en todas direcciones, lo que regala dB adicionales sin gastar potencia
+extra).</div>
+
+<div class="lbl lbl-cifras"><span class="lbl-tag">Las cifras</span>La diferencia medida entre un cono de
+3" (84 dB SPL/W/m, verificado de hoja Misco) y la trompeta TOA SC-615 (112 dB SPL/W/m pico, verificado
+de hoja TOA) es de <strong>19 a 28 dB</strong>.</div>
+
+<div class="eq">
+  factor de potencia equivalente = 10^(ΔL / 10)
+  <div class="eq-note"><em>Variables:</em> ΔL = diferencia de sensibilidad entre dos transductores, en dB SPL/W/m.
+  <em>Supuesto de validez:</em> la comparación asume la misma potencia eléctrica de entrada y campo libre.</div>
+</div>
+
+<table>
+  <tr><th>ΔL</th><th>Factor de potencia</th></tr>
+  <tr><td>19 dB</td><td>×79</td></tr>
+  <tr><td>28 dB</td><td>×631</td></tr>
+</table>
+
+<p>Dicho en términos concretos: para que el cono de 84 dB igualara a la trompeta con 0.2 W de entrada,
+habría que meterle <strong>126 W</strong>. Ningún LM386 alimentado con pilas AA llega ahí ni de lejos.</p>
+<div class="hallazgo"><strong>Conclusión de diseño:</strong> la ganancia está en el transductor, no en el
+amplificador. Es la razón por la que este proyecto compra una trompeta completa en vez de intentar
+estirar watts de un circuito que estructuralmente no los tiene.</div>
+
+<h3>3.2 Por qué un megáfono de mano no puede radiar los graves de la voz</h3>
+<div class="lbl lbl-intuicion"><span class="lbl-tag">Intuición</span>Una bocina es, para el aire, lo
+mismo que un transformador de impedancia es para un circuito eléctrico: en la garganta el aire está
+confinado en un área chica, así que el diafragma empuja contra algo "duro" y eficiente; el perfil que
+se abre hacia la boca va transformando esa presión alta / velocidad baja en presión baja / velocidad
+alta hasta empatar con el aire libre. Igual que un transformador eléctrico, tiene una banda: abajo de
+cierta frecuencia deja de transformar y el diafragma vuelve a "dar manotazos" en el aire sin empujar
+nada útil.</div>
+
+<div class="lbl lbl-mecanismo"><span class="lbl-tag">El mecanismo real, con la ecuación de Webster</span>
+La propagación del sonido dentro de un ducto de sección variable (como el interior de una bocina) se
+describe con la ecuación de Webster para ondas planas en un ducto de área S(x).</div>
+
+<div class="eq">
+  ∂/∂x [ S(x) · ∂p'/∂x ] = S(x)/c² · ∂²p'/∂t²
+  <div class="eq-note">p'(x,t) = desviación de presión [Pa] · S(x) = área de sección transversal en x [m²]
+  · c = velocidad del sonido, 343 m/s a 20 °C · x = coordenada a lo largo del eje de la bocina [m].
+  <em>Supuestos:</em> onda aproximadamente plana en cada sección (falla cerca de la boca); acústica
+  lineal (válida hasta ~140 dB en la garganta); paredes rígidas y sin pérdidas; sin flujo medio de aire.</div>
+</div>
+
+<p>Lo que decide si la bocina transforma impedancia o no es el signo de un término en la ecuación
+transformada: si es positivo, la onda <strong>viaja</strong> y hay transformación; si es negativo, la
+onda es <strong>evanescente</strong> y no se propaga. El cambio de signo <strong>es</strong> la
+frecuencia de corte. Dos criterios prácticos la fijan, y manda el mayor de los dos:</p>
+
+<div class="eq">
+  f_c = m·c / 4π &nbsp; (perfil de la bocina) &nbsp;&nbsp;·&nbsp;&nbsp; f_c = c / 2π·a_m &nbsp; (tamaño de la boca)
+  <div class="eq-note">m = constante de apertura del perfil exponencial [m⁻¹] · a_m = radio de la boca [m].</div>
+</div>
+
+<p>En dimensiones caseras (boca de 20–40 cm) casi siempre manda el criterio de la boca, y los dos
+convergen en el mismo rango: <strong>250–550 Hz</strong> para cualquier bocina de tamaño de mano.</p>
+
+<div class="lbl lbl-cifras"><span class="lbl-tag">Las cifras que importan</span>El fundamental de la voz
+masculina está en 116–120 Hz, el de la voz femenina en 205–210 Hz (verificado, datos normativos de
+fonética). Para que una bocina radie esos fundamentales haría falta una boca de:</div>
+
+<div class="eq">
+  a_m = c / (2π·f_c) &nbsp;⟹&nbsp; para f_c = 116 Hz: a_m ≈ 0.47 m &nbsp;⟹&nbsp; boca de <strong>≈1.1 m de diámetro</strong>
+</div>
+
+<p>Ningún megáfono de mano tiene eso.</p>
+<div class="hallazgo"><strong>Conclusión:</strong> el sonido "delgado y nasal" característico de un
+megáfono no es un defecto de fabricación — es una consecuencia directa de la longitud de onda. Y no
+cuesta inteligibilidad: el oído humano reconstruye el tono percibido a partir de los armónicos
+superiores aunque el fundamental esté ausente (fenómeno del <em>fundamental ausente</em>), y la
+información que distingue las palabras vive en las consonantes, entre 2 y 4 kHz — no en el fundamental.
+Por eso este proyecto recorta deliberadamente la banda por debajo de 300 Hz (§3.4): no se pierde nada
+que la bocina fuera a radiar de todos modos.</div>
+
+<h3>3.3 Por qué el micrófono pegado a la boca evita el pitido — no la electrónica</h3>
+<div class="lbl lbl-intuicion"><span class="lbl-tag">Intuición</span>Un megáfono es, matemáticamente, un
+oscilador al que le faltan unos dB. La cadena micrófono → amplificador → bocina → aire → micrófono es un
+lazo cerrado, el mismo objeto que un oscilador Colpitts o un lazo de control inestable. Piensa en una
+fila de dominós en círculo: si cada dominó tiene fuerza para tirar al siguiente, la ronda nunca se
+detiene. La única pregunta de diseño es cuánto le falta a cada dominó para tirar al siguiente — ese
+déficit es el margen.</div>
+
+<div class="lbl lbl-mecanismo"><span class="lbl-tag">El mecanismo real: el criterio de Barkhausen</span>
+El sistema oscila cuando, simultáneamente, la ganancia de lazo alcanza 1 y la fase completa un ciclo.</div>
+
+<div class="eq">
+  T(jω) = G_mic · G_amp · G_spk · H_aire &nbsp;&nbsp;·&nbsp;&nbsp; |T(jω₀)| ≥ 1 y ∠T(jω₀) = 2πn
+  <div class="eq-note">G_mic = sensibilidad del micrófono hacia la bocina [V/Pa] · G_amp = ganancia de voltaje del
+  amplificador completo [V/V] · G_spk = eficiencia del transductor, Pa a 1 m por volt de entrada [Pa/V] ·
+  H_aire = camino acústico bocina→micrófono, atenuación ∝ 1/d y retardo [adimensional].
+  <em>Supuestos:</em> sistema lineal (se rompe al recortar — y es justo el recorte lo que estabiliza la
+  amplitud del pitido en vez de dejarlo crecer sin límite); geometría fija; un solo camino acústico
+  dominante.</div>
+</div>
+
+<p>La condición de fase se cumple en muchas frecuencias a la vez — con un retardo de 0.25 m hay un
+candidato de fase cada 1372 Hz, repartidos por todo el espectro audible. <strong>La fase no decide dónde
+pita: decide la magnitud.</strong> El sistema pita en la frecuencia donde el producto |T(jω)| tiene su
+pico, y ese pico casi siempre cae en <strong>1–3 kHz</strong>: es donde la trompeta es más sensible,
+donde el electret es plano y donde el amplificador tiene toda su ganancia disponible. Coincide con la
+experiencia universal de que los megáfonos pitan agudo, no grave.</p>
+
+<div class="lbl lbl-cifras"><span class="lbl-tag">El presupuesto de margen</span>Para un aparato donde el
+micrófono y la bocina van en el mismo cuerpo:</div>
+
+<div class="eq">
+  M ≈ 20·log₁₀(D_lazo / D_S) + R_spk + R_mic − FSM
+  <div class="eq-note">D_lazo = distancia bocina → cápsula, dentro del aparato [m] · D_S = distancia boca del hablante
+  → cápsula [m] · R_spk = rechazo del transductor hacia atrás [dB] · R_mic = rechazo del micrófono hacia
+  la bocina, 0 dB si es omnidireccional [dB] · FSM = margen de estabilidad de realimentación, 6 dB por
+  convención de la industria [dB]. <em>Supuestos:</em> campo libre en los dos caminos; la ley 1/r vale
+  (falla muy cerca de la boca, a menos de ~10 cm); sin reflexiones fuertes cercanas.</div>
+</div>
+
+<figure class="fig" id="fig3">
+<svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .body{fill:#f8f6f2; stroke:#82868c; stroke-width:1.5;}
+    .cage{fill:#eef4f0; stroke:#6f9b84; stroke-width:2;}
+    .dim{stroke:#b5535e; stroke-width:1.3;}
+    .dimt{font:600 11px 'JetBrains Mono',monospace; fill:#b5535e; text-anchor:middle;}
+    .lab3{font:500 11.5px 'Source Sans 3',sans-serif; fill:#4b4f56;}
+    .labb{font:700 11.5px 'Source Sans 3',sans-serif; fill:#23262b;}
+  </style>
+  <!-- Spine -->
+  <rect class="body" x="60" y="150" width="560" height="34" rx="4"/>
+  <text class="lab3" x="330" y="230" text-anchor="middle">espina de pino, 330 mm</text>
+
+  <!-- Trumpet at left -->
+  <path class="body" d="M 60 130 L 60 204 L -10 250 L -10 84 Z" fill="#f8f6f2" stroke="#a98a5c" stroke-width="2"/>
+  <text class="lab3" x="20" y="172" text-anchor="middle">MK2</text>
+
+  <!-- Boom + jaula at right -->
+  <path class="body" d="M 620 160 C 700 140, 760 140, 800 150" fill="none" stroke="#82868c" stroke-width="10" stroke-linecap="round"/>
+  <text class="lab3" x="710" y="130">boom (PETG)</text>
+
+  <g transform="translate(800,150)">
+    <path class="cage" d="M 0 -34 C 40 -34 60 -10 60 0 C 60 10 40 34 0 34 L -6 30 C 20 22 34 12 34 0 C 34 -12 20 -22 -6 -30 Z"/>
+    <circle cx="10" cy="0" r="13" fill="#fff" stroke="#5c7a99" stroke-width="2.2"/>
+    <text class="lab3" x="10" y="4" text-anchor="middle" font-size="8">MK1</text>
+    <text class="lab3" x="15" y="-45" text-anchor="middle">jaula de voz</text>
+    <text class="lab3" x="15" y="52" text-anchor="middle" font-size="10">3 costillas + anillo de borde</text>
+  </g>
+
+  <!-- Dimension G1: capsule to ring plane -->
+  <line class="dim" x1="810" y1="110" x2="810" y2="35"/>
+  <line class="dim" x1="858" y1="110" x2="858" y2="35"/>
+  <line class="dim" x1="810" y1="72" x2="858" y2="72"/>
+  <text class="dimt" x="834" y="66">G1: 30±3 mm</text>
+
+  <!-- Dimension D_loop: MK2 mouth to MK1 -->
+  <line class="dim" x1="-10" y1="270" x2="-10" y2="300"/>
+  <line class="dim" x1="810" y1="270" x2="810" y2="300"/>
+  <line class="dim" x1="-10" y1="292" x2="810" y2="292"/>
+  <text class="dimt" x="400" y="312">G2 · D_lazo ≥ 400 mm (boca de MK2 → cápsula MK1)</text>
+
+  <text class="labb" x="330" y="120" text-anchor="middle">D_S = G1 — boca del hablante → cápsula: 30 mm (25–35 mm en uso, cota G3)</text>
+</svg>
+<figcaption><span class="fig-num">Figura 3.</span> La geometría que decide el margen contra el pitido.
+El boom fuerza dos cotas a la vez: G1 (cápsula al borde de la jaula, 30 ± 3 mm, fija D<sub>S</sub>) y
+G2 (bocina a cápsula dentro del cuerpo, D<sub>lazo</sub> ≥ 400 mm). El término dominante del presupuesto
+de margen es 20·log(D<sub>lazo</sub>/D<sub>S</sub>) — ver texto. G1 y D<sub>S</sub> son <strong>la misma distancia vista de dos maneras</strong>: el anillo de borde de la jaula apoya en el labio y el mentón del usuario, así que el plano del borde coincide con la boca del hablante. La cota mecánica de 30 ± 3 mm es por lo tanto el valor de D<sub>S</sub> que entra en el presupuesto de margen; la cota G3 del manual de armado verifica en uso real ese mismo 25–35 mm.</figcaption>
+<div class="qr-row">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAagAAAGoAQAAAAA7yUxtAAAD9ElEQVR4nO1c0W7kMAgEq///y5yAGez25XR9KD4Xt9rNOrG0ziwwHnDU5BttfWeQzKizzd34DXfjQ0TzyPzgsLbd7WdMRK267p/XenTUR9z/hMccEQclgfHuwKh66sr757UexkvSsDR7cBTm5oeO4fExMLt/XutlvNgs0VGaVkAX7tBhsv9pXus3jNIIVm5LqupQqQZMeLngG8pvH/XhL4TC1LR8YRiXI+U9YWb7yvvntR4dJVZgyd//OOT+ea1HR+l2c0qTSppIBoJwlqcbvuGaUV/WX6DvBlcIWOgY4SPZNfyw274UJN5oTrXQgp05U4S5xfv85ns9gGHNZRbBrOyLbpELZktXOevldo+tEbbE38KothDl+ASMJUY5ghNTWvmGMmxpqlHhBCFIAalwmCVwDF5n++G7oWlLerhCg1FB2DDnIhvDwetza/j1qmMRLwFVUns9xA74yVw7j3216hsKs7HoCcCKE+7VFzhiYDb+sJcfilMNcTCCIIbzy0wKiUgSfqbCBq9mfUMhaCABdkgZdWbb4eDVzDcU4oZsppEuMO0LazHnHdk59tUZvywcn8UajEnLbOn9MsdcGWY/GH/Yqc9b+jkL5s6ePMf+kPFxfvT55vilVawhR4I5I9uZDsPiefhGu75hu3ZDMsn8uZgDtTilc4w/PNuP3w1zwmGnRghnmOqu+0H2NH3Df27r6Xobw4rLdk0UDG17xTK98YfNfF5ZrmGBhutRyKsEgup6R1hYVd3c/ztcj45S8AhvpyxP+g6t/gho/uH+ea1HR+lB/ow+EOlJppZhVEcBx/3zWo+OUhZsKNLJlAgLHkBYxdoTv67AS3IpRlNCsW8ZVwEYV9z/O1yPjpIo2oB6IVnBUbWGeWbLH6D0U3/YXr8hzglL4IXb8/xJlvim1Ivl1/D5fv3QmxEYknnqhpXO5NvU9zbnvzQre5WEvaoNj9IOZr+mPqo9ftmOX5IvGbNoewhitVNl7OuC+kOt2tBooW7sOEZlPv/v51Hr0VGKHMqxiSgPat/evix9o8N6/7zWo6OkUpS205P0hyfP2ETfxh9251Mk/aD6BxZBIZHCNXJ0hyA89QDd+RSNrQziLWs1Pj0YACsyqMHDD+/Qe5USb5UIHLvBziqciV8X7a/UohRf9leyZ/Jf7f5Q88i4p6F2U5agURv2qNvfz6PW+8+30eQSSDJ/foRKZZxHP7xDP7RSMiAR4iTI/fm4lOHzl1ilZZEvn/BFplEP+0rwhs9f5EUtbWmjlhvBwktSCRk96op6AKudll8fyIGaUlYIjB7Vv1/Pm0KEgnKIXXt8JFEYGK+9n0et99dfT81rzaijzd0420/ejT/6S4yUOVNLwQAAAABJRU5ErkJggg==" alt="QR presupuesto de ganancia">
+  <div class="qr-txt"><span class="qr-cap">presupuesto-ganancia · 1260e33</span>hardware/presupuesto-de-ganancia.md — derivación dB por dB de toda la cadena, en GitHub.</div>
+</div>
+</figure>
+
+<p><strong>El término que domina, con mucha ventaja, es 20·log(D<sub>lazo</sub>/D<sub>S</sub>).</strong>
+Con el micrófono a 3.0 cm de la boca y la geometría del cuerpo dando D<sub>lazo</sub> ≈ 0.54 m
+(calculado sobre la disposición mecánica del proyecto), el margen ronda <strong>~37 dB</strong>, contra
+los ~11 dB de ganancia acústica que el sistema necesita para funcionar a nivel de voz normal:
+<strong>más de 20 dB de holgura.</strong> Esa holgura no viene de ningún filtro ni de ningún truco
+electrónico. Viene de que el micrófono está pegado a la boca del usuario y lejos, en términos relativos,
+de la bocina. Si el usuario aleja el micrófono a 20 cm, el margen se desploma a ~21 dB y el sistema
+empieza a pitar en uso real, no en laboratorio — por eso el boom del cuerpo <strong>fuerza</strong> esa
+distancia en vez de sugerirla (ver el manual de armado).</p>
+
+<h3>3.4 Por qué recortar a 300 Hz–4 kHz gana inteligibilidad y margen contra el pitido a la vez</h3>
+<div class="lbl lbl-intuicion"><span class="lbl-tag">Intuición</span>La voz humana es una fuente
+espectralmente rara: casi toda su <strong>energía</strong> está en los graves (el fundamental y sus
+primeros armónicos), pero casi toda su <strong>información</strong> está en los agudos (las
+consonantes). Es como una fotografía donde el 90&nbsp;% de los píxeles son el cielo de fondo y el
+10&nbsp;% es el rostro: si hay que comprimir, se tira el cielo.</div>
+
+<div class="lbl lbl-mecanismo"><span class="lbl-tag">El mecanismo real</span>La banda 1–4 kHz tiene alta
+importancia para la inteligibilidad; las consonantes, que cargan la información en lenguas no tonales,
+ocupan específicamente 2–4 kHz (verificado, French &amp; Steinberg 1947 vía DPA Microphones). La banda
+telefónica estándar, 300–3400 Hz, entrega inteligibilidad prácticamente completa — es la razón por la
+que un teléfono se entiende aunque corte los graves. Este proyecto adopta <strong>300 Hz – 4 kHz</strong>
+como banda de diseño: cubre la banda telefónica completa más la banda de consonantes, y excluye
+deliberadamente los fundamentales, que la bocina no podría radiar de todos modos (§3.2).</div>
+
+<p>Recortar por debajo de 300 Hz compra dos cosas a la vez, y es la razón de que valga la pena hacerlo
+con filtros pasivos simples en vez de dejar la banda completa:</p>
+<ol>
+  <li><strong>Inteligibilidad por watt.</strong> El amplificador no gasta swing de voltaje ni corriente
+  reproduciendo energía que no aporta información. Y como el pico de la señal de voz está justo en los
+  graves, quitarlos baja el factor de cresta — la relación entre el pico y el promedio de la señal —, lo
+  que permite subir el nivel promedio sin recortar. Es ganancia de nivel medio gratis.</li>
+  <li><strong>Margen contra el pitido.</strong> Una banda más angosta es menos oportunidades de que el
+  lazo de realimentación (§3.3) cumpla su criterio de oscilación en alguna frecuencia. El sistema pita en
+  el pico de su respuesta; cada octava que se elimina del extremo es una región del espectro que ya no
+  puede llegar a tener ese pico.</li>
+</ol>
+
+<h3>3.5 Por qué "sin distorsión" significa elegir menos potencia</h3>
+<div class="lbl lbl-intuicion"><span class="lbl-tag">Intuición</span>Un amplificador clase AB con
+alimentación de una sola fuente (como este circuito, alimentado con pilas) no puede sacar la señal
+centrada en cero: la centra a la mitad de la alimentación y oscila alrededor de ese punto. El swing
+disponible es entonces la mitad de la alimentación — y todavía hay que restarle lo que los transistores
+de salida pierden por saturación. Es un columpio colgado del punto medio de un cuarto de 6 m de alto:
+puede subir 3 m, no 6, y como las cadenas tienen nudos, en la práctica sube un poco menos.</div>
+
+<div class="lbl lbl-mecanismo"><span class="lbl-tag">El mecanismo real</span></div>
+<div class="eq">
+  V_p,max = V_S/2 − V_perdida &nbsp;&nbsp;·&nbsp;&nbsp; P_o,max = V_p,max² / (2·R_L)
+  <div class="eq-note">V_S = alimentación bajo carga [V] · V_p,max = amplitud pico máxima antes de recortar [V] ·
+  V_perdida = swing perdido por saturación de salida [V] · R_L = impedancia de carga (la bocina) [Ω] ·
+  P_o,max = potencia de salida máxima, senoidal RMS [W]. <em>Supuestos:</em> señal senoidal (la voz
+  tiene factor de cresta mayor, potencia media bastante menor para el mismo pico); salida acoplada por
+  capacitor; carga resistiva pura; V_S medido bajo carga, tras la caída por resistencia interna de las
+  pilas.</div>
+</div>
+
+<p>La hoja de datos del LM386 solo da dos puntos verificados de la curva distorsión-vs-potencia:
+<strong>125 mW a 0.2&nbsp;% THD</strong> y <strong>325 mW a 10&nbsp;% THD</strong> (a 6 V/8 Ω). El
+segundo número — el que suele aparecer en catálogos y foros como "la potencia del LM386" — es recorte
+audible: 10&nbsp;% de distorsión armónica total se oye.</p>
+<div class="hallazgo"><strong>Elegir "sin distorsión audible" es, literalmente, elegir el punto de la
+curva con menos watts.</strong> Este proyecto trabaja en 0.269–0.431 W (0.2–1&nbsp;% THD aproximado, a
+9 V con la variante N-3), no en los 700 mW "típicos" de la hoja a esa tensión — esos 700 mW son la
+garantía del fabricante al 10&nbsp;% de distorsión, no el punto de trabajo limpio.</div>
+<div class="qr-row">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAagAAAGoAQAAAAA7yUxtAAAEAklEQVR4nO1c0W7jMAyTjP3/L+sgiZSdvQy3h9rx5DugSVoDdTjRFKVUTX4xxm8mSc9aR9+Nv3A3vkQ0j8wPlmibl/0dE1GrS+eva1w66yvuf8JjjoiDksD45cCortQnz1/XuBgvycDSvIKjCDc/dAyX08Ds/HWNm/HisKQ+ZWgFdHHNYbI3rWv8Bbw0+FBNEUvJkSTKTd9w9KzveBEKi83KI4kMieMMs/nJvofr+OTdECuw5Od/nNJ4reOTd0MnzSlVYOxguXnhBG9v+YajZ33LvyDfrXRGvEORyO2MKVnrw83xpf5aen7mXpAfnjBTK2bY9d/8XgYwaIsYtaOlsA98mDAHdJ0v72dsdUDUoUhBP40oxydRRNAFgr2nbMy/LNnQwIhgyFD02L/AlxT3jddzfPivV53sEEilKTKoYGyYa5HEMbmy42sdG+6GLvYgHSkNYjR/jY3MLyLyGq+dfpQiFTap2CpNOLMvaMTArPHaqg/Vg0gKuCS/NKcyqCLSPBFDKazx2uxvKAwNFMAWK6PeqWJK71/fxqf/etVzL43TkPCVgIXCzwQsypjOkxGJHV9b68uaaZfMomWOZL+sMVeF2Q8ar731L020lAowwYlNLKvLQZvTA268DvAPJTVhyXk2a8xOnPSlWm/s1hs6O58eID5s4DKCtfujnuPjbGNh9kqwX9XB/Eq6u+5w8Mqmb/jfY1w9y6pYotG+EfCkykhfqkpiyYxvWdeVsxRBJOFghKBPeQEWVPc7IsLo0b9jXVfOkqx51Yk4NLNXA+dLl0ecnL+ucXU/tnHbUta4SI/VygYnqvsBTsiXtfSfABjfyYL+gFq99v51gD6U2LkUOVbUmkPTw+lNTkyJ2P02Z/i9QhcjY636NRYPeDaRns/z49JZCogmZsCEVkfm0/gonfrz1zUunSVgOLZJRZYMMU9xyE6beml9uJkPFTEl7AdgAs0etmLDjq8D8i/LhjWb+Rca2BhSCL2KwfN5Y1w9S7FhySyAlZ0YRZXq5Mj/b1nXfbO0Hkw2EGE9Ers+88VmNrThnL+uceksCUGRFGgkP/LhqjOKMp1Bz1/XuHeWlZpXinsUmgMbBiHcqe4H2M+HUjmXoKA8+zV4Tq7s/OuAfgADQLa0rvlIdJ5dOL1/HeBH+dDyn9LbfToe09x4C8/f/vs2hp7resCyDI16YI/72/nrGvf/vo3iIRX2Ia60WBXnrqec4R/aQ7uznjyft1x+LqX1/PZ+UQ6DybG0jjoLovBcv/v1At4Yf2CWkfGioX6RjuwThfXxtnXdNEtLshsf15sm1JKWQe/jk+eva9z8vJ7EUMQXnEM8tbf8PNG0g89f17g//7pqXaNnLaPvxjo+eTf+Aaj2dtAj/VQpAAAAAElFTkSuQmCC" alt="QR presupuesto de potencia">
+  <div class="qr-txt"><span class="qr-cap">presupuesto-potencia · 1260e33</span>hardware/presupuesto-de-potencia.md — derivación completa de swing, disipación y márgenes térmicos a 8 Ω, en GitHub.</div>
+</div>
+
+<h2><span class="num">4</span>Por qué se diseñó así</h2>
+
+<h3>4.1 Trompeta completa con driver de compresión, no bocina de cono ni flare casero</h3>
+<p>La restricción original de Baltasar permitía elegir la bocina libremente y aceptaba un cono acústico
+casero. El presupuesto de SPL (§3.1) cerró esa decisión con números, no con preferencia: contra el
+objetivo de ≥92.3 dB SPL a 1 m, un cono de 3" con cono de cartón casero falla por <strong>9 a 12
+dB</strong> incluso en el mejor caso estimado — y eso ya con toda la reserva eléctrica del proyecto
+gastada. Una trompeta de retail sin hoja de datos verificable falla también, por 1 a 5 dB según el
+escenario de descarga de pilas. Solo una trompeta con sensibilidad de hoja de datos real y alta (≥109
+dB/W declarados como pico) cierra el presupuesto con margen defendible.</p>
+<p>Se evaluó también comprar solo el <strong>driver de compresión desnudo</strong> y construir un flare
+casero de PVC (documentado como Ruta B en la nota de mecánica, no construido). La razón de compresión —
+el mecanismo que de verdad da la ganancia (§3.1) — vive <strong>dentro</strong> del driver, antes de la
+garganta de salida: comprar el driver desnudo sí compra esa razón de compresión. Pero el flare casero,
+aguas abajo de la garganta, ya no comprime — solo transforma impedancia y directividad, con una
+ganancia estimada de <strong>~0 dB ± 4 dB</strong> respecto a la bocina de fábrica. Lo que sí compra es
+ancho de banda (corte más bajo), no volumen. Y los drivers de 1" de retail para car audio suelen ser
+tweeters que cortan en 2–3 kHz, comiéndose la octava de 1–2 kHz que es crítica para inteligibilidad
+(§3.4) — riesgo de abasto real.</p>
+<div class="hallazgo"><strong>Decisión:</strong> trompeta PA completa (Ruta A). Ruta B queda documentada
+como variante para quien quiera intentarla después.</div>
+<p>Consecuencia de alcance que se reporta sin esconder: el cono de cartón que formaba parte del pedido
+original de Baltasar queda fuera. Ponerle un cono casero adelante de una trompeta completa sería
+redundante y contraproducente — un segundo flare desacoplado del primero, con reflexión de boca
+adicional y rizo extra, resultado neutro o negativo.</p>
+
+<h3>4.2 Alimentación a 6×AA (9 V) con LM386N-3, no 4×AA (6 V)</h3>
+<p>La restricción original de Fase 0 pedía "9 V o 2×AA". Se descartó la pila cuadrada de 9 V por una
+razón más fuerte que su resistencia interna (que de hecho es comparable, celda a celda, a la de un
+paquete de AA): la hoja de datos del fabricante no caracteriza esa pila arriba de 50 mA, y este
+proyecto necesita picos de 330 mA. No hay dato de fabricante que respalde operar ahí. Además, una sola
+pila de 9 V tiene 3 veces menos energía que 4×AA, con prácticamente el mismo peso.</p>
+<p>Entre 4×AA y 6×AA, la decisión la cerró el presupuesto de SPL, no una preferencia de ingeniería: con
+4×AA (6 V) el margen contra el objetivo cae a <strong>+0.9 dB al fin de vida de las pilas</strong> —
+menos que la tolerancia unidad a unidad del propio transductor, un margen que no sobrevive el error de
+medición más pequeño razonable. Con 6×AA (9 V) y la variante LM386N-<strong>3</strong> (la única que TI
+garantiza en 9 V), el margen queda en <strong>+6.0 dB al fin de vida</strong>: baja el requisito de
+sensibilidad del transductor de 114 a 109 dB/W, que es la diferencia entre "ningún producto disponible
+cumple" y "la TOA SC-615 cumple con 2.9 dB de sobra". No es un cambio de intención respecto al pedido
+original — 9 V fue la petición inicial de Baltasar — sino la forma de dársela con celdas que sí
+sostienen los picos de corriente, cosa que la pila cuadrada no hace.</p>
+<p><strong>Consecuencia colateral, y es buena:</strong> con el transductor resuelto dentro de
+presupuesto, el circuito no necesitó la reserva de bajar a 4 Ω (que habría dado +3 dB adicionales a
+costa de duplicar la corriente pico a 660 mA y salir de las condiciones de prueba del fabricante). El
+diseño entregable opera en 8 Ω, dentro de la hoja de datos de TI en todo momento.</p>
+
+<h3>4.3 Un transistor discreto de preamplificación, no un segundo circuito integrado</h3>
+<p>La restricción de Baltasar prohibía "un segundo IC de audio", no un componente discreto. El
+presupuesto de ganancia mostró que el LM386 solo, con su máximo de 46 dB, queda corto: a un nivel de voz
+conversacional normal (90 dB SPL en la cápsula) haría falta 53.4 dB, y el IC solo no llega. Un
+transistor no es un circuito integrado — la letra de la restricción se respeta, y el espíritu también:
+sigue siendo "un amplificador de un solo IC de audio" más una etapa discreta simple, no un segundo chip.
+Se descartó explícitamente agregar un NE5532 o un TL072 (operacionales de audio de dos canales): eso sí
+habría sido un segundo IC, y quedaba prohibido sin excepción.</p>
+<p>El diseño del preamplificador en sí — emisor común con resistor de emisor sin puentear (R6 = 220 Ω) —
+sacrifica ganancia máxima teórica (con el emisor totalmente puenteado la ganancia llegaría a 36.8 dB) a
+cambio de una ganancia que <strong>no depende de beta del transistor en absoluto</strong>: la fijan dos
+resistencias (R_ac y R6), no la corriente de colector ni la temperatura. Beta solo mueve 0.4 dB por un
+efecto secundario en la impedancia de entrada. Esa estabilidad, en un circuito que un principiante va a
+soldar con un transistor genérico de tolerancia amplia, vale más que los 15 dB de ganancia extra que se
+sacrificaron.</p>
+
+<h3>4.4 Perfboard punto a punto para el equipo final, no protoboard permanente</h3>
+<p>El criterio 3 de terminado ("resiste uso portátil") descarta el protoboard como entrega final por una
+razón física, no de comodidad: sus contactos de resorte se abren con vibración y se oxidan con el
+tiempo, y a la ganancia de este circuito (46–66 dB) un contacto intermitente en el nodo del micrófono se
+oye como una chicharra. El protoboard sigue siendo la herramienta correcta para la puesta en marcha — es
+rápido de modificar mientras se verifica el circuito — pero el aparato que se va a cargar en la mano
+necesita soldadura fija.</p>
+
+<h3>4.5 Masa estructural en un solo punto (punto estrella), no rieles compartidos de protoboard</h3>
+<p>Cada contacto de protoboard tiene 50–100 mΩ, y los rieles de masa son tiras largas y delgadas. El
+retorno de la bocina lleva picos de 330 mA. Si ese retorno comparte camino físico con la masa de señal
+del micrófono — como ocurre por defecto en un riel de protoboard compartido —, la caída resultante (330
+mA × 50 mΩ ≈ 16.5 mV) entra al micrófono como si fuera señal de entrada. A la ganancia de este circuito
+eso se amplifica hasta <strong>3.4 V en Config A y 34 V en Config B</strong>: ambos números arriba del
+recorte, y el resultado se oye como un motor fuera de borda (<em>motorboating</em>) o un aullido continuo
+que <strong>no se apaga tapando el micrófono</strong> — a diferencia del pitido acústico real, que sí se
+apaga. La solución no es un filtro adicional: es que todos los retornos de potencia (pin 4 de U1,
+negativo de C7, negativo de la bocina, negativo de las pilas) converjan en un único punto físico, de
+modo que la corriente de potencia nunca comparta camino con la señal de bajo nivel del micrófono.</p>
+
+<h3>4.6 Cuerpo de espina de madera, no carcasa impresa</h3>
+<p>Una carcasa impresa del largo necesario (330 mm) tomaría 6–10 horas de impresión, en un proyecto cuya
+restricción dura es "una tarde de armado". El aluminio sería más rígido por masa, pero conduce vibración
+mucho mejor que la madera (factor de pérdida ~100 veces menor, estimado) — y la vibración estructural
+que viaja de la trompeta al micrófono es exactamente el riesgo que este proyecto necesita evitar (§4.8).
+El pino cepillado corta con serrucho, acepta tornillo directo, cuesta una fracción del aluminio, y da
+una cara ancha donde montar todo. Se sacrifica volumen (es más voluminoso que un tubo) y hay que unir
+las piezas cargadas con perno pasante y tuerca, no con tornillo para madera, porque los agujeros de
+tornillo se barren si se aprieta de más.</p>
+<div class="qr-row">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAagAAAGoAQAAAAA7yUxtAAADz0lEQVR4nO1c2XLcQAgcVP7/XyYFNMduXhI/CHndJF7rrFpNC+hpGIueb9j1nZsO75rG0fgNo/F1jsSWYkNl7tmGijuhaB16/nNdH3rXl4+/oXGOGiIGiorvJkYGGLDElc9/ruuD8ToBjgQ8AAcOBgB71zF7/nNdn4xXmjpa9hmu5SBKQGWQ/aDnun7DXeLJynxJxEKig5VY6c99rk/zL41tDWgcsIiQYrvmXY3c7d/w4l3TNP1G/+Ff3sIxnHbnaEiHOSkCGHkMTB/pzJjHyje8eNc0Tb/RylHtS+587Vb4Rf/afaPEMRBHJjCxvGVAegIDgH4BgOQ7vzpfFogZEhQxp8oZFmMuXXxfqG+82srbq57KPP6lluHYGTP0UJkk0i6jfy3zDbGPgMzljfaydC1cGoeJ17SbR0OCGerUfIEjhA3PboiUzF/r/iVJ2gV+hZ3Wd0uldzmR+WvXv3Qydw390F3JA6BTxCEDU+9d9i+JvKSYKPtReNs8UP/J59fjoQZzF8RBFCjjgkYNoiL5xpstsC+NYOczsWTuclykD7UjTvtv1iu3/Ut961QrQEbH8KhRxEz9g3x+2p2jcYysBw4aP0OJx6mQo8Ds/ZN4LfP5UyWvzmOTzM/JM/PXMj883ROlKXmgFWp0TXWw5PxrVe9V8D9BdoJ/gd+DLqYmdf83vHjXtKxqncpbKfuikhJJrKpits/8tflGKeA5pWlA8oDriRjLeKmP8Z1f1ecltrUVjqLvxT9GFzDz13Y/tk7QBDUwR6rEjUAOMzD617S7R0NDtdB2M59vef3SUPKYGOe8MZF4beu9knqhFAssTb5P9dIH+temvnG6A0qxAabofpYsA9UW9h8+YL2DjplzVrqgG3rHbzZuoMeD/rW8nkiqv6aEX6SvOGQt9YGjB0TitaxHnVyP0tkMsCFppRjF+tcD9HkdPb3anWvVHgphHpdRn3+z26ON5GRZu6FeLfyhYyNCYqqKzF/r/YfyUjXR5B29wuGldsn8tcznD4i7xoG59qHIfQdN6r3r8y+t1HTGwpS/51+ZyMgPd/3rNGLnFSUcSY0qThKvfT4vOSF+Vew7v6Vxfcpz1ldq92i8ra/EtAyXMx7u1lPMNDSMLnXFWr2cMRdarH895O/bSFSUS4XKzt+YgvXKWPL5Xb5xXrs1TlN7rIKo83kH+cZT/l6KYBnsaMseSyFqmSXz17TF0dCopLRc7xJVxMioYLJ/fh8vzbgnUfwHz6g1fNU/laow/Wt3/mWm5VSTvo8FYTUxY3/UI+Zf/2H0r2kcjWkcjTPsD9+1tSl4IR+8AAAAAElFTkSuQmCC" alt="QR cuerpo portátil">
+  <div class="qr-txt"><span class="qr-cap">cuerpo-portátil · 1260e33</span>mecanica/cuerpo-portatil.md — diseño mecánico completo del cuerpo, Ruta A, con cotas y materiales, en GitHub.</div>
+</div>
+
+<h3>4.7 Jaula abierta de tres costillas, no copa cerrada, para el micrófono</h3>
+<p>La solución obvia para forzar la distancia boca–cápsula es una copa cónica cerrada de 30 mm de
+profundidad. Se descarta: una cavidad cerrada de esa longitud tiene una resonancia de cuarto de onda en
+f = c/(4L) = 343/(4 × 0.030) ≈ 2.86 kHz — justo dentro de la banda de voz y, peor aún, dentro de la
+ventana de 1–3 kHz donde el lazo de realimentación ya tiene su pico natural (§3.3). Meter ahí una
+resonancia adicional es regalar margen contra el pitido en el peor lugar posible.</p>
+<p>La jaula de tres costillas con anillo de borde da el mismo tope físico — el anillo toca el labio o el
+mentón del usuario, fijando la geometría (Figura 3) — sin cerrar el volumen.</p>
+<div class="hallazgo"><strong>Los huecos entre costillas no son una pieza sin terminar: son la razón por
+la que el aparato no pita.</strong> En uso real los labios y el mentón sí cierran parcialmente ese
+volumen de ~30 mm, y la cavidad reaparece, pero muy fugada — los huecos son enormes frente a la sección
+cerrada — así que su factor de calidad (Q) es bajísimo: el pico resultante es un bulto ancho y
+amortiguado, no la resonancia aguda de una copa rígida. Quien "mejore" la jaula tapando esos huecos con
+cinta, espuma o una pieza impresa reconstruye exactamente el problema que el diseño evitó.</div>
+
+<h3>4.8 Cuatro etapas de aislamiento de vibración, ninguna opcional</h3>
+<p>El presupuesto de margen contra el pitido (§3.3) es solo el camino <strong>aéreo</strong> —
+bocina-aire-micrófono. Existe un segundo camino, estructural: la vibración de la trompeta viaja
+físicamente a través del bracket de montaje, la espina de madera, el boom y hasta el micrófono,
+<strong>puenteando por completo el margen aéreo de ~37 dB</strong>. Un filtro eléctrico no puede tocar
+esa vía porque no es eléctrica.</p>
+
+<figure class="fig" id="fig4">
+<svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#82868c"/>
+    </marker>
+  </defs>
+  <style>
+    .st{fill:#f6f0e6; stroke:#a98a5c; stroke-width:1.6;}
+    .stt{font:700 12px 'Source Sans 3',sans-serif; fill:#23262b; text-anchor:middle;}
+    .std{font:500 9.5px 'Source Sans 3',sans-serif; fill:#4b4f56; text-anchor:middle;}
+    .stv{font:700 10.5px 'JetBrains Mono',monospace; fill:#a98a5c; text-anchor:middle;}
+    .chain{stroke:#82868c; stroke-width:2; marker-end:url(#ar4);}
+  </style>
+  <text x="30" y="40" class="stt" text-anchor="start">MK2</text>
+  <text x="30" y="58" class="std" text-anchor="start">vibración de la trompeta</text>
+  <line class="chain" x1="100" y1="45" x2="155" y2="45"/>
+
+  <rect class="st" x="160" y="15" width="140" height="70" rx="8"/>
+  <text class="stt" x="230" y="42">Etapa 1</text>
+  <text class="std" x="230" y="58">bracket: arandelas de</text>
+  <text class="std" x="230" y="70">neopreno + buje de silicón</text>
+  <line class="chain" x1="300" y1="50" x2="345" y2="50"/>
+
+  <rect class="st" x="350" y="15" width="140" height="70" rx="8"/>
+  <text class="stt" x="420" y="42">Etapa 2</text>
+  <text class="std" x="420" y="58">espina de pino</text>
+  <text class="std" x="420" y="70">(pérdida estructural)</text>
+  <line class="chain" x1="490" y1="50" x2="535" y2="50"/>
+
+  <rect class="st" x="540" y="15" width="150" height="70" rx="8"/>
+  <text class="stt" x="615" y="36">Etapa 3</text>
+  <text class="std" x="615" y="52">boom (PETG) — resonancia</text>
+  <text class="std" x="615" y="64">propia ~390 Hz, Q≈10-25</text>
+  <line class="chain" x1="690" y1="50" x2="735" y2="50"/>
+
+  <rect class="st" x="740" y="15" width="140" height="70" rx="8"/>
+  <text class="stt" x="810" y="36">Etapa 4</text>
+  <text class="std" x="810" y="52">grommet + espuma</text>
+  <text class="std" x="810" y="64">delante de MK1</text>
+
+  <text x="880" y="45" class="stt" text-anchor="end">MK1</text>
+
+  <!-- attenuation vs frequency callouts -->
+  <rect x="160" y="120" width="720" height="110" rx="8" fill="#eef4f0" stroke="#6f9b84" stroke-width="1.4"/>
+  <text class="stt" x="520" y="142" fill="#3f6b53">Resultado neto medido/calculado por banda</text>
+  <text class="std" x="300" y="168" fill="#23262b">a 390 Hz (resonancia propia del boom)</text>
+  <text class="stv" x="300" y="186">−7 a 0 dB — no protege ahí</text>
+  <text class="std" x="700" y="168" fill="#23262b">a 1–3 kHz (pico del lazo acústico)</text>
+  <text class="stv" x="700" y="186">−14.9 dB @1kHz · −35.3 dB @3kHz</text>
+  <text class="std" x="520" y="212" fill="#4b4f56">≥25 dB de atenuación estructural, acotado a 1–3 kHz — no en toda la banda (§4.9)</text>
+</svg>
+<figcaption><span class="fig-num">Figura 4.</span> Las cuatro etapas de aislamiento de vibración, en
+serie, ninguna opcional. El resultado neto depende de la banda: en 390 Hz (resonancia propia del boom)
+casi no hay protección, pero en 1–3 kHz — donde el lazo acústico-eléctrico sí tiene ganancia disponible
+— la cadena atenúa con fuerza. Ver §4.9 para la explicación completa de por qué esa acotación es
+honesta y no un defecto de reporte.</figcaption>
+</figure>
+
+<p>Se rompe con cuatro etapas en serie, cada una atacando un tramo distinto del camino: arandelas de
+neopreno + buje de silicón en cada perno del bracket de la trompeta (la etapa de más palanca, porque
+está aguas arriba de todo lo demás), un grommet de hule que suspende la cápsula sin contacto rígido con
+el PETG, un disco de espuma delante de la cápsula (que además detiene el golpe de aire de las
+consonantes explosivas /p/, /t/, /b/), y un bucle de servicio en el cable para que su propia tensión no
+anule el grommet.</p>
+
+<h3>4.9 Por qué la atenuación estructural no se afirma en 390 Hz</h3>
+<p>El boom, calculado con su geometría real, tiene una frecuencia de resonancia propia de
+<strong>~390 Hz</strong>. Un modelo simplificado sugeriría que el grommet, aguas abajo, atenúa esa
+resonancia con creces. Ese argumento estaba incompleto: <strong>el boom mismo amplifica en su propia
+resonancia por factor de calidad</strong>, con PETG dando Q del orden de 10–25, es decir <strong>+20 a
++28 dB a 390 Hz</strong>, antes de que el grommet tenga oportunidad de atenuar nada. El resultado neto en
+390 Hz es de −7 a 0 dB: prácticamente no hay atenuación ahí.</p>
+<div class="hallazgo">Lo que sí sostiene el diseño, y es lo que se afirma: <strong>a 390 Hz el lazo de
+realimentación casi no tiene ganancia</strong>, porque la trompeta no radia por debajo de su propio corte
+(280–486 Hz, §3.2) y la cadena electrónica tiene su esquina de corte compuesta en ~340 Hz. Un pico de
+vibración en una frecuencia donde el lazo acústico-eléctrico no tiene ganancia disponible no puede hacer
+oscilar el sistema, sin importar cuánto amplifique mecánicamente. En cambio, en 1–3 kHz — donde el lazo
+sí tiene su máximo — el boom ya está muy por encima de su propia resonancia y atenúa con fuerza
+(−14.9 dB a 1 kHz, −35.3 dB a 3 kHz calculados), sumándose ahí sí al grommet. La cadena de aislamiento
+funciona exactamente donde tiene que funcionar, y el documento no reclama más que eso.</div>
+
+<h2><span class="num">5</span>Límites y casos donde falla</h2>
+<ul>
+  <li><strong>El transductor es la única variable de primer orden del proyecto.</strong> El rango de
+  sensibilidad entre las opciones consideradas es de 22 dB; todo el margen que la parte eléctrica puede
+  dar junta — subir de 4×AA a 6×AA más bajar de 8 a 4 Ω — son 6.3 dB, agotando todo el arsenal
+  disponible. Un error en la elección o en la unidad realmente comprada no se compensa con nada del
+  resto del circuito.</li>
+  <li><strong>Con Config A faltará volumen a nivel de voz normal, y es lo esperado, no una falla.</strong>
+  Config A (26 dB de U1) queda 3.2 dB corta ya a 94 dB SPL en la cápsula. Config B es la configuración
+  normal de trabajo; A es el arranque seguro de puesta en marcha y la salida si B silba demasiado en un
+  recinto reverberante.</li>
+  <li><strong>El aparato pita si el micrófono se aleja de la boca.</strong> El margen contra
+  retroalimentación cae de ~37 dB a 3 cm a ~21 dB a 20 cm. La geometría del boom fuerza la distancia
+  correcta; si el micrófono queda suelto o mal encajado, el margen desaparece en uso real.</li>
+  <li><strong>No radia los fundamentales de la voz.</strong> Ningún megáfono de mano lo hace (§3.2):
+  haría falta una boca de más de un metro de diámetro. La voz suena delgada y nasal por diseño, no por
+  defecto.</li>
+  <li><strong>El presupuesto de incertidumbre acústica es de ±4.5 a ±6 dB</strong>, dominado por el
+  desconocimiento exacto de la sensibilidad efectiva del transductor comprado (pico vs. promedio de
+  banda) y por la falta de medición con sonómetro calibrado. El margen de diseño (+6.0 dB al fin de
+  vida de pilas) está dentro de ese rango de incertidumbre, no muy por encima.</li>
+  <li><strong>La prueba de vibración estructural (V1 del manual de armado) es la única que decide si el
+  criterio 3 realmente se cumple.</strong> Si el camino estructural queda vivo por un aislador mal
+  apretado o un cable tenso, ningún filtro eléctrico lo corrige.</li>
+  <li><strong>No hay margen para 8 pilas alcalinas.</strong> 8 × 1.6 V = 12.8 V está por encima del
+  rango recomendado del LM386N-3 (4–12 V). El compartimento de pilas está dimensionado para 6 celdas
+  exactas.</li>
+  <li><strong>Masa de 1.74 kg</strong>: sostener el aparato con una mano más de uno o dos minutos no es
+  cómodo. El correal de carga es obligatorio en el uso normal, no un accesorio.</li>
+</ul>
+
+<h2><span class="num">6</span>Glosario</h2>
+<dl class="glosario">
+  <dt>SPL</dt><dd><em>Sound Pressure Level</em>, nivel de presión sonora, en dB referido a 20 µPa.</dd>
+  <dt>dB SPL/W/m</dt><dd>Sensibilidad de un transductor: nivel de presión sonora que produce con 1 W eléctrico, medido a 1 m.</dd>
+  <dt>THD</dt><dd><em>Total Harmonic Distortion</em>, distorsión armónica total: fracción de la señal de salida que es distorsión, no señal original.</dd>
+  <dt>Emisor común</dt><dd>Configuración de un transistor bipolar donde la señal entra por la base y sale por el colector, con el emisor como referencia común.</dd>
+  <dt>Clase AB</dt><dd>Topología de amplificador donde los dispositivos de salida conducen más de medio ciclo pero menos de un ciclo completo; equilibrio entre eficiencia y linealidad.</dd>
+  <dt>Driver de compresión</dt><dd>Transductor de bocina donde el diafragma empuja sobre una garganta de área mucho menor que su propia superficie, multiplicando la presión (razón de compresión).</dd>
+  <dt>Frecuencia de corte (f<sub>c</sub>)</dt><dd>Frecuencia por debajo de la cual una bocina deja de transformar impedancia acústica y su ganancia colapsa.</dd>
+  <dt>Directividad (DI)</dt><dd>Ganancia en dB, en el eje de radiación, de un transductor directivo respecto a uno que radiara igual en todas direcciones.</dd>
+  <dt>Realimentación acústica</dt><dd>Camino cerrado bocina→aire→micrófono→amplificador→bocina; si su ganancia llega a 1 con la fase correcta, el sistema oscila (pita).</dd>
+  <dt>Barkhausen, criterio de</dt><dd>Condición matemática de oscilación de un lazo cerrado: ganancia de lazo ≥ 1 y fase de 0° (o múltiplo de 360°) simultáneamente.</dd>
+  <dt>Factor de cresta</dt><dd>Relación entre el valor pico y el valor RMS de una señal; la voz tiene un factor de cresta mucho mayor que una onda senoidal.</dd>
+  <dt>Fundamental ausente</dt><dd>Fenómeno psicoacústico: el oído reconstruye la percepción de un tono grave a partir de sus armónicos superiores aunque el fundamental no esté presente en la señal.</dd>
+  <dt>PETG</dt><dd>Tereftalato de polietileno modificado con glicol, plástico de impresión 3D con mayor resistencia térmica que el PLA.</dd>
+  <dt>Grommet</dt><dd>Pieza de hule o goma que aísla un componente del contacto rígido con la estructura que lo rodea, reduciendo la transmisión de vibración.</dd>
+  <dt>Punto estrella</dt><dd>Técnica de conexión a masa donde todos los retornos de corriente convergen en un único punto físico, evitando que compartan camino resistivo.</dd>
+  <dt>Red de Zobel</dt><dd>Red RC en la salida de un amplificador de audio que mantiene una carga resistiva en alta frecuencia y evita oscilación por la inductancia de la bocina.</dd>
+  <dt>Polyfuse (PTC)</dt><dd>Fusible resettable de coeficiente positivo de temperatura: aumenta su resistencia al calentarse por sobrecorriente, cortando el paso sin destruirse.</dd>
+  <dt>CG</dt><dd>Centro de gravedad.</dd>
+  <dt>JND</dt><dd><em>Just Noticeable Difference</em>, mínima diferencia perceptible entre dos estímulos.</dd>
+</dl>
+
+<footer class="doc-foot">
+  Megáfono Analógico · Manual científico descriptivo · Maquetado por Maestro Axel · Método de edición
+  visual de Maestro Axel (Axel García Villagómez) · Los QR de esta edición anclan a
+  <code>github.com/the-baltman/Megafono-Analogico</code>, commit <code>1260e33f</code>.
+  El manual de armado complementa este documento con la secuencia de construcción paso a paso.
+</footer>
+
+</body>
+</html>
