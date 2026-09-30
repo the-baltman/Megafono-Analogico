@@ -218,19 +218,28 @@
   .wire-k{stroke:#3a3833; stroke-width:2.8; fill:none; stroke-linecap:round;}
   .wire-b{stroke:#5c7a99; stroke-width:2.4; fill:none; stroke-linecap:round;}
 
+  dl.glos{display:grid; grid-template-columns:11em 1fr; column-gap:1.2em; row-gap:.1em;}
+  dl.glos dt{margin:.5em 0 0;} dl.glos dd{margin:.5em 0 0; max-width:none;}
   @media print{
     html,body{width:100%; background:var(--paper) !important;}
-    body{max-width:680px; margin:0 auto; padding:0; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    body{max-width:none; width:100%; margin:0; padding:0; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
     *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     figure.fig{max-width:100%; overflow:hidden; box-shadow:none;}
     figure.fig svg{max-width:100%; width:100%; height:auto;}
     table{max-width:100%;}
     figure.fig, .adv, .verif, .t1, .compuerta, tr, ol li, .paso-head{break-inside:avoid; page-break-inside:avoid;}
+    .compuerta{break-before:page;}
+    .bq-pb{break-before:page;}
+    .bloque{break-after:avoid;}
     .paso{-webkit-box-decoration-break:clone; box-decoration-break:clone; box-shadow:none;}
     h2, h3, .paso-head{break-after:avoid; page-break-after:avoid;}
     p{orphans:3; widows:3;}
     .pag-apaisada{page:apaisada; width:230mm; margin-left:calc((100% - 230mm) / 2);}
     .pag-apaisada figure.fig{margin:0;}
+    figcaption, figure.fig{max-width:100%; overflow:visible;}
+    figure.fig svg{overflow:visible;}
+    table{table-layout:auto; word-wrap:break-word;}
+    p, li, dd{max-width:none;}
   }
 </style>
 </head>
@@ -307,6 +316,38 @@ presupuesto con quien lo autoriza.</p>
 2026-09-30.</strong> Cotiza en tu localidad antes de comprar; un rango con fecha no es un dato
 inventado, un precio firme sin fecha sí lo sería.</p>
 
+<figure class="fig" id="figP1"><svg viewBox="0 0 900 492" xmlns="http://www.w3.org/2000/svg"><style>
+.t{font:700 16px 'Space Grotesk',sans-serif;fill:#23221f}
+.s{font:500 14px 'Source Sans 3',sans-serif;fill:#4a4844}
+.m{font:600 14px 'JetBrains Mono',monospace;fill:#3d5670}
+.d{font:700 15px 'JetBrains Mono',monospace;fill:#a8515b}
+.nw{fill:#f5e4d8;stroke:#c97a52;stroke-width:2.6}
+.bt{fill:#eeece6;stroke:#a5a19a;stroke-width:1.8}
+</style>
+<text class="t" x="300" y="28" text-anchor="middle">MK2 — TOA SC-615 (trompeta re-entrante)</text>
+<g transform="translate(60,60) scale(1.7)" fill="#f3ecd9" stroke="#a98a5c" stroke-width="1.2941176470588236" stroke-linejoin="round"><path d="M 0 0 L 66 14 L 66 66 L 0 80 Z"/><rect x="0" y="0" width="5" height="80" rx="2"/><rect x="66" y="12" width="34" height="56" rx="8"/><rect x="100" y="24" width="18" height="32" rx="9"/><path d="M 50 68 V 82 H 92 V 68" fill="none" stroke="#6b6f76" stroke-width="2.3529411764705883" stroke-linecap="round"/></g><g transform="translate(420,70) scale(1.3)" stroke="#a98a5c" stroke-width="1.6923076923076923"><rect x="0" y="0" width="100" height="80" rx="18" fill="#f3ecd9"/><ellipse cx="50" cy="40" rx="38" ry="29" fill="#fffdf9"/><circle cx="50" cy="40" r="9" fill="#f3ecd9"/></g>
+<text class="s" x="165" y="270" text-anchor="middle">perfil: campana, cuerpo de caja, tapa del driver, U-bracket</text>
+<text class="s" x="480" y="270" text-anchor="middle">frente: boca rectangular redondeada</text>
+<text class="m" x="300" y="292" text-anchor="middle">222 × 179 × 234 mm · ~1 kg · 8 Ω · 15 W (hoja TOA)</text>
+<text class="t" x="770" y="28" text-anchor="middle">MK1 — electret Ø9.7 × 4.5</text>
+<rect x="650" y="62" width="120" height="56" rx="8" fill="#e9e7e1" stroke="#83807a" stroke-width="2.4"/><line x1="770" y1="80" x2="800" y2="80" stroke="#4a4844" stroke-width="3"/><line x1="770" y1="100" x2="800" y2="100" stroke="#4a4844" stroke-width="3"/>
+<text class="s" x="710" y="140" text-anchor="middle">perfil: lata de aluminio</text>
+<circle cx="840" cy="190" r="48" fill="#e9e7e1" stroke="#83807a" stroke-width="2.4"/><circle cx="840" cy="178" r="8" fill="#a8524a"/><rect x="826" y="210" width="28" height="14" rx="3" fill="#3a3833"/>
+<text class="s" x="780" y="262" text-anchor="middle">vista trasera: 2 terminales</text><text class="s" x="780" y="282" text-anchor="middle">Term.1 (arriba) = señal (+)</text><text class="s" x="780" y="300" text-anchor="middle">Term.2 (abajo) = carcasa (−)</text>
+<text class="t" x="150" y="340" text-anchor="middle">Q1 — 2N3904</text>
+<path d="M 100 420 A 50 55 0 0 1 200 420 Z" fill="#fffdf9" stroke="#83807a" stroke-width="2.4"/>
+<line x1="120" y1="420" x2="120" y2="450" stroke="#3a3833" stroke-width="3.5"/><line x1="150" y1="420" x2="150" y2="450" stroke="#5c7a99" stroke-width="3.5"/><line x1="180" y1="420" x2="180" y2="450" stroke="#a8524a" stroke-width="3.5"/>
+<text class="s" x="150" y="370" text-anchor="middle">cara plana al frente</text><text class="m" x="120" y="466" text-anchor="middle">E</text><text class="m" x="150" y="466" text-anchor="middle">B</text><text class="m" x="180" y="466" text-anchor="middle">C</text><text class="s" x="150" y="486" text-anchor="middle" style="font-size:12px">ORDEN onsemi 2N3904 — verifica el tuyo</text>
+<text class="t" x="450" y="340" text-anchor="middle">U1 — LM386N-3 (DIP-8)</text>
+<rect x="380" y="368" width="140" height="62" rx="4" fill="#3a3833"/><path d="M 380 386 A 10 10 0 0 1 380 406" fill="#eeece6"/><circle cx="394" cy="380" r="3.5" fill="#fffdf9"/><text style="font:700 14px sans-serif;fill:#fffdf9" text-anchor="middle" x="450" y="404" text-anchor="middle">LM386N-3</text>
+<rect x="392" y="430" width="8" height="18" fill="#a5a19a"/><rect x="392" y="350" width="8" height="18" fill="#a5a19a"/><rect x="422" y="430" width="8" height="18" fill="#a5a19a"/><rect x="422" y="350" width="8" height="18" fill="#a5a19a"/><rect x="452" y="430" width="8" height="18" fill="#a5a19a"/><rect x="452" y="350" width="8" height="18" fill="#a5a19a"/><rect x="482" y="430" width="8" height="18" fill="#a5a19a"/><rect x="482" y="350" width="8" height="18" fill="#a5a19a"/>
+<text class="s" x="450" y="468" text-anchor="middle">muesca al lado de pin 1 · 9.6 × 6.35 mm</text>
+<text class="t" x="740" y="340" text-anchor="middle">Portapilas 6×AA</text>
+<rect x="640" y="362" width="200" height="86" rx="6" fill="#fffdf9" stroke="#83807a" stroke-width="2.4"/>
+<rect x="652" y="370" width="52" height="30" rx="14" fill="#eeece6" stroke="#a5a19a" stroke-width="1.8"/><rect x="652" y="408" width="52" height="30" rx="14" fill="#eeece6" stroke="#a5a19a" stroke-width="1.8"/><rect x="712" y="370" width="52" height="30" rx="14" fill="#eeece6" stroke="#a5a19a" stroke-width="1.8"/><rect x="712" y="408" width="52" height="30" rx="14" fill="#eeece6" stroke="#a5a19a" stroke-width="1.8"/><rect x="772" y="370" width="52" height="30" rx="14" fill="#eeece6" stroke="#a5a19a" stroke-width="1.8"/><rect x="772" y="408" width="52" height="30" rx="14" fill="#eeece6" stroke="#a5a19a" stroke-width="1.8"/>
+<line x1="840" y1="380" x2="872" y2="380" stroke="#a8524a" stroke-width="4"/><line x1="840" y1="430" x2="872" y2="430" stroke="#3a3833" stroke-width="4"/>
+<text class="s" x="740" y="466" text-anchor="middle">2 filas × 3 celdas, cable rojo (+) y negro (−)</text></svg>
+<figcaption><span class="fig-num">Figura P1.</span> Cómo se ven las piezas críticas. Dibujos esquemáticos hechos contra las hojas de datos de TOA (SC series), CUI (CMA-4544PF-W), onsemi (2N3904) y TI (LM386): sirven para reconocer la pieza en la mano o en el mostrador, no son planos.</figcaption></figure>
 <h3>1.1 Micrófono y su rail de alimentación (Bloque A)</h3>
 <p>El micrófono es una cápsula electret: un transductor miniatura que convierte presión sonora en una
 señal eléctrica pequeña. Necesita un poco de corriente para polarizarse (por eso lleva su propio
@@ -328,7 +369,7 @@ llegue a la etapa de potencia. Sin él, el circuito completo se queda corto de g
 normal.</p>
 <table>
 <tr><th>#</th><th>Ref</th><th>Parte</th><th>Cant</th><th>Dónde</th><th>MXN</th><th>Nota</th></tr>
-<tr><td>6</td><td>Q1</td><td>Transistor 2N3904, TO-92</td><td>1 (comprar 5)</td><td>cualquier tienda</td><td>3 c/u</td><td>sustituible por BC547, 2N2222A, BC337</td></tr>
+<tr><td>6</td><td>Q1</td><td>Transistor 2N3904, TO-92</td><td>1 (comprar 5)</td><td>cualquier tienda</td><td>3 c/u</td><td>sustituible por 2N2222A (TO-92), BC547, BC337 — <strong>OJO: BC547 y 2N2222A traen el pinout al revés (C-B-E). Si no es un 2N3904, ignora la Figura A y usa la hoja de tu transistor</strong></td></tr>
 <tr><td>7</td><td>R3</td><td>Resistor 82 kΩ, 1/4 W</td><td>1</td><td>idem</td><td>1</td><td></td></tr>
 <tr><td>8</td><td>R4</td><td>Resistor 22 kΩ, 1/4 W</td><td>1</td><td>idem</td><td>1</td><td></td></tr>
 <tr><td>9</td><td>R5</td><td>Resistor 4.7 kΩ, 1/4 W</td><td>1</td><td>idem</td><td>1</td><td></td></tr>
@@ -499,43 +540,28 @@ impresora 3D): ~$80–150 MXN adicionales por las dos piezas (~70 g de PETG).</p
 (R#, C#, Q1, U1) usa la numeración fija del proyecto.</p>
 
 <figure class="fig" id="figA-pinout">
-<svg viewBox="0 0 860 260" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    .pk{fill:var(--panel); stroke:var(--ink-mute); stroke-width:1.6;}
-    .pkt{font:700 12px 'Space Grotesk',sans-serif; fill:var(--ink); text-anchor:middle;}
-    .pks{font:600 9.5px 'JetBrains Mono',monospace; fill:var(--blue); text-anchor:start;}
-    .pin{fill:var(--ink-soft);}
-  </style>
-  <!-- Q1 TO-92 -->
-  <text class="pkt" x="150" y="30">Q1 — 2N3904 (TO-92)</text>
-  <text style="font:500 10.5px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="150" y="46" text-anchor="middle">cara plana hacia el armador, patas hacia abajo</text>
-  <path class="pk" d="M 100 60 a 50 50 0 1 1 0 0.1 Z" />
-  <line x1="100" y1="60" x2="200" y2="60" stroke="var(--ink-mute)" stroke-width="1.6"/>
-  <line x1="115" y1="110" x2="115" y2="150" stroke="var(--wire-k)" stroke-width="3"/>
-  <line x1="150" y1="110" x2="150" y2="150" stroke="var(--wire-b)" stroke-width="3"/>
-  <line x1="185" y1="110" x2="185" y2="150" stroke="var(--wire-r)" stroke-width="3"/>
-  <text class="pks" x="95" y="168" text-anchor="middle">E</text>
-  <text class="pks" x="150" y="168" text-anchor="middle">B</text>
-  <text class="pks" x="200" y="168" text-anchor="middle">C</text>
-  <text style="font:500 10px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="150" y="190" text-anchor="middle">Emisor · Base · Colector, izq. a der.</text>
-  <text style="font:500 9.5px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="150" y="206" text-anchor="middle">Verificar con el probador de diodos antes de soldar.</text>
-
-  <!-- U1 DIP-8 -->
-  <text class="pkt" x="600" y="30">U1 — LM386N-3 (DIP-8, vista superior)</text>
-  <rect class="pk" x="500" y="45" width="200" height="150" rx="6"/>
-  <path d="M 500 90 a 20 20 0 0 0 0 40" fill="var(--panel)" stroke="var(--ink-mute)" stroke-width="1.6"/>
-  <circle class="pin" cx="515" cy="60" r="4"/><text class="pks" x="525" y="64">1 GAIN</text>
-  <circle class="pin" cx="515" cy="90" r="4"/><text class="pks" x="525" y="94">2 −IN</text>
-  <circle class="pin" cx="515" cy="120" r="4"/><text class="pks" x="525" y="124">3 +IN</text>
-  <circle class="pin" cx="515" cy="150" r="4"/><text class="pks" x="525" y="154">4 GND</text>
-  <circle class="pin" cx="685" cy="60" r="4"/><text class="pks" x="615" y="64" text-anchor="end">8 GAIN</text>
-  <circle class="pin" cx="685" cy="90" r="4"/><text class="pks" x="615" y="94" text-anchor="end">7 BYPASS</text>
-  <circle class="pin" cx="685" cy="120" r="4"/><text class="pks" x="615" y="124" text-anchor="end">6 V_S</text>
-  <circle class="pin" cx="685" cy="150" r="4"/><text class="pks" x="615" y="154" text-anchor="end">5 V_OUT</text>
-  <text style="font:500 9.5px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="600" y="215" text-anchor="middle">Muesca a la izquierda. Comprobar contra la muesca del encapsulado antes de energizar.</text>
-</svg>
-<figcaption><span class="fig-num">Figura A.</span> Pinout de referencia de Q1 y U1, para verificar antes de soldar en cada bloque.</figcaption>
+<svg viewBox="0 0 860 300" xmlns="http://www.w3.org/2000/svg"><style>
+.t{font:700 16px 'Space Grotesk',sans-serif;fill:#23221f}
+.s{font:500 14px 'Source Sans 3',sans-serif;fill:#4a4844}
+.m{font:600 14px 'JetBrains Mono',monospace;fill:#3d5670}
+.d{font:700 15px 'JetBrains Mono',monospace;fill:#a8515b}
+.nw{fill:#f5e4d8;stroke:#c97a52;stroke-width:2.6}
+.bt{fill:#eeece6;stroke:#a5a19a;stroke-width:1.8}
+</style>
+<text class="t" x="170" y="28" text-anchor="middle">Q1 — 2N3904 (TO-92)</text><text class="s" x="170" y="50" text-anchor="middle">mira la cara plana, patas hacia abajo</text>
+<path d="M 115 150 A 55 60 0 0 1 225 150 L 225 150 Z" fill="#fffdf9" stroke="#83807a" stroke-width="2.4"/>
+<line x1="115" y1="150" x2="225" y2="150" stroke="#83807a" stroke-width="2.4"/>
+<line x1="135" y1="150" x2="135" y2="215" stroke="#3a3833" stroke-width="4"/><line x1="170" y1="150" x2="170" y2="215" stroke="#5c7a99" stroke-width="4"/><line x1="205" y1="150" x2="205" y2="215" stroke="#a8524a" stroke-width="4"/>
+<text class="t" x="135" y="240" text-anchor="middle">E</text><text class="t" x="170" y="240" text-anchor="middle">B</text><text class="t" x="205" y="240" text-anchor="middle">C</text>
+<text class="s" x="10" y="266" text-anchor="start" style="font-size:12.5px">Orden de la hoja onsemi del 2N3904. NO es universal.</text><text class="s" x="10" y="286" text-anchor="start" style="font-size:12.5px">Un BC547 o un 2N2222A en TO-92 van al revés: C · B · E.</text>
+<text class="t" x="610" y="28" text-anchor="middle">U1 — LM386N-3 (DIP-8, vista superior)</text>
+<rect x="520" y="60" width="180" height="170" rx="6" fill="#fffdf9" stroke="#83807a" stroke-width="2.4"/>
+<path d="M 580 60 A 20 20 0 0 0 620 60" fill="#eeece6" stroke="#83807a" stroke-width="2.4"/><circle cx="540" cy="80" r="5" fill="#83807a"/>
+<line x1="498" y1="95" x2="520" y2="95" stroke="#4a4844" stroke-width="3"/><text class="m" x="486" y="100" text-anchor="end">1</text><text class="m" x="532" y="100" text-anchor="start">GAIN</text><line x1="700" y1="95" x2="722" y2="95" stroke="#4a4844" stroke-width="3"/><text class="m" x="734" y="100" text-anchor="start">8</text><text class="m" x="688" y="100" text-anchor="end">GAIN</text><line x1="498" y1="137" x2="520" y2="137" stroke="#4a4844" stroke-width="3"/><text class="m" x="486" y="142" text-anchor="end">2</text><text class="m" x="532" y="142" text-anchor="start">−IN</text><line x1="700" y1="137" x2="722" y2="137" stroke="#4a4844" stroke-width="3"/><text class="m" x="734" y="142" text-anchor="start">7</text><text class="m" x="688" y="142" text-anchor="end">BYPASS</text><line x1="498" y1="179" x2="520" y2="179" stroke="#4a4844" stroke-width="3"/><text class="m" x="486" y="184" text-anchor="end">3</text><text class="m" x="532" y="184" text-anchor="start">+IN</text><line x1="700" y1="179" x2="722" y2="179" stroke="#4a4844" stroke-width="3"/><text class="m" x="734" y="184" text-anchor="start">6</text><text class="m" x="688" y="184" text-anchor="end">V_S</text><line x1="498" y1="221" x2="520" y2="221" stroke="#4a4844" stroke-width="3"/><text class="m" x="486" y="226" text-anchor="end">4</text><text class="m" x="532" y="226" text-anchor="start">GND</text><line x1="700" y1="221" x2="722" y2="221" stroke="#4a4844" stroke-width="3"/><text class="m" x="734" y="226" text-anchor="start">5</text><text class="m" x="688" y="226" text-anchor="end">V_OUT</text>
+<text class="s" x="610" y="256" text-anchor="middle">Muesca arriba, punto del pin 1 arriba a la izquierda.</text><text class="s" x="610" y="276" text-anchor="middle">Pines 1–4 bajan por la izquierda; 5–8 suben por la derecha.</text></svg>
+<figcaption><span class="fig-num">Figura A.</span> Pinout de referencia de Q1 y U1. El de U1 es universal para el LM386 en DIP-8 (TI SNAS545D, tabla 5-1). <strong>El de Q1 vale solo para el 2N3904 de onsemi</strong>: verifícalo contra la hoja del transistor que tengas en la mano antes del paso 10.</figcaption>
 </figure>
+<div class="adv"><span class="adv-tag">⚠</span><strong>El orden de patas del dibujo vale para el 2N3904 de onsemi y nada más.</strong> En el mismo encapsulado TO-92, el <strong>BC547</strong> y el <strong>2N2222A</strong> —los dos sustitutos que permite el BOM— traen <strong>colector, base, emisor</strong>, exactamente al revés. Si no compraste un 2N3904, <strong>el dibujo no te sirve</strong>: manda la hoja de tu transistor.</div>
 
 <h3>4.1 Bloque A — Micrófono y su rail filtrado</h3>
 <ul>
@@ -560,6 +586,13 @@ impresora 3D): ~$80–150 MXN adicionales por las dos piezas (~70 g de PETG).</p
   hacia el emisor) hacia masa. <strong>R6 no lleva capacitor de desvío</strong>: así la ganancia queda
   fijada por dos resistencias, no por la corriente del transistor.</li>
   <li>C4 (12 nF) va del colector de Q1 a masa: filtro pasa-bajas de la etapa.</li>
+
+  <li>Pinout del 2N3904 (TO-92, cara plana hacia el armador, patas hacia abajo): de izquierda a derecha, <strong>Emisor, Base, Colector</strong>. Es el orden de la hoja de onsemi (2N3903/D, CASE 29-11) y <strong>solo vale para el 2N3904</strong>: en el mismo TO-92, un BC547 o un 2N2222A vienen <strong>Colector, Base, Emisor</strong>.
+  <strong>Cómo se verifica de verdad, en dos partes:</strong>
+  <ol>
+  <li><strong>Antes de montar, con el probador de diodos: encuentra la base.</strong> Punta roja fija en una pata y la negra en las otras dos; la pata donde las dos lecturas conducen (~0.6–0.8 V) es la <strong>base</strong>, y que conduzca con la roja confirma que es <strong>NPN</strong>. Entre las otras dos no debe conducir en ningún sentido. <strong>Este paso no distingue emisor de colector</strong> — las dos lecturas desde la base son casi iguales, así que no intentes deducirlo de aquí.</li>
+  <li><strong>El emisor y el colector se deciden en el paso 10, en protoboard, midiendo.</strong> Con el circuito armado y R5 puesta, el colector de Q1 tiene que medir <strong>5.5–6.1 V</strong>. Si mide <strong>~8.5 V</strong>, Q1 está en corte porque <strong>emisor y colector están intercambiados</strong>: apaga, gira el transistor 180° (la base se queda en su sitio, las otras dos patas cambian) y vuelve a medir. <strong>Nada de Q1 se suelda hasta que esa medición salga.</strong></li>
+  </ol></li>
 </ul>
 
 <h3>4.3 Bloque C — Etapa de potencia (U1, LM386N-3)</h3>
@@ -611,7 +644,7 @@ porque el balanceo de la empuñadura exige el aparato completo y con las pilas p
 <p>Los pasos marcados con <span class="obligatorio">NO SE SALTA</span> no se pueden hacer después: si se
 saltan, hay que desarmar para corregirlos.</p>
 
-<h3 style="color:var(--accent-step-ink); background:var(--accent-step-bg); display:inline-block; padding:.2em .7em; border-radius:6px;">BLOQUE 1 — Conjunto de micrófono</h3>
+<h3 class="bloque" style="color:var(--accent-step-ink); background:var(--accent-step-bg); display:inline-block; padding:.2em .7em; border-radius:6px;">BLOQUE 1 — Conjunto de micrófono</h3>
 <p><strong>Piezas de esta sección:</strong> MK1, boom (impreso), jaula de voz (impresa), grommet, disco
 de espuma, tornillo M3×12, cable blindado de 450 mm.</p>
 
@@ -634,34 +667,23 @@ de espuma, tornillo M3×12, cable blindado de 450 mm.</p>
   Soldar con el grommet ya puesto derrite el hule y arruina el aislamiento de vibración.</p>
 
   <figure class="fig" id="figB1">
-  <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
-    <style>
-      .mkc{fill:#fff; stroke:var(--blue); stroke-width:2.2;}
-      .mkt{font:700 12px 'Space Grotesk',sans-serif; fill:var(--ink); text-anchor:middle;}
-      .mks{font:600 10px 'JetBrains Mono',monospace; text-anchor:start;}
-      .term{fill:var(--ink-soft);}
-    </style>
-    <circle class="mkc" cx="120" cy="110" r="46"/>
-    <text class="mkt" x="120" y="106">MK1</text>
-    <text style="font:500 9px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="120" y="122" text-anchor="middle">electret</text>
-    <circle class="term" cx="100" cy="150" r="4"/>
-    <circle class="term" cx="140" cy="150" r="4"/>
-    <text class="mks" x="88" y="172" text-anchor="middle">+</text>
-    <text class="mks" x="152" y="172" text-anchor="middle">−</text>
-
-    <path class="wire-r" d="M 100 150 C 100 190, 250 190, 300 150"/>
-    <path class="wire-k" d="M 140 150 C 140 200, 250 210, 300 175"/>
-    <path d="M 90 145 C 90 210, 260 225, 310 180" fill="none" stroke="var(--ink-mute)" stroke-width="1" stroke-dasharray="3 3"/>
-
-    <rect x="300" y="130" width="260" height="70" rx="8" fill="var(--panel-2)" stroke="var(--line-strong)"/>
-    <text class="mks" x="315" y="150" fill="var(--wire-red)">conductor 1 = señal (+)</text>
-    <text class="mks" x="315" y="168" fill="#2b2925">conductor 2 = retorno (−)</text>
-    <text class="mks" x="315" y="186" fill="var(--ink-mute)" font-size="9">malla del blindaje: libre en este extremo, con termofit</text>
-
-    <text style="font:600 11px 'Space Grotesk',sans-serif; fill:var(--ink);" x="450" y="40" text-anchor="middle">Cable blindado de 450 mm, hacia la placa</text>
-    <line x1="560" y1="150" x2="640" y2="150" stroke="var(--ink-mute)" stroke-width="2" marker-end="url(#none)"/>
-    <text style="font:500 10px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="600" y="140" text-anchor="middle">→ placa</text>
-  </svg>
+  <svg viewBox="0 0 800 290" xmlns="http://www.w3.org/2000/svg"><style>
+.t{font:700 16px 'Space Grotesk',sans-serif;fill:#23221f}
+.s{font:500 14px 'Source Sans 3',sans-serif;fill:#4a4844}
+.m{font:600 14px 'JetBrains Mono',monospace;fill:#3d5670}
+.d{font:700 15px 'JetBrains Mono',monospace;fill:#a8515b}
+.nw{fill:#f5e4d8;stroke:#c97a52;stroke-width:2.6}
+.bt{fill:#eeece6;stroke:#a5a19a;stroke-width:1.8}
+</style>
+<circle cx="130" cy="150" r="60" fill="#e9e7e1" stroke="#83807a" stroke-width="3"/><text class="t" x="130" y="146" text-anchor="middle">MK1</text><text class="s" x="130" y="166" text-anchor="middle">vista trasera</text>
+<circle cx="190" cy="125" r="6" fill="#4a4844"/><circle cx="190" cy="175" r="6" fill="#4a4844"/>
+<text class="t" x="212" y="118" text-anchor="start">+</text><text class="t" x="212" y="170" text-anchor="start">−</text>
+<line x1="190" y1="125" x2="470" y2="125" stroke="#a8524a" stroke-width="5" stroke-linecap="round"/>
+<line x1="190" y1="175" x2="470" y2="175" stroke="#3a3833" stroke-width="5" stroke-linecap="round"/>
+<line x1="150" y1="212" x2="470" y2="240" stroke="#83807a" stroke-width="2.5" stroke-dasharray="8 6"/>
+<text class="s" x="480" y="131" text-anchor="start">conductor 1 = señal (+, Term.1)</text><text class="s" x="480" y="181" text-anchor="start">conductor 2 = retorno (−, Term.2)</text>
+<text class="s" x="480" y="246" text-anchor="start">malla: libre aquí, con termofit</text>
+<text class="t" x="400" y="40" text-anchor="middle">cable blindado de 450 mm — el otro extremo va a la placa</text></svg>
   <figcaption><span class="fig-num">Figura B1.</span> Cableado de MK1 antes de meter la cápsula en el grommet. Conductor 1 a la terminal "+", conductor 2 a la terminal "−"; la malla queda libre en este extremo.</figcaption>
   </figure>
 
@@ -686,29 +708,23 @@ de espuma, tornillo M3×12, cable blindado de 450 mm.</p>
   amarrar el cable en la cápsula misma.</p>
 
   <figure class="fig" id="figB2">
-  <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
-    <style>
-      .boomg{stroke:var(--built); stroke-width:11; fill:none; stroke-linecap:round;}
-      .cageg{fill:var(--new-bg); stroke:var(--new); stroke-width:2.6;}
-      .dimg{stroke:var(--danger); stroke-width:1.4;}
-      .dimt2{font:700 11px 'JetBrains Mono',monospace; fill:var(--danger); text-anchor:middle;}
-    </style>
-    <path class="boomg" d="M 40 220 C 160 200, 260 200, 340 210"/>
-    <text style="font:600 11px 'Space Grotesk',sans-serif; fill:var(--ink-mute);" x="150" y="180">boom — pie ya armado (gris)</text>
-
-    <g transform="translate(420,210)">
-      <path class="cageg" d="M 0 -40 C 48 -40 72 -12 72 0 C 72 12 48 40 0 40 L -8 34 C 24 26 40 14 40 0 C 40 -14 24 -26 -8 -34 Z"/>
-      <circle cx="12" cy="0" r="15" fill="#fff" stroke="var(--blue)" stroke-width="2.4"/>
-      <text style="font:700 9px 'JetBrains Mono',monospace; fill:var(--ink); text-anchor:middle;" x="12" y="4">MK1</text>
-      <text style="font:700 10px 'Space Grotesk',sans-serif; fill:var(--new-strong); text-anchor:middle;" x="18" y="-56">jaula — pieza nueva de este paso</text>
-    </g>
-
-    <line class="dimg" x1="432" y1="150" x2="432" y2="60"/>
-    <line class="dimg" x1="485" y1="150" x2="485" y2="60"/>
-    <line class="dimg" x1="432" y1="105" x2="485" y2="105"/>
-    <text class="dimt2" x="458" y="98">G1: 30 ± 3 mm</text>
-    <text style="font:500 10px 'Source Sans 3',sans-serif; fill:var(--ink-mute);" x="458" y="130" text-anchor="middle">cápsula → plano del borde de la jaula</text>
-  </svg>
+  <svg viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg"><style>
+.t{font:700 16px 'Space Grotesk',sans-serif;fill:#23221f}
+.s{font:500 14px 'Source Sans 3',sans-serif;fill:#4a4844}
+.m{font:600 14px 'JetBrains Mono',monospace;fill:#3d5670}
+.d{font:700 15px 'JetBrains Mono',monospace;fill:#a8515b}
+.nw{fill:#f5e4d8;stroke:#c97a52;stroke-width:2.6}
+.bt{fill:#eeece6;stroke:#a5a19a;stroke-width:1.8}
+</style>
+<path d="M 30 250 C 160 235 330 235 440 240" fill="none" stroke="#a5a19a" stroke-width="14" stroke-linecap="round"/>
+<text class="s" x="230" y="210" text-anchor="middle">boom — ya armado</text>
+<path class="nw" d="M 440 240 C 480 190 560 190 600 240 C 560 290 480 290 440 240 Z" opacity=".9"/>
+<ellipse cx="612" cy="240" rx="12" ry="56" fill="#f5e4d8" stroke="#c97a52" stroke-width="3"/>
+<circle cx="520" cy="240" r="24" fill="#fff" stroke="#5c7a99" stroke-width="3"/><text class="m" x="520" y="245" text-anchor="middle">MK1</text>
+<line x1="520" y1="120" x2="520" y2="205" stroke="#a8515b" stroke-width="1.5" stroke-dasharray="5 4"/><line x1="612" y1="120" x2="612" y2="175" stroke="#a8515b" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="520" y1="140" x2="612" y2="140" stroke="#a8515b" stroke-width="2.2"/><line x1="520" y1="130" x2="520" y2="150" stroke="#a8515b" stroke-width="2.2"/><line x1="612" y1="130" x2="612" y2="150" stroke="#a8515b" stroke-width="2.2"/>
+<text class="d" x="566" y="112" text-anchor="middle">G1: 30 ± 3 mm</text>
+<text class="t" x="566" y="320" text-anchor="middle">jaula de voz — pieza nueva de este paso</text><text class="s" x="566" y="342" text-anchor="middle">cota: cápsula → plano del borde de la jaula</text></svg>
   <figcaption><span class="fig-num">Figura B2.</span> Cota G1: distancia de la cápsula al plano del
   borde de la jaula. Es la cota que decide el margen contra el pitido (manual científico, §3.3). La
   jaula (contorno naranja) es la pieza nueva de este paso; el boom (gris) ya estaba armado.</figcaption>
@@ -725,49 +741,25 @@ de espuma, tornillo M3×12, cable blindado de 450 mm.</p>
 
 <p><strong>El Bloque 1 termina aquí.</strong> No armes nada más de la mecánica todavía: el Bloque 2 necesita este conjunto sobre la mesa.</p>
 
-<h3 style="color:var(--accent-step-ink); background:var(--accent-step-bg); display:inline-block; padding:.2em .7em; border-radius:6px;">BLOQUE 2 — Puesta en marcha en protoboard</h3>
+<h3 class="bloque bq-pb" style="color:var(--accent-step-ink); background:var(--accent-step-bg); display:inline-block; padding:.2em .7em; border-radius:6px;">BLOQUE 2 — Puesta en marcha en protoboard</h3>
 <p><strong>Piezas de esta sección:</strong> todo el BOM electrónico de las secciones 1.1 a 1.5 (excepto
 la placa final de perfboard), más el conjunto de micrófono del Bloque 1.</p>
 
 <figure class="fig" id="figC1">
-<svg viewBox="0 0 860 260" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    .zoneA{fill:#eef4f0; stroke:#6f9b84;}
-    .zoneB{fill:#eaf0f5; stroke:#5c7a99;}
-    .zoneC{fill:#f6f0e6; stroke:#a98a5c;}
-    .zonet{font:700 10.5px 'JetBrains Mono',monospace; letter-spacing:.03em;}
-    .zonel{font:500 9.5px 'Source Sans 3',sans-serif; fill:var(--ink-mute);}
-  </style>
-  <rect x="20" y="20" width="820" height="26" rx="4" fill="var(--panel-2)" stroke="var(--line-strong)"/>
-  <text style="font:700 10px 'JetBrains Mono',monospace; fill:var(--blue);" x="30" y="38">RIEL SUPERIOR — V+ (9.0 V, a través de SW1 y F1)</text>
-
-  <rect class="zoneA" x="20" y="60" width="220" height="150" rx="8" stroke-width="1.6"/>
-  <text class="zonet" x="35" y="80" fill="#3f6b53">ZONA A — MICRÓFONO + PREAMP</text>
-  <text class="zonel" x="35" y="98">R1, C1, R2, MK1, C2</text>
-  <text class="zonel" x="35" y="112">R3, R4, Q1, R5, R6, R7, C3, C4</text>
-  <text class="zonel" x="35" y="130">montar primero: alejado de la salida</text>
-
-  <rect class="zoneB" x="255" y="60" width="150" height="150" rx="8" stroke-width="1.6"/>
-  <text class="zonet" x="265" y="80" fill="#2f4a63">ZONA B</text>
-  <text class="zonet" x="265" y="94" fill="#2f4a63">CONTROL</text>
-  <text class="zonel" x="265" y="112">RV1 al centro</text>
-
-  <rect class="zoneC" x="420" y="60" width="200" height="150" rx="8" stroke-width="1.6"/>
-  <text class="zonet" x="432" y="80" fill="#7a5a24">ZONA C — U1 + FILTRO</text>
-  <text class="zonel" x="432" y="98">U1, C7, C8, C9, C10/JP1</text>
-  <text class="zonel" x="432" y="112">punto estrella: fila dedicada,</text>
-  <text class="zonel" x="432" y="126">a &lt;3 cm del pin 4 de U1</text>
-
-  <rect x="640" y="60" width="200" height="150" rx="8" fill="#f5e4d8" stroke="var(--new)" stroke-width="1.6"/>
-  <text class="zonet" x="652" y="80" fill="var(--new-strong)">ZONA SALIDA</text>
-  <text class="zonel" x="652" y="98">R8, C12, C11, cable a MK2</text>
-  <text class="zonel" x="652" y="112">tan separada de la entrada</text>
-  <text class="zonel" x="652" y="126">como sea posible: 330 mA</text>
-  <text class="zonel" x="652" y="140">pico contra señal de alta Z</text>
-
-  <rect x="20" y="222" width="820" height="26" rx="4" fill="var(--panel-2)" stroke="var(--line-strong)"/>
-  <text style="font:700 10px 'JetBrains Mono',monospace; fill:var(--danger);" x="30" y="240">RIEL INFERIOR — GND DE SEÑAL únicamente. El GND de potencia NO va por el riel: usa el punto estrella (§4.5).</text>
-</svg>
+<svg viewBox="0 0 900 330" xmlns="http://www.w3.org/2000/svg"><style>
+.t{font:700 16px 'Space Grotesk',sans-serif;fill:#23221f}
+.s{font:500 14px 'Source Sans 3',sans-serif;fill:#4a4844}
+.m{font:600 14px 'JetBrains Mono',monospace;fill:#3d5670}
+.d{font:700 15px 'JetBrains Mono',monospace;fill:#a8515b}
+.nw{fill:#f5e4d8;stroke:#c97a52;stroke-width:2.6}
+.bt{fill:#eeece6;stroke:#a5a19a;stroke-width:1.8}
+</style>
+<rect x="20" y="12" width="860" height="40" rx="6" fill="#faf7f0" stroke="#cabfa8"/><text class="m" x="34" y="38" text-anchor="start">RIEL SUPERIOR — V+ (9.0 V, tras SW1 y F1)</text>
+<rect x="20" y="70" width="265" height="170" rx="10" fill="#eef4f0" stroke="#6f9b84" stroke-width="2"/><text class="t" x="34" y="96" text-anchor="start">ZONA A · MIC + PREAMP</text><text class="s" x="34" y="120" text-anchor="start">R1, C1, R2, MK1, C2</text><text class="s" x="34" y="144" text-anchor="start">R3, R4, Q1, R5, R6, R7</text><text class="s" x="34" y="168" text-anchor="start">C3, C4</text><text class="s" x="34" y="192" text-anchor="start">se monta primero</text>
+<rect x="295" y="70" width="150" height="170" rx="10" fill="#eaf0f5" stroke="#5c7a99" stroke-width="2"/><text class="t" x="309" y="96" text-anchor="start">ZONA B</text><text class="s" x="309" y="120" text-anchor="start">RV1 al centro</text><text class="s" x="309" y="144" text-anchor="start">(control de</text><text class="s" x="309" y="168" text-anchor="start">volumen)</text>
+<rect x="455" y="70" width="235" height="170" rx="10" fill="#f6f0e6" stroke="#a98a5c" stroke-width="2"/><text class="t" x="469" y="96" text-anchor="start">ZONA C · U1</text><text class="s" x="469" y="120" text-anchor="start">U1, C7, C8, C9, C10</text><text class="s" x="469" y="144" text-anchor="start">punto estrella: fila</text><text class="s" x="469" y="168" text-anchor="start">dedicada, a < 3 cm</text><text class="s" x="469" y="192" text-anchor="start">del pin 4 de U1</text>
+<rect x="700" y="70" width="180" height="170" rx="10" fill="#f5e4d8" stroke="#c97a52" stroke-width="2"/><text class="t" x="714" y="96" text-anchor="start">ZONA SALIDA</text><text class="s" x="714" y="120" text-anchor="start">R8, C12, C11,</text><text class="s" x="714" y="144" text-anchor="start">cable a MK2</text><text class="s" x="714" y="168" text-anchor="start">lejos de la entrada</text>
+<rect x="20" y="262" width="860" height="44" rx="6" fill="#f5e6e7" stroke="#d3a9ae"/><text class="d" x="34" y="289" text-anchor="start">RIEL INFERIOR — solo GND de señal. El GND de potencia va al punto estrella (§4.5).</text></svg>
 <figcaption><span class="fig-num">Figura C1.</span> Mapa de zonas en protoboard de 830 puntos. Cuatro
 zonas de izquierda a derecha, en el mismo orden que la señal fluye, con la salida de potencia tan
 separada de la entrada de micrófono como el protoboard permite.</figcaption>
@@ -823,8 +815,7 @@ separada de la entrada de micrófono como el protoboard permite.</figcaption>
 </div>
 <div class="paso">
   <div class="paso-head"><div class="paso-num">12</div><div><div class="paso-titulo">Montar U1 y su periferia<span class="obligatorio">CONFIG A</span></div></div></div>
-  <p><strong>SW1 en OFF.</strong> Insertar U1 en el zócalo, muesca hacia el lado correcto según tu
-  colocación. Montar C9, RV1, los puentes de conexión, R8, C12, C11. Para empezar, dejar los pines 1 y 8
+  <p><strong>SW1 en OFF.</strong> Insertar U1 en el zócalo <strong>con la muesca del chip alineada con la muesca del zócalo</strong>: las dos apuntan al mismo lado. Antes de energizar, confirmar con la Figura A que el <strong>pin 6 (V_S)</strong> es el que recibe V+ y el <strong>pin 4 (GND)</strong> el que va al punto estrella. Si el chip entra girado 180°, <strong>V+ cae en el pin de −IN y el chip se destruye al encender</strong>. Montar C9, RV1, los puentes de conexión, R8, C12, C11. Para empezar, dejar los pines 1 y 8
   sin nada (Config A).</p>
 </div>
 <div class="paso">
@@ -874,7 +865,7 @@ separada de la entrada de micrófono como el protoboard permite.</figcaption>
 
 <p><strong>El Bloque 2 termina cuando el circuito suena bien en Config B, con Q1 verificado y sin oscilación.</strong></p>
 
-<h3 style="color:var(--accent-step-ink); background:var(--accent-step-bg); display:inline-block; padding:.2em .7em; border-radius:6px;">BLOQUE 3 — Placa final en perfboard y caja</h3>
+<h3 class="bloque bq-pb" style="color:var(--accent-step-ink); background:var(--accent-step-bg); display:inline-block; padding:.2em .7em; border-radius:6px;">BLOQUE 3 — Placa final en perfboard y caja</h3>
 <p><strong>Piezas de esta sección:</strong> perfboard 50×70 mm, caja de proyecto ABS, portapilas.</p>
 
 <div class="paso">
@@ -896,58 +887,29 @@ separada de la entrada de micrófono como el protoboard permite.</figcaption>
   del protoboard. <strong>El protoboard no se desarma hasta que la perfboard mida igual.</strong></div>
 </div>
 
-<h3 style="color:var(--accent-step-ink); background:var(--accent-step-bg); display:inline-block; padding:.2em .7em; border-radius:6px;">BLOQUE 4 — Cuerpo</h3>
+<h3 class="bloque bq-pb" style="color:var(--accent-step-ink); background:var(--accent-step-bg); display:inline-block; padding:.2em .7em; border-radius:6px;">BLOQUE 4 — Cuerpo</h3>
 <p><strong>Piezas de esta sección:</strong> espina de pino, bloque de empuñadura, portapilas, caja de
 circuito ya armada (Bloque 3), stack de aislamiento de la trompeta, MK2, armellas, strap.</p>
 
 <figure class="fig" id="figD1">
-<svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    .exp{fill:var(--panel-2); stroke:var(--built); stroke-width:1.6;}
-    .expn{fill:var(--new-bg); stroke:var(--new); stroke-width:2.4;}
-    .expt{font:700 11px 'Space Grotesk',sans-serif; fill:var(--ink); text-anchor:middle;}
-    .expl{stroke:var(--ink-mute); stroke-width:1; stroke-dasharray:3 3;}
-  </style>
-  <!-- trumpet -->
-  <path class="exp" d="M 30 100 L 100 90 L 160 60 L 160 180 L 100 150 L 30 140 Z"/>
-  <text class="expt" x="90" y="200">MK2 · trompeta</text>
-
-  <!-- bracket -->
-  <rect class="expn" x="175" y="95" width="34" height="70" rx="4"/>
-  <text class="expt" x="192" y="180">bracket +</text>
-  <text class="expt" x="192" y="192" font-size="9.5">stack aislante</text>
-
-  <!-- spine -->
-  <rect class="exp" x="225" y="120" width="420" height="24" rx="3"/>
-  <text class="expt" x="435" y="170">espina de pino, 330 mm</text>
-
-  <!-- battery box -->
-  <rect class="exp" x="280" y="90" width="120" height="26" rx="3"/>
-  <text class="expt" x="340" y="80" font-size="10">portapilas 6×AA</text>
-  <line class="expl" x1="340" y1="90" x2="340" y2="116"/>
-
-  <!-- circuit box -->
-  <rect class="exp" x="440" y="146" width="110" height="40" rx="4"/>
-  <text class="expt" x="495" y="205" font-size="10">caja de circuito (Bloque 3)</text>
-  <line class="expl" x1="495" y1="186" x2="495" y2="200"/>
-
-  <!-- grip -->
-  <rect class="exp" x="650" y="118" width="110" height="28" rx="5"/>
-  <text class="expt" x="705" y="80" font-size="10">empuñadura, 110 mm</text>
-  <line class="expl" x1="705" y1="90" x2="705" y2="118"/>
-  <text class="expt" x="705" y="210" font-size="9.5">posición fijada por balanceo (paso 27)</text>
-
-  <!-- boom -->
-  <path d="M 645 132 C 720 105, 780 105, 830 118" fill="none" stroke="var(--built)" stroke-width="9" stroke-linecap="round"/>
-  <g transform="translate(838,118)">
-    <path class="expn" d="M 0 -22 C 26 -22 40 -6 40 0 C 40 6 26 22 0 22 L -4 18 C 14 14 22 8 22 0 C 22 -8 14 -14 -4 -18 Z"/>
-    <circle cx="8" cy="0" r="9" fill="#fff" stroke="var(--blue)" stroke-width="1.8"/>
-  </g>
-  <text class="expt" x="800" y="70" font-size="10">boom + jaula (Bloque 1)</text>
-  <line class="expl" x1="800" y1="80" x2="820" y2="105"/>
-
-  <text style="font:600 11px 'Space Grotesk',sans-serif; fill:var(--ink-mute);" x="450" y="290" text-anchor="middle">Vista despiezada — orden de integración: espina → bracket con stack → portapilas y caja → boom → empuñadura</text>
-</svg>
+<svg viewBox="0 0 960 400" xmlns="http://www.w3.org/2000/svg"><style>
+.t{font:700 16px 'Space Grotesk',sans-serif;fill:#23221f}
+.s{font:500 14px 'Source Sans 3',sans-serif;fill:#4a4844}
+.m{font:600 14px 'JetBrains Mono',monospace;fill:#3d5670}
+.d{font:700 15px 'JetBrains Mono',monospace;fill:#a8515b}
+.nw{fill:#f5e4d8;stroke:#c97a52;stroke-width:2.6}
+.bt{fill:#eeece6;stroke:#a5a19a;stroke-width:1.8}
+</style>
+<g transform="translate(20,110) scale(1.05)" fill="#eeece6" stroke="#a5a19a" stroke-width="2.0952380952380953" stroke-linejoin="round"><path d="M 0 0 L 66 14 L 66 66 L 0 80 Z"/><rect x="0" y="0" width="5" height="80" rx="2"/><rect x="66" y="12" width="34" height="56" rx="8"/><rect x="100" y="24" width="18" height="32" rx="9"/><path d="M 50 68 V 82 H 92 V 68" fill="none" stroke="#6b6f76" stroke-width="3.8095238095238093" stroke-linecap="round"/></g><text class="s" x="85" y="250" text-anchor="middle">MK2 · TOA SC-615</text>
+<rect class="nw" x="165" y="130" width="30" height="110" rx="5"/><text class="s" x="180" y="272" text-anchor="middle">bracket +</text><text class="s" x="180" y="290" text-anchor="middle">stack aislante</text>
+<rect class="bt" x="215" y="170" width="420" height="36" rx="4"/><text class="s" x="425" y="194" text-anchor="middle">espina de pino · 330 mm</text>
+<rect class="bt" x="270" y="120" width="130" height="36" rx="4"/><text class="s" x="335" y="108" text-anchor="middle">portapilas 6×AA</text>
+<rect class="bt" x="450" y="222" width="130" height="50" rx="4"/><text class="s" x="515" y="300" text-anchor="middle">caja de circuito (Bloque 3)</text>
+<rect class="bt" x="600" y="222" width="120" height="36" rx="5"/><text class="s" x="660" y="282" text-anchor="middle">empuñadura · 110 mm</text>
+<path d="M 635 188 C 720 160 800 150 850 162" fill="none" stroke="#a5a19a" stroke-width="12" stroke-linecap="round"/>
+<path class="nw" d="M 850 162 C 875 135 915 135 925 162 C 915 190 875 190 850 162 Z"/><circle cx="880" cy="162" r="11" fill="#fff" stroke="#5c7a99" stroke-width="2.4"/>
+<text class="s" x="800" y="118" text-anchor="middle">boom + jaula (Bloque 1)</text>
+<text class="s" x="480" y="368" text-anchor="middle">Orden: espina → bracket con stack → portapilas y caja → boom → empuñadura (balanceo, paso 27)</text></svg>
 <figcaption><span class="fig-num">Figura D1.</span> Vista despiezada del cuerpo completo. El boom y su
 jaula (naranja) llegan ya armados del Bloque 1; el bracket con su stack de aislamiento (naranja) se monta
 en este bloque, paso 23.</figcaption>
@@ -968,48 +930,21 @@ en este bloque, paso 23.</figcaption>
   <div class="adv"><span class="adv-tag">⚠</span>Este stack no se puede agregar después sin desmontar la trompeta.</div>
 
   <figure class="fig" id="figD2">
-  <svg viewBox="0 0 860 200" xmlns="http://www.w3.org/2000/svg">
-    <style>
-      .st{fill:var(--new-bg); stroke:var(--new); stroke-width:2;}
-      .stt{font:700 11px 'Space Grotesk',sans-serif; fill:var(--ink); text-anchor:middle;}
-      .std{font:500 9.5px 'Source Sans 3',sans-serif; fill:var(--ink-mute); text-anchor:middle;}
-      .stv{font:700 10px 'JetBrains Mono',monospace; fill:var(--danger); text-anchor:middle;}
-      .chain2{stroke:var(--ink-mute); stroke-width:2; fill:none;}
-    </style>
-    <text x="30" y="30" class="stt" text-anchor="start">MK2</text>
-    <line class="chain2" x1="70" y1="35" x2="110" y2="35"/>
-
-    <rect class="st" x="115" y="10" width="150" height="70" rx="8"/>
-    <text class="stt" x="190" y="32">Etapa 1</text>
-    <text class="std" x="190" y="48">bracket: neopreno +</text>
-    <text class="std" x="190" y="60">buje de silicón</text>
-    <line class="chain2" x1="265" y1="45" x2="300" y2="45"/>
-
-    <rect x="305" y="10" width="140" height="70" rx="8" fill="var(--built-bg)" stroke="var(--built)" stroke-width="1.4"/>
-    <text class="stt" x="375" y="32" fill="#585650">Etapa 2</text>
-    <text class="std" x="375" y="48">espina de pino</text>
-    <line class="chain2" x1="445" y1="45" x2="480" y2="45"/>
-
-    <rect x="485" y="10" width="160" height="70" rx="8" fill="var(--built-bg)" stroke="var(--built)" stroke-width="1.4"/>
-    <text class="stt" x="565" y="28" fill="#585650">Etapa 3</text>
-    <text class="std" x="565" y="44">boom PETG — resonancia</text>
-    <text class="std" x="565" y="56">propia ~390 Hz</text>
-    <line class="chain2" x1="645" y1="45" x2="680" y2="45"/>
-
-    <rect class="st" x="685" y="10" width="150" height="70" rx="8"/>
-    <text class="stt" x="760" y="32">Etapa 4</text>
-    <text class="std" x="760" y="48">grommet + espuma</text>
-    <text class="std" x="760" y="60">delante de MK1</text>
-
-    <text x="820" y="30" class="stt" text-anchor="end">MK1</text>
-
-    <rect x="115" y="110" width="720" height="72" rx="8" fill="#eef4f0" stroke="#6f9b84"/>
-    <text class="stt" x="475" y="130" fill="#3f6b53">Resultado neto — ninguna etapa es opcional (§4.8-4.9 del manual científico)</text>
-    <text class="std" x="300" y="152" fill="var(--ink)">a 390 Hz (resonancia del boom)</text>
-    <text class="stv" x="300" y="168">−7 a 0 dB — no protege ahí</text>
-    <text class="std" x="650" y="152" fill="var(--ink)">a 1–3 kHz (pico del lazo acústico)</text>
-    <text class="stv" x="650" y="168">≥25 dB de atenuación</text>
-  </svg>
+  <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg"><style>
+.t{font:700 16px 'Space Grotesk',sans-serif;fill:#23221f}
+.s{font:500 14px 'Source Sans 3',sans-serif;fill:#4a4844}
+.m{font:600 14px 'JetBrains Mono',monospace;fill:#3d5670}
+.d{font:700 15px 'JetBrains Mono',monospace;fill:#a8515b}
+.nw{fill:#f5e4d8;stroke:#c97a52;stroke-width:2.6}
+.bt{fill:#eeece6;stroke:#a5a19a;stroke-width:1.8}
+</style>
+<text class="m" x="20" y="26" text-anchor="start">MK2 (vibración)</text><text class="m" x="880" y="26" text-anchor="end">MK1</text>
+<rect class="nw" x="10" y="40" width="190" height="84" rx="10"/><text class="t" x="105" y="66" text-anchor="middle">Etapa 1</text><text class="s" x="105" y="88" text-anchor="middle">bracket: neopreno</text><text class="s" x="105" y="108" text-anchor="middle">+ buje de silicón</text><rect class="bt" x="240" y="40" width="190" height="84" rx="10"/><text class="t" x="335" y="66" text-anchor="middle">Etapa 2</text><text class="s" x="335" y="88" text-anchor="middle">espina de pino</text><text class="s" x="335" y="108" text-anchor="middle"></text><rect class="bt" x="470" y="40" width="190" height="84" rx="10"/><text class="t" x="565" y="66" text-anchor="middle">Etapa 3</text><text class="s" x="565" y="88" text-anchor="middle">boom PETG</text><text class="s" x="565" y="108" text-anchor="middle">resonancia ~390 Hz</text><rect class="nw" x="700" y="40" width="190" height="84" rx="10"/><text class="t" x="795" y="66" text-anchor="middle">Etapa 4</text><text class="s" x="795" y="88" text-anchor="middle">grommet + espuma</text><text class="s" x="795" y="108" text-anchor="middle">delante de MK1</text>
+<path d="M 200 82 H 238 M 430 82 H 468 M 660 82 H 698" stroke="#83807a" stroke-width="3" fill="none"/>
+<rect x="10" y="150" width="880" height="96" rx="10" fill="#eef4f0" stroke="#6f9b84" stroke-width="2"/>
+<text class="t" x="450" y="176" text-anchor="middle">Resultado neto — ninguna etapa es opcional (manual científico §4.8–4.9)</text>
+<text class="s" x="250" y="206" text-anchor="middle">a 390 Hz (resonancia del boom)</text><text class="d" x="250" y="230" text-anchor="middle">−7 a 0 dB: no protege ahí</text>
+<text class="s" x="660" y="206" text-anchor="middle">a 1–3 kHz (pico del lazo acústico)</text><text class="d" x="660" y="230" text-anchor="middle">≥ 25 dB de atenuación</text></svg>
   <figcaption><span class="fig-num">Figura D2.</span> Las cuatro etapas de aislamiento de vibración, en
   serie. En este paso se monta la Etapa 1 (naranja); las etapas 2 y 3 ya existen en la madera y el boom
   (gris); la Etapa 4 se montó en el Bloque 1.</figcaption>
@@ -1150,7 +1085,7 @@ fría), que sí es una falla real y común.</div>
 <tr><td>Sin sonido y U1 se calienta</td><td>Oscilación ultrasónica (no audible)</td><td>Corriente de reposo &gt;20 mA confirma. Revisar la red de Zobel (R8+C12), patas cortas en el pin 5, C8 en el pin 6</td></tr>
 <tr><td>Drenaje de MK1 pegado a 8.5 V</td><td>Micrófono al revés o abierto</td><td>Revisar polaridad de MK1 y continuidad del cable</td></tr>
 <tr><td>Drenaje de MK1 cerca de 0 V</td><td>Micrófono en corto</td><td>Revisar soldadura y el propio MK1</td></tr>
-<tr><td>Colector de Q1 en ~8.5 V</td><td>Q1 en corte, pinout invertido</td><td>Verificar con el probador de diodos antes de resoldar</td></tr>
+<tr><td>Colector de Q1 en ~8.5 V</td><td>Q1 en corte: emisor y colector intercambiados</td><td>Apagar y girar Q1 180° (la base se queda en su sitio). El probador de diodos NO distingue E de C: esta medición es la que lo decide</td></tr>
 <tr><td>Colector de Q1 en ~1.2 V</td><td>Q1 saturado</td><td>Revisar R5, R3/R4</td></tr>
 <tr><td>El aparato pita solo cuando se sostiene con la mano en cierta posición, no en la mesa</td><td>Camino de vibración estructural vivo (no es acústico)</td><td>Correr la prueba V1. Revisar apriete del stack de neopreno (debe mecerse ~1 mm, no estar rígido), tensión del cable del micrófono, y que ningún metal de la cápsula toque el PETG</td></tr>
 <tr><td>El golpe del nudillo en la trompeta se oye tan fuerte como la voz (prueba V2 falla)</td><td>Camino estructural vivo</td><td>Mismo que el anterior: revisar el stack de aislamiento completo</td></tr>
