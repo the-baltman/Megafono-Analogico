@@ -35,14 +35,14 @@ punto estrella descrito más abajo.
 | C2 | 100 nF | 7c | 11a | no polarizado |
 | R3 | 82 kΩ | 4d | 11b | del rail filtrado V_A |
 | R4 | 22 kΩ | 11c | riel GND | |
-| Q1 | 2N3904 | E=14a, B=11e, C=17a | — | verificar pinout con probador de diodos antes de insertar |
+| Q1 | 2N3904 | E=14a, B=11e, C=17a | — | base con probador de diodos; emisor y colector con el zócalo hFE, o con las lecturas de base y emisor del Paso 2 de `puesta-en-marcha.md` |
 | R6 | 220 Ω | 14b | 16a | |
 | R7 | 1.8 kΩ | 16b | riel GND | |
 | C3 | 22 µF/16V | 16c (+) | riel GND (−) | puentea solo R7 |
 | R5 | 4.7 kΩ | 4e | 17b | del rail filtrado V_A |
 | C4 | 12 nF | 17c | riel GND | |
 | C5 | 220 nF | 17d | 22a | |
-| RV1 | 10k log | ext.1=22b, wiper=24a, ext.3=riel GND | — | ext.3 es el lado de "mínimo". En la versión final va montado en el panel de la caja |
+| RV1 | 10k log | ext.3=22b, wiper=24a, ext.1=riel GND | — | ext.1 es el lado de "mínimo" (tope antihorario, visto de frente). Confirmar con óhmetro: a tope antihorario, cursor a riel GND ≈ 0 Ω. En la versión final va montado en el panel de la caja |
 | U1 | LM386N-3 | pin1=e30, pin2=e31, pin3=e32, pin4=e33, pin5=f33, pin6=f32, pin7=f31, pin8=f30 | — | a caballo del canal, muesca hacia la fila 30 |
 | — | puente | 24a (wiper) | e32 (pin 3) | cable corto |
 | — | puente | e31 (pin 2) | riel GND | lo más corto posible |
@@ -53,8 +53,8 @@ punto estrella descrito más abajo.
 | R8 | 10 Ω 1/2W | f33 (pin 5) | 40f | |
 | C12 | 47 nF | 40g | **punto estrella** | |
 | C11 | 100 µF/16V | f33 (+, pin 5) | 44f (−) | |
-| Bocina (+) | cable | 44g | — | |
-| Bocina (−) | cable | **punto estrella** | — | no al riel |
+| Bocina (+) | conductor **negro** de la SC-615 ("Hot") | 44g | — | negro = (+): al revés que el portapilas |
+| Bocina (−) | conductor **blanco** de la SC-615 ("Com") | **punto estrella** | — | no al riel |
 | SW1 | interruptor | (+) de pila | F1 | en la versión final va en el panel de la caja |
 | F1 | polyfuse 0.75 A, R_max ≤ 0.15 Ω | SW1 | riel V+ | va en la placa |
 | Pila (−) | cable | **punto estrella** | — | |
@@ -67,6 +67,7 @@ punto estrella descrito más abajo.
 
         fila 63  ->  * -------- pin 4 de U1 (cable corto)
                      * -------- (-) de C7 1000u
+                     * -------- C8 100n (pata de masa)
                      * -------- (-) de la BOCINA
                      * -------- (-) de C12 (Zobel)
                      * -------- (-) del PAQUETE DE PILAS

@@ -23,7 +23,7 @@ abierto ningún otro archivo para entender las conexiones.
                                             |
                                         [C1] 220u
                                             |
-                                          STAR GND
+                                          GND-S  (masa de señal; un solo cable a STAR GND)
 
    MK1 electret --> Q1 (CE, +21.6 dB) --> RV1 10k log --> U1 LM386N-3 --> bocina 8 ohm
    -44 dBV/Pa        LP 4.1 kHz          volumen         26 o 46 dB       HP 199 Hz
@@ -49,13 +49,13 @@ diferencia entre que el circuito funcione limpio y que produzca un sonido de mot
                         |               |
                      [C1] 220u/16V   [R2] 2.2k 1/4W
                         |               |
-                       GND              *---- V_drain = 7.36 V
+                      GND-S             *---- V_drain = 7.36 V
                                         |
                                         |  <-- nodo de ALTA IMPEDANCIA (~2 kohm):
                                         |      aqui entra todo el zumbido
                                      [MK1] electret CMA-4544PF-W
                                         |      (+ = terminal aislada,
-                                       GND      - = carcasa metalica)
+                                      GND-S     - = carcasa metalica)
 
         Acoplo a la base de Q1:
         V_drain ----[C2] 100n ----> base de Q1      (f_HP = 111 Hz)
@@ -81,7 +81,7 @@ y se amplificaría 46–66 dB. Atenuación de este filtro a 300 Hz: **−45.8 dB
         |   |               |  |
      [R4] 22k           C  /   [C4] 12n  (paso bajas, f = 4.14 kHz)
         |   |              /    |
-        |   +--[C2]--> B  |Q1  GND
+        |   +--[C2]--> B  |Q1  GND-S
         |     100n         \   2N3904
         |                 E \
         |                   |
@@ -95,7 +95,7 @@ y se amplificaría 46–66 dB. Atenuación de este filtro a 300 Hz: **−45.8 dB
         |                   |          |
         *-------------------*----------*
         |
-       GND (estrella)
+       GND-S (masa de señal)
 ```
 
 Punto de operación: V_B = 1.79 V, V_E = 1.14 V, I_C ≈ 0.565 mA, r_e = 46 Ω, V_C = 5.80 V. La carga
@@ -106,8 +106,10 @@ $$A_{v1} = \frac{R_{ac}}{r_e + R6} = \frac{3197}{266} = 12.02 \Rightarrow \mathb
 
 R6 (220 Ω) no lleva capacitor de desvío: la ganancia queda fijada por dos resistencias, no por la
 corriente de colector ni por beta del transistor. Pinout del 2N3904 (TO-92, cara plana hacia el
-armador, patas hacia abajo, de izquierda a derecha): **Emisor, Base, Colector**. Verificar con
-probador de diodos antes de soldar.
+armador, patas hacia abajo, de izquierda a derecha): **Emisor, Base, Colector**. Antes de soldar:
+la base con el probador de diodos; el emisor y el colector con el zócalo hFE del multímetro, o con
+las lecturas de base y emisor del Paso 2 de `puesta-en-marcha.md` (el probador de diodos no los
+distingue).
 
 ## Bloque C — Etapa de potencia LM386N-3
 
@@ -129,14 +131,14 @@ probador de diodos antes de soldar.
      *--------[ \ ]                           |          |                  |
               |  \___ wiper ___             pin 6      pin 1              pin 8
               |                |              |          |                  |
-             GND               |        +-----*----------*------------------*
+            GND-S              |        +-----*----------*------------------*
                                +----> pin 3   |      U1  LM386N-3
                                               |
-                        GND ----------> pin 2 |
+                      GND-S ----------> pin 2 |
                                               |
                    STAR GND ----------> pin 4 |
                                               |
-                                        pin 7 *--[C9] 10u/16V----> STAR GND
+                                        pin 7 *--[C9] 10u/16V----> GND-S
                                               |
                                         pin 5 *--[C11] 100u/16V--> (+) BOCINA 8 ohm
                                               |                          |
@@ -170,9 +172,11 @@ la derivación completa y por qué Config B —no A— es la configuración norm
 
 ## La masa en estrella
 
-Un único punto físico reúne, y solo reúne: pin 4 de U1, (−) de C7, (−) de la bocina, (−) de C12
-(Zobel) y (−) del paquete de pilas. Ningún otro retorno de masa lo toca por un camino distinto. El
-retorno de la bocina lleva picos de 330 mA; si comparte camino resistivo con la masa de señal del
+Un único punto físico reúne, y solo reúne: pin 4 de U1, (−) de C7, C8, (−) de la bocina, (−) de C12
+(Zobel) y (−) del paquete de pilas, **más un solo cable desde la masa de señal (GND-S)**. Todo lo
+demás que va a masa (C1, R4, R7, C3, C4, el conductor 2 y la malla del cable de MK1, el pin 2 de U1,
+el extremo de mínimo de RV1 y el (−) de C9) va a GND-S. Ningún otro retorno de masa lo toca por un
+camino distinto. El retorno de la bocina lleva picos de 330 mA; si comparte camino resistivo con la masa de señal del
 micrófono, la caída resultante se amplifica 46–66 dB y produce un motorboating que **no** se apaga
 tapando el micrófono — a diferencia del pitido acústico real.
 

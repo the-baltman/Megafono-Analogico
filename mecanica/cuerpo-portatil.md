@@ -84,6 +84,10 @@ neopreno, cara superior de la espina, rondana de acero, tuerca nylock. Barreno d
 para alojar el buje (agrandar con broca escalonada si el de fábrica es de 7 mm — **verificar contra
 la unidad real comprada**). **Apretar solo hasta que el neopreno pase de 3.0 a 2.0 ± 0.3 mm, no más**
 — sobre-apretar cortocircuita el aislador. Verificación a mano: la trompeta debe poder mecerse ~1 mm.
+El cable de la trompeta cruza esta etapa: es PVC de 6 mm, unas 20 veces más rígido que un par de
+20 AWG (estimado). Si va tenso o amarrado cerca de su salida, conecta la trompeta a la espina por
+fuera de las arandelas de neopreno. Por eso se deja en un bucle libre de radio ≥ 36 mm (ver "Cable de
+la trompeta", abajo), y la prueba V1 tiene un paso que lo comprueba.
 
 **Etapa 2 — suspender la cápsula** (nada rígido la toca). Grommet de hule de panel, OD 14–16 / ID
 9.5 mm, para barreno de panel 12.5 mm, pared 1.5–2 mm. La cápsula entra a presión con 0.1–0.3 mm de
@@ -135,7 +139,49 @@ es cómodo más de uno o dos minutos.
 ## Alojamiento del circuito y del portapilas
 
 Caja del circuito: se compra, no se imprime (caja de proyecto ABS ~100×60×35 mm exterior). Montaje:
-2 tornillos #6×16 mm con rondana, desde dentro de la caja hacia la espina.
+2 tornillos #6×16 mm con rondana, desde dentro de la caja hacia la espina. Lleva un barreno Ø15.2 mm
+para el pasacable PG9 (`bom-mecanica.md`, fila 20) en la cara que mira a la trompeta.
+
+**Barreno del pasacable, antes de meter la perfboard en la caja:** presenta dentro de la caja la
+perfboard y el pasacable con su contratuerca. Entre el extremo interior del pasacable y la placa o
+cualquier componente tiene que quedar espacio para que la chaqueta asome 5–10 mm y los dos
+conductores doblen hacia la placa sin forzarse. **Si no cabe, PARAR y consultar.** Si cabe, barrena
+con la broca escalonada el diámetro de la rosca del pasacable (Ø15.2 mm para PG9) en la cara de la
+caja que va a mirar a la trompeta, a media altura de esa cara. Quita la rebaba con lija 220, monta el
+cuerpo del pasacable con la contratuerca por dentro y deja el capuchón suelto.
+
+## Cable de la trompeta
+
+La SC-615 trae cable integral de PVC Ø6 mm con alivio de tensión (hoja TOA SC-615, págs. 2 y 4); sale
+por la parte baja de la tapa trasera de la trompeta y es el cable a la placa: no se corta ni se
+cambia en la trompeta. La hoja marca la polaridad: **negro = (+), "Hot"; blanco = (−), "Com"**. Es
+al revés de la costumbre y del portapilas de este mismo aparato, donde el negro es el negativo.
+
+**Ruteo, antes de atornillar la caja de circuito.** El cable del micrófono va por el lado izquierdo de
+la espina; el cable de la trompeta y el de las pilas, por el lado derecho. Si se cruzan en algún
+punto, que sea a 90°, nunca en paralelo. En este orden:
+
+1. No lo jales ni lo dobles pegado a la salida de la trompeta: ahí está su alivio de tensión.
+2. Forma un **bucle libre en omega**: tres cuartos de vuelta alrededor del núcleo de cartón de un
+   rollo de cinta canela o masking (~76 mm de diámetro). El cable nunca debe quedar más cerrado que
+   ese núcleo (radio ≥ 36 mm). El bucle queda en el aire, detrás del bracket, y **no toca el bracket,
+   los pernos, las tuercas ni la espina** (cotas G7 y G8).
+3. Después del bucle, llévalo por el costado derecho de la espina, pegado a la arista superior y
+   lejos de la zona de agarre, hasta la cara de la caja que mira a la trompeta.
+4. **Todavía no le pongas ninguna cinta de amarre:** se amarra con la inclinación ya fijada (punto 7).
+5. **SW1 en OFF y sin pilas.** Pasa primero el capuchón del pasacable por los conductores sueltos;
+   luego mete el cable por el pasacable hasta que la chaqueta asome 5–10 mm adentro. Aprieta el
+   capuchón hasta que el cable no se deslice al jalarlo con los dedos, sin hundir la chaqueta.
+6. Suelda el conductor **negro** (+, "Hot") al nodo SAL, la pata (−) de C11, y el conductor
+   **blanco** (−, "Com") al punto estrella, con ~30 mm de holgura. Dentro de la caja, llévalos
+   directo, sin correr junto a los cables de RV1 ni al del micrófono.
+   Verificación: con SW1 en OFF, entre SAL y el punto estrella el óhmetro lee **5–7 Ω** (la
+   trompeta); el recorrido, de la salida de la trompeta al pasacable con el bucle incluido, no pasa
+   del largo de chaqueta medido menos 50 mm (cota G9).
+7. Con la inclinación de la trompeta ya fija, pon la primera cinta a **60–70 mm** de donde termina el
+   bucle (nunca más cerca) y las demás cada 80 mm. Aprieta cada cinta solo hasta que no se deslice,
+   sin hundir la chaqueta. Si después cambias la inclinación, corta primero la primera cinta: si no,
+   el cable jala la trompeta y anula el aislador.
 
 Portapilas 6×AA: cerrado, arreglo 2×3, tapa retenida por tornillo (no por fricción — en una caída las
 pilas se salen). Montado en la cara superior, tapa hacia arriba.
@@ -178,3 +224,5 @@ cápsula se vuelve obligatorio sin margen para omitirlo. Jaula en anillo de PVC 
 | Rosca expuesta de la empuñadura | Cortar a ras o tuerca de bellota |
 | Astillas de pino | Lijar 120 → 220 todas las caras y cantos |
 | Pilas | Terminales no expuestas, tapa atornillada (no de fricción), switch real |
+| Cable de la trompeta rígido (PVC Ø6 mm), que hace resorte: se engancha con la ropa, el strap o la mano y jala el aparato; si se cierra de más, se daña | No cerrarlo a menos de radio 36 mm; no jalar la trompeta del cable ni colgar nada de él; fuera del bucle, mantenerlo a menos de 50 mm de la espina (cota G10) |
+| Rebaba en el barreno de la caja y en el pasacable: cortes al armar; la rebaba también corta la chaqueta del cable | Lija 220 en el barreno antes de montar el pasacable |

@@ -24,22 +24,39 @@ cápsula suelta en la mano. Ver `mecanica/cuerpo-portatil.md` para el Bloque 1.
 
 ## Paso 2 — Micrófono y preamplificador, sin U1
 
-4. Montar R1, C1, R2, cable del micrófono, MK1, C2, R3, R4, Q1, R5, R6, R7, C3, C4.
-5. Energizar y medir en DC (negro del multímetro en el punto estrella):
+4. **SW1 en OFF.** Antes de montar, **mide cada resistor con el óhmetro, fuera del circuito**:
+
+   | R1 | R2 | R3 | R4 | R5 | R6 | R7 |
+   |---|---|---|---|---|---|---|
+   | 440–500 Ω | 2.07–2.33 kΩ | 77–87 kΩ | 20.7–23.3 kΩ | 4.42–4.98 kΩ | 205–235 Ω | 1.69–1.91 kΩ (2.07–2.33 kΩ si usas el de 2.2 kΩ) |
+
+   220 Ω y 2.2 kΩ, y también 470 Ω y 4.7 kΩ, solo se distinguen por la tercera banda. La tabla del punto 5 no
+   atrapa un R5 de valor equivocado y el óhmetro sí. Con Q1: la base con el probador de diodos, y el
+   emisor y el colector con el zócalo hFE si tu multímetro lo tiene (con la base en la B, prueba las
+   dos orientaciones de las otras dos patas: la correcta lee de decenas a cientos, la invertida unas
+   pocas unidades). Si no tiene zócalo hFE, lo deciden la base y el emisor del punto 5.
+   Después monta R1, C1, R2, el cable de MK1, MK1, C2, R3, R4, Q1, R5, R6, R7, C3 y C4.
+5. SW1 en ON. Medir en DC. Punta negra en el punto estrella, salvo en las filas de "caída": ahí van
+   las dos puntas en las dos patas del resistor.
 
 | Punto | Esperado | Qué significa si falla |
 |---|---|---|
-| V_A (unión R1/R3/R5) | 8.2–8.7 V | si está en ~9 V, no circula corriente: Q1 o el micrófono no conducen |
-| Drenaje de MK1 (unión R2/C2) | 6.5–8.2 V | pegado a 8.5 V = micrófono al revés o abierto; cerca de 0 V = en corto |
-| Base de Q1 | 1.70–1.90 V | divisor R3/R4 mal |
-| Emisor de Q1 | 1.00–1.25 V | |
-| Colector de Q1 | 5.5–6.1 V | ~8.5 V = Q1 en corte (pinout invertido); ~1.2 V = saturado (revisar R5, R3/R4) |
-| Corriente total | 0.8–1.5 mA | |
+| Caída en R1 (puntas en las dos patas de R1) | 0.18–0.75 V | Menos de 0.18 V: casi no circula corriente (Q1 no conduce o el micrófono está abierto). Más de 0.75 V: corriente de más (Q1 saturado, R4 abierta, algún corto) |
+| Caída en R2 (puntas en las dos patas de R2) | 0.1–2.0 V | Menos de 0.1 V: no pasa corriente por la cápsula (cable, soldadura o conductor 1 abiertos, o cápsula muerta). Drenaje (unión R2/C2) cerca de 0 V: corto en el cable o en la cápsula, o R2 abierta. Entre 2.0 V y ese extremo: la cápsula consume fuera de su hoja; revisa su polaridad por continuidad a la lata y prueba la cápsula de repuesto |
+| Base de Q1 | 1.40–2.20 V | Base debajo de 1.4 V **y** emisor debajo de 0.75 V: emisor y colector de Q1 intercambiados. Apaga, **cambia Q1 por uno nuevo** (con el transistor al revés, la unión base-emisor recibe hasta ~8 V en inversa, más que los 6 V que garantiza la hoja de onsemi) y móntalo girado 180° (la base se queda en su sitio). Si girar Q1 no lo arregla: R4 de valor bajo, o R6 y R7 en corto. Cualquier otro valor fuera: divisor R3/R4 mal (valor, posición o soldadura) |
+| Emisor de Q1 | 0.70–1.60 V | Ver la fila de la base |
+| Caída en R6 (puntas en las dos patas de R6, rango de 2 V) | 0.05–0.20 V | Menos de 0.05 V: R6 en corto o de valor bajo (puente de soldadura, 22 Ω en vez de 220 Ω): el preamplificador gana de 11 a 15 dB de más y el aparato pita antes. Más de 0.20 V: R6 de valor alto (2.2 kΩ en vez de 220 Ω) o R7 de valor bajo |
+| Colector de Q1 | 4.8–7.9 V | Más de 7.9 V: no circula corriente de colector (R6 o R7 abiertas o sin soldar, R5 de 1 kΩ o menos). Menos de 4.8 V: Q1 conduce de más o está saturado (R3 y R4 intercambiadas, R4 abierta, R7 de 180 Ω). **Un colector dentro de la ventana no descarta el pinout invertido: eso lo deciden la base y el emisor** |
+| Corriente total (amperímetro en serie, como en el Paso 1) | 0.5–1.6 mA | Más de 1.6 mA: consumo de más (compárala con la caída en R1). Lee después de ~1 minuto encendido: la fuga inicial de C7 baja sola |
 
-**Sobre el rango del drenaje del electret**: el valor exacto depende del consumo real de tu cápsula,
-y la hoja de datos de CUI da 0.5 mA como **máximo**, no como típico. Lo que importa no es acertar un
-número exacto, es que **no** esté pegado a 8.5 V (micrófono abierto o invertido) ni cerca de 0 V (en
-corto). Para el dato real de tu cápsula, mide la caída en R2 y divide entre 2.2 kΩ.
+*Ventanas calculadas en esquinas para el 2N3904: hFE de 40 a 800, V_BE de 0.57 a 0.77 V, resistores de
+5 % (R7 de 1.8 kΩ o de 2.2 kΩ), V+ de 9.0 a 9.7 V y cápsula de 0.05 a 0.6 mA. No busques el número
+central: busca que caiga dentro.* **Nada de Q1 se suelda (en la perfboard) hasta que estas lecturas
+salgan.**
+
+**Sobre el drenaje del electret:** la hoja de CUI da 0.5 mA como máximo y no da mínimo. Por eso se
+mide la caída en R2 (I = caída / 2.2 kΩ). Que el drenaje quede pegado a V_A solo prueba que no pasa
+corriente; la polaridad de la cápsula se comprueba por continuidad a la lata antes de soldar.
 
 6. **Prueba de señal, sin etapa de potencia:** multímetro en V AC, puntas en colector de Q1 y masa.
    Hablar fuerte a 3 cm de la cápsula. La lectura debe **moverse** de unos pocos mV a 100–200 mV.
@@ -50,6 +67,9 @@ corto). Para el dato real de tu cápsula, mide la caída en R2 y divide entre 2.
 
 7. **SW1 en OFF.** Insertar U1 en el zócalo, muesca hacia la fila 30. Montar C9, RV1, los puentes,
    R8, C12, C11. **Config A: dejar pines 1 y 8 sin nada.**
+   **Antes de energizar:** gira RV1 a tope en sentido antihorario y mide con el óhmetro entre el
+   cursor y el extremo que va al riel GND (GND-S): debe dar **~0 Ω**. Si da ~10 kΩ, intercambia los
+   dos extremos. Así, "RV1 al mínimo" siempre es **tope antihorario**.
 8. En lugar de la bocina, conectar la resistencia de 10 Ω 5 W. RV1 al mínimo.
 9. SW1 en ON. Medir:
 
@@ -69,8 +89,11 @@ no por su voltaje: con C9 puesto hay menos zumbido de fondo que sin él.
 
 ## Paso 4 — Bocina
 
-11. **SW1 en OFF.** Quitar la resistencia de prueba y conectar la trompeta: (+) a C11, (−) directo al
-    punto estrella.
+11. **SW1 en OFF.** Quitar la resistencia de prueba y conectar la trompeta: conductor **negro** (+,
+    "Hot", hoja TOA SC-615) al (−) de C11; conductor **blanco** (−, "Com") directo al punto estrella.
+    **Ojo: es al revés de la costumbre y del portapilas de este mismo aparato, donde el negro es el
+    negativo.** *Con una sola bocina, la polaridad no cambia el sonido ni daña nada (C11 bloquea la
+    DC), pero se respeta para que el aparato quede igual que los diagramas.*
 12. **Antes de encender: la trompeta apuntando lejos de cualquier cara y de cualquier pared cercana.**
 13. SW1 en ON, RV1 al mínimo, subir despacio hablando a 3 cm.
 14. **Con Config A va a faltar volumen: es lo esperado**, no una falla — Config A queda 3.2 dB corta
